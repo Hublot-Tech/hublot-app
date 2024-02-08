@@ -1,4 +1,6 @@
 # HUBLOT Project Analysis
+Application for connecting service providers and customers. The general idea of the project is to design software program connecting service providers and customers
+
 ## Project strengths
 - Database of Qualified Service Providers
 - User-friendly and Intuitive Interface
