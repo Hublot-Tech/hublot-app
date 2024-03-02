@@ -8,18 +8,19 @@ async function bootstrap() {
 
   // Swagger initialise
   const config = new DocumentBuilder()
+  // .addBearerAuth()
     .setTitle('Hublot')
     .setDescription(
       'Hublot for connecting service providers and customers. The general idea of the project is to design software program connecting service providers and customers')
     .setVersion('1.0')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
 
+  const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 
-
-
 }
+
 bootstrap();

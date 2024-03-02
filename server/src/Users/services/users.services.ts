@@ -1,4 +1,5 @@
-import { CreateUsersDto, UserDto } from "../dto/users.dto";
+import { CreateUsersDto, UpdateUsersDto, UserDto } from "../dto/users.dto";
+import { UserInterface } from "../interfaces/userInterface";
 
  
  
@@ -23,8 +24,12 @@ export class UserService {
     }
 
 
-    updateUser(userId: number, data: UserDto): any {
+    updateUser(userId: number, data: UpdateUsersDto): any {
          return UserDto;
+    }
+
+    findUsersByEmail(email:string): UserInterface {
+        return {} as UserInterface;
     }
 
 

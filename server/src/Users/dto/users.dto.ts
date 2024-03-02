@@ -1,5 +1,5 @@
 import { Optional } from "@nestjs/common";
-import { ApiOkResponse, ApiProperty } from "@nestjs/swagger";
+import { ApiOkResponse, ApiProperty, PartialType } from "@nestjs/swagger";
 import { IsDate, IsDefined, IsEmail, IsInt, IsNotEmpty, IsNumber, IsNumberString, IsPositive, Length, MinLength } from "class-validator";
 
  
@@ -56,7 +56,8 @@ export class GetUserByIdDto{
 }
 
 
-export class UpdateUsersDto {
+export class UpdateUsersDto extends PartialType(CreateUsersDto) {
+
     @ApiProperty({ description: 'The name value is Optional', required: false})  
     @Optional()
      @MinLength(3, { message: 'Name must be at least 3 characters long' })
