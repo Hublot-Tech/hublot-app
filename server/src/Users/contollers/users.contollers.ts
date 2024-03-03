@@ -1,40 +1,213 @@
 import { Controller, Get, Query, Post, Body, Put, Param, Delete, ValidationPipe, HttpException, HttpStatus, ParseIntPipe, Patch } from '@nestjs/common';
-import { validate } from 'class-validator';
-import { CreateUsersDto, GetAllUserDto, UpdateUsersDto } from '../dto/users.dto';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-  
+import { CreateUsersDto, GetAllUserDto, UpdateUsersDto, UserDto } from '../dto/users.dto';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { UserService } from '../services/users.services';
+
 @ApiTags('User')
 @Controller('user')
 export class UsersController {
-    
+
+  constructor(private userService: UserService) { }
+
   @Post()
-  
-  async create(@Body() createUserDto: CreateUsersDto) {
-     return createUserDto;
+  @ApiOkResponse({
+    type: GetAllUserDto, description: 'Successful user registration',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'objet',
+          items: { $ref: '#/components/schemas/UserDto' },
+        },
+      },
+    },
+
+    links: {
+      LinkToGetAllUser: {
+        operationId: 'register',
+        description: 'Link to register user',
+      },
+    },
+    status: 201,
+    headers: {
+      Link: {
+        description: 'http://localhost:3000/user',
+        schema: {
+          type: 'string',
+        },
+      },
+      Authorization: {
+        description: 'Bearer token for authentication',
+        schema: {
+          type: 'string',
+        },
+      },
+    }
+  })
+  register(@Body() createUserDto: CreateUsersDto) {
+    const users = this.userService.register(createUserDto);
+    return users;
   }
 
   @Get()
-  getAllUsers(@Query() query: GetAllUserDto) {
-    return `This action returns all cats`;
+  @ApiOkResponse({
+    type: UserDto, isArray: true, description: 'Link to get all user',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'objet',
+          items: { $ref: '#/components/schemas/UserDto' },
+        },
+      },
+    },
+
+    links: {
+      LinkToFindAllUser: {
+        operationId: 'findAll',
+        description: 'Link to get all users',
+      },
+    },
+    status: 200,
+    headers: {
+      Link: {
+        description: 'http://localhost:3000/user',
+        schema: {
+          type: 'string',
+        },
+      },
+      Authorization: {
+        description: 'Bearer token for authentication',
+        schema: {
+          type: 'string',
+        },
+      },
+    }
+  })
+  findAll(@Query() query: UserDto) {
+    const user = this.userService.findAll();
+    return user
   }
 
   @Get(':id')
-  async getUserByIb( @Param('id', ParseIntPipe) id: number ) {
-     return `This action returns a #${id} cat`;
+  @ApiOkResponse({
+    type: UserDto,
+    content: {
+      'application/json': {
+        schema: {
+          type: 'objet',
+          items: { $ref: '#/components/schemas/UserDto' },
+        },
+      },
+    },
+
+    links: {
+      LinkToFindOneUser: {
+        operationId: 'findOne',
+        parameters: { id: 'path.id' },
+        description: 'Link to get a user',
+      },
+    },
+    description: 'User information successfully retrieved',
+    status: 200,
+    headers: {
+      Link: {
+        description: 'http://localhost:3000/user/1',
+        schema: {
+          type: 'string',
+        },
+      },
+      Authorization: {
+        description: 'Bearer token for authentication',
+        schema: {
+          type: 'string',
+        },
+      },
+    }
+  })
+  @ApiNotFoundResponse({ description: 'User not found' })
+  @ApiBadRequestResponse({ description: 'Invalid user ID' })
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    const user = this.userService.findOne(id);
+    return user;
   }
 
   @Put(':id')
-  updateUserPut(@Param('id', ParseIntPipe) id: number, @Body() updateUsersDto: UpdateUsersDto) {
-    return `This action updates a #${id} cat`;
-  }
+  @ApiOkResponse({
+    type: GetAllUserDto,
+    content: {
+      'application/json': {
+        schema: {
+          type: 'objet',
+          items: { $ref: '#/components/schemas/UserDto' },
+        },
+      },
+    },
 
-  @Patch(':id')
-  updateUserPatch(@Param('id', ParseIntPipe) id: number, @Body() updateUsersDto: UpdateUsersDto) {
-    return `This action updates a #${id} cat`;
+    links: {
+      LinkToUpdateOneUser: {
+        operationId: 'update',
+        parameters: { id: 'path.id' },
+        description: 'Link to the modified user',
+      },
+    }
+
+    , description: 'The user has been successfully modified', status: 200, headers: {
+      Link: {
+        description: 'http://localhost:3000/user/1',
+        schema: {
+          type: 'string',
+        },
+      },
+      Authorization: {
+        description: 'Bearer token for authentication',
+        schema: {
+          type: 'string',
+        },
+      },
+    }
+  })
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateUsersDto: UpdateUsersDto) {
+    const user = this.userService.update(id, updateUsersDto);
+    return user;
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return `This action removes a #${id} cat`;
+  @ApiNoContentResponse({
+    description: 'User successfully deleted', headers: {
+      Link: {
+        description: 'http://localhost:3000/user/1',
+        schema: {
+          type: 'string',
+        },
+      },
+      Authorization: {
+        description: 'Bearer token for authentication',
+        schema: {
+          type: 'string',
+        },
+      },
+    },
+    content: {
+      'application/json': {
+        schema: {
+          type: 'objet',
+          items: { $ref: '#/components/schemas/UserDto' },
+        },
+        example: {
+          message: 'User successfully deleted'
+        }
+      },
+    },
+
+    links: {
+      LinkToDeleteUser: {
+        operationId: 'delete',
+        parameters: { id: 'path.id' },
+        description: 'Link to the delete user',
+      },
+    }
+  })
+  delete(@Param('id', ParseIntPipe) id: number) {
+    this.userService.delete(id);
   }
+
 }

@@ -1,32 +1,29 @@
-import { CreateUsersDto, UserDto } from "../dto/users.dto";
+import { CreateUsersDto, UpdateUsersDto, UserDto } from "../dto/users.dto";
 
- 
- 
 export class UserService {
-
-
-    //register
-    userRegister(userData: CreateUsersDto): CreateUsersDto{
+    
+    register(userData: CreateUsersDto): CreateUsersDto{
         return userData
     }
 
-    findUsersById(userId: number): UserDto{
+    findOne(userId: number): UserDto{
         return 
     }
 
-    getAllUsers(): UserDto[]{
+    findByEmail(): UserDto{
+        return
+    }
+
+    findAll(): UserDto[]{
         return [];
     }
 
-    deleteUser(userId: number): boolean {
+    delete(userId: number): boolean {
         return false;
     }
 
-
-    updateUser(userId: number, data: UserDto): any {
+    update(userId: number, data: UpdateUsersDto): any {
          return UserDto;
     }
-
-
 
 }
