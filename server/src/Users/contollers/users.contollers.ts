@@ -1,6 +1,6 @@
-import { Controller, Get, Query, Post, Body, Put, Param, Delete, ValidationPipe, HttpException, HttpStatus, ParseIntPipe, Patch } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Put, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { CreateUsersDto, GetAllUserDto, UpdateUsersDto, UserDto } from '../dto/users.dto';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../services/users.services';
 
 @ApiTags('User')

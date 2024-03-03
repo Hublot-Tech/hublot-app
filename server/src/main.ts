@@ -19,7 +19,7 @@ async function bootstrap() {
   // Customize Swagger UI setup
   const customCss = readFileSync(join(__dirname, '../custom.css'), 'utf8'); // Optional: Load custom CSS
   const customScript = readFileSync(join(__dirname, '../custom-script.js'), 'utf8'); // Load custom script
-
+  
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document, {
     customCss,
