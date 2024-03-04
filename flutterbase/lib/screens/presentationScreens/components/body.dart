@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterbase/configuration.dart';
+import 'package:flutterbase/screens/clientScreens/client_screen.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -62,7 +63,7 @@ class _BodyState extends State<Body> {
                 children: [
                   textPresentation(
                       mesg: spash_data[currentIndex]['text']!,
-                      size: 23,
+                      size: 24,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 30),
                   textPresentation(
@@ -73,20 +74,27 @@ class _BodyState extends State<Body> {
               ),
             ),
             const SizedBox(height: 30),
-            Container(
-              width: 390,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: currentIndex == 2 ? kprimaryColor : ksecondaryColor,
-              ),
-              child: const Center(
-                child: Text(
-                  "Découvrir",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+            GestureDetector(
+              onTap: currentIndex == 2
+                  ? () {
+                      Navigator.pushNamed(context, ClientScrenn.routeName);
+                    }
+                  : () {},
+              child: Container(
+                width: 390,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: currentIndex == 2 ? kprimaryColor : ksecondaryColor,
+                ),
+                child: const Center(
+                  child: Text(
+                    "Découvrir",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -94,21 +102,6 @@ class _BodyState extends State<Body> {
             const SizedBox(height: 20),
           ],
         ),
-      ),
-    );
-  }
-
-  Text textPresentation(
-      {required String mesg,
-      double size = 30,
-      required FontWeight fontWeight}) {
-    return Text(
-      mesg,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontWeight: fontWeight,
-        color: kprimaryColor,
-        fontSize: size,
       ),
     );
   }
@@ -126,5 +119,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
- 
-
