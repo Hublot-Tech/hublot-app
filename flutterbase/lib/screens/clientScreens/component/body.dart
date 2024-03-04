@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterbase/screens/clientScreens/component/row_prestataire.dart';
 
 import '../../../configuration.dart';
+import 'account_row.dart';
 import 'row_reseau_connect.dart';
 
 class Body extends StatelessWidget {
@@ -53,20 +54,7 @@ class Body extends StatelessWidget {
               img: "Continuer avec Gmail",
               press: () {},
             ),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.add_circle,
-                      color: Colors.blue,
-                    )),
-                const Text(
-                  "Creer un compte",
-                  style: TextStyle(color: Colors.blue),
-                )
-              ],
-            ),
+            AccountRow(),
             const Row(
               children: [
                 TextWithStyle(text: "Vous acceptez les", colors: Colors.black),
