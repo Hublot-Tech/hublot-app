@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterbase/configuration.dart';
 import 'package:flutterbase/screens/clientScreens/client_screen.dart';
@@ -7,13 +6,15 @@ import 'package:flutterbase/screens/clientScreens/client_screen.dart';
 import 'field_form.dart';
 
 class Body extends StatelessWidget {
-  Body({super.key});
-  TextEditingController name_controller = TextEditingController();
+  const Body({super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController name_controller = TextEditingController();
   TextEditingController email_controller = TextEditingController();
   TextEditingController number_controller = TextEditingController();
   TextEditingController mdp_controller = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
+  
     return Stack(children: [
       Container(
         decoration: const BoxDecoration(color: ksecondaryColor),

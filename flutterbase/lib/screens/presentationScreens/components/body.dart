@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterbase/configuration.dart';
-import 'package:flutterbase/screens/clientScreens/client_screen.dart';
+import 'package:flutterbase/screens/Partie%20client/homeScreens/components/home_screen.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -10,27 +10,6 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentIndex = 0;
-  List<Map<String, String>> spash_data = [
-    {
-      "img": "img/presentation1.png",
-      "text": "Vous êtes passionné(e) et souhaitez vivre de cette passion ?",
-      "mig":
-          "Plomberie, Electricité, Vitrerie, Chaudronnerie, Seignerie; etc ... ils ont la solution à tous vous besoins "
-    },
-    {
-      "img": "img/presentation2.png",
-      "text":
-          "Tous les micro-services dont vous avez besoin à portée de main !",
-      "mig":
-          "Plomberie, Electricité, Vitrerie, Chaudronnerie, Seignerie; etc ... tout les metiers sont permis."
-    },
-    {
-      "img": "img/presentation3.png",
-      "text": "Des échanges constructifs avec des Travailleurs compétents.",
-      "mig":
-          "Plomberie, Electricité, Vitrerie, Chaudronnerie, Seignerie; etc ... ils ont la solution à tous vous besoins "
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,9 +25,17 @@ class _BodyState extends State<Body> {
                   });
                 },
                 itemCount: spash_data.length,
-                itemBuilder: (context, index) => Image.asset(
-                  spash_data[index]['img']!,
-                  //fit: BoxFit.cover,
+                itemBuilder: (context, index) => Container(
+                  width: 400,
+                  height: 581,
+                  padding: const EdgeInsets.all(3),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(60),
+                    child: Image.asset(
+                      spash_data[index]['img']!,
+                      //fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -63,7 +50,7 @@ class _BodyState extends State<Body> {
                 children: [
                   textPresentation(
                       mesg: spash_data[currentIndex]['text']!,
-                      size: 24,
+                      size: 26,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 30),
                   textPresentation(
@@ -77,24 +64,35 @@ class _BodyState extends State<Body> {
             GestureDetector(
               onTap: currentIndex == 2
                   ? () {
-                      Navigator.pushNamed(context, ClientScrenn.routeName);
+                      Navigator.pushNamed(context, HomeScrenns.routeName);
                     }
                   : () {},
               child: Container(
                 width: 390,
                 height: 60,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(13),
                   color: currentIndex == 2 ? kprimaryColor : ksecondaryColor,
                 ),
-                child: const Center(
-                  child: Text(
-                    "Découvrir",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Découvrir",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 3, top: 9),
+                        width: 5,
+                        height: 5,
+                        decoration: BoxDecoration(color: kyellowColor),
+                      ),
+                    ],
                   ),
                 ),
               ),
