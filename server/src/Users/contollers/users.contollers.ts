@@ -17,6 +17,7 @@ import {
 } from '../dto/users.dto';
 import {
   ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -30,7 +31,7 @@ export class UsersController {
   constructor(private userService: UserService) {}
 
   @Post()
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     type: GetAllUserDto,
     description: 'Successful user registration',
   })
