@@ -1,47 +1,38 @@
-import { Controller, Get, Query, Post, Body, Put, Param, Delete, ParseIntPipe } from '@nestjs/common';
-import { CreateUsersDto, GetAllUserDto, UpdateUsersDto, UserDto } from '../dto/users.dto';
-import { ApiBadRequestResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
+import {
+  CreateUsersDto,
+  GetAllUserDto,
+  UpdateUsersDto,
+  UserDto,
+} from '../dto/users.dto';
+import {
+  ApiBadRequestResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserService } from '../services/users.services';
 
 @ApiTags('User')
 @Controller('user')
 export class UsersController {
-
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   @Post()
   @ApiOkResponse({
-    type: GetAllUserDto, description: 'Successful user registration',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'objet',
-          items: { $ref: '#/components/schemas/UserDto' },
-        },
-      },
-    },
-
-    links: {
-      LinkToGetAllUser: {
-        operationId: 'register',
-        description: 'Link to register user',
-      },
-    },
-    status: 201,
-    headers: {
-      Link: {
-        description: 'http://localhost:3000/user',
-        schema: {
-          type: 'string',
-        },
-      },
-      Authorization: {
-        description: 'Bearer token for authentication',
-        schema: {
-          type: 'string',
-        },
-      },
-    }
+    type: GetAllUserDto,
+    description: 'Successful user registration',
   })
   register(@Body() createUserDto: CreateUsersDto) {
     const users = this.userService.register(createUserDto);
@@ -50,78 +41,18 @@ export class UsersController {
 
   @Get()
   @ApiOkResponse({
-    type: UserDto, isArray: true, description: 'Link to get all user',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'objet',
-          items: { $ref: '#/components/schemas/UserDto' },
-        },
-      },
-    },
-
-    links: {
-      LinkToFindAllUser: {
-        operationId: 'findAll',
-        description: 'Link to get all users',
-      },
-    },
-    status: 200,
-    headers: {
-      Link: {
-        description: 'http://localhost:3000/user',
-        schema: {
-          type: 'string',
-        },
-      },
-      Authorization: {
-        description: 'Bearer token for authentication',
-        schema: {
-          type: 'string',
-        },
-      },
-    }
+    type: UserDto,
+    description: 'list of successfully loaded users',
   })
   findAll(@Query() query: UserDto) {
     const user = this.userService.findAll();
-    return user
+    return user;
   }
 
   @Get(':id')
   @ApiOkResponse({
     type: UserDto,
-    content: {
-      'application/json': {
-        schema: {
-          type: 'objet',
-          items: { $ref: '#/components/schemas/UserDto' },
-        },
-      },
-    },
-
-    links: {
-      LinkToFindOneUser: {
-        operationId: 'findOne',
-        parameters: { id: 'path.id' },
-        description: 'Link to get a user',
-      },
-    },
     description: 'User information successfully retrieved',
-    status: 200,
-    headers: {
-      Link: {
-        description: 'http://localhost:3000/user/1',
-        schema: {
-          type: 'string',
-        },
-      },
-      Authorization: {
-        description: 'Bearer token for authentication',
-        schema: {
-          type: 'string',
-        },
-      },
-    }
   })
   @ApiNotFoundResponse({ description: 'User not found' })
   @ApiBadRequestResponse({ description: 'Invalid user ID' })
@@ -133,81 +64,21 @@ export class UsersController {
   @Put(':id')
   @ApiOkResponse({
     type: GetAllUserDto,
-    content: {
-      'application/json': {
-        schema: {
-          type: 'objet',
-          items: { $ref: '#/components/schemas/UserDto' },
-        },
-      },
-    },
-
-    links: {
-      LinkToUpdateOneUser: {
-        operationId: 'update',
-        parameters: { id: 'path.id' },
-        description: 'Link to the modified user',
-      },
-    }
-
-    , description: 'The user has been successfully modified', status: 200, headers: {
-      Link: {
-        description: 'http://localhost:3000/user/1',
-        schema: {
-          type: 'string',
-        },
-      },
-      Authorization: {
-        description: 'Bearer token for authentication',
-        schema: {
-          type: 'string',
-        },
-      },
-    }
+    description: 'The user has been successfully modified',
   })
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateUsersDto: UpdateUsersDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUsersDto: UpdateUsersDto,
+  ) {
     const user = this.userService.update(id, updateUsersDto);
     return user;
   }
 
   @Delete(':id')
   @ApiNoContentResponse({
-    description: 'User successfully deleted', headers: {
-      Link: {
-        description: 'http://localhost:3000/user/1',
-        schema: {
-          type: 'string',
-        },
-      },
-      Authorization: {
-        description: 'Bearer token for authentication',
-        schema: {
-          type: 'string',
-        },
-      },
-    },
-    content: {
-      'application/json': {
-        schema: {
-          type: 'objet',
-          items: { $ref: '#/components/schemas/UserDto' },
-        },
-        example: {
-          message: 'User successfully deleted'
-        }
-      },
-    },
-
-    links: {
-      LinkToDeleteUser: {
-        operationId: 'delete',
-        parameters: { id: 'path.id' },
-        description: 'Link to the delete user',
-      },
-    }
+    description: 'User successfully deleted',
   })
   delete(@Param('id', ParseIntPipe) id: number) {
     this.userService.delete(id);
   }
-
 }

@@ -1,29 +1,27 @@
-import { CreateUsersDto, UpdateUsersDto, UserDto } from "../dto/users.dto";
+import { CreateUsersDto, UpdateUsersDto, UserDto } from '../dto/users.dto';
 
 export class UserService {
-    
-    register(userData: CreateUsersDto): CreateUsersDto{
-        return userData
-    }
+  register(userData: CreateUsersDto): Promise<CreateUsersDto> {
+    return;
+  }
 
-    findOne(userId: number): UserDto{
-        return 
-    }
+  findOne(userId: number): Promise<UserDto> {
+    return;
+  }
 
-    findByEmail(): UserDto{
-        return
-    }
+  findByEmail(): Promise<UserDto> {
+    return;
+  }
 
-    findAll(): UserDto[]{
-        return [];
-    }
+  findAll(): Promise<UserDto[]> {
+    return;
+  }
 
-    delete(userId: number): boolean {
-        return false;
-    }
+  delete(userId: number): Promise<boolean> {
+    return;
+  }
 
-    update(userId: number, data: UpdateUsersDto): any {
-         return UserDto;
-    }
-
+  update(userId: number, data: UpdateUsersDto): Promise<UserDto> {
+    return;
+  }
 }
