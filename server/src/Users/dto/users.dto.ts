@@ -48,7 +48,7 @@ export class CreateUsersDto {
     required: true,
   })
   @IsNotEmpty({ message: 'locale is required' })
-  local: string;
+  locale: string;
 
   @ApiProperty({
     example: 'Lobbessou',
@@ -124,10 +124,10 @@ export class UserDto {
 
   @ApiProperty({
     example: 'Douala',
-    description: 'Local information for account creation',
+    description: 'Locale information for account creation',
     required: true,
   })
-  local: string;
+  locale: string;
 
   @ApiProperty({
     example: 'Lobbessou',
