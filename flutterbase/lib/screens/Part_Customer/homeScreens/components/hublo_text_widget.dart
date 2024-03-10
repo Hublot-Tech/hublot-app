@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 
-class HublotWigdet extends StatelessWidget {
-  const HublotWigdet({
+class HublotTextWigdet extends StatelessWidget {
+  const HublotTextWigdet({
     super.key,
   });
 

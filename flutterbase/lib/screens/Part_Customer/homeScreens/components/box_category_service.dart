@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../configuration.dart';
 
-class CategoriesBox extends StatelessWidget {
-  const CategoriesBox({
+class BoxCategoryService extends StatelessWidget {
+  const BoxCategoryService({
     super.key,
-    required this.name, required this.press,
+    required this.name,
+    required this.press,
   });
   final String name;
   final GestureCancelCallback press;
@@ -21,7 +22,7 @@ class CategoriesBox extends StatelessWidget {
               mesg: "Voir Tout",
               fontWeight: FontWeight.bold,
               size: 13,
-              color: kCategoriecolor ),
+              color: kCategoriecolor),
         )
       ],
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/prestataireScreen/components/body.dart';
+import 'package:flutterbase/screens/Authentification/prestataireScreen/components/body.dart';
 
 class PrestataireScreen extends StatelessWidget {
   const PrestataireScreen({super.key});

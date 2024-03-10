@@ -5,21 +5,21 @@ import 'package:flutterbase/configuration.dart';
 import 'box_information.dart';
 import 'box_star.dart';
 
-class CardRecommandes extends StatelessWidget {
-  const CardRecommandes({
+class CardServicePrestataire extends StatelessWidget {
+  const CardServicePrestataire({
     super.key,
     required this.note,
     required this.name,
     required this.profession,
-    required this.lieu,
+    required this.localization,
     required this.distance,
     required this.img,
   });
-  final String note, name, profession, lieu, distance, img;
+  final String note, name, profession, localization, distance, img;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: size.width,
       child: Stack(
         children: [
@@ -61,7 +61,7 @@ class CardRecommandes extends StatelessWidget {
             child: BoxStar(
               size: size,
               icon: 'img/icons8_star 2.svg',
-              nbreEtoile: note,
+              nbrOfStar: note,
             ),
           ),
           Padding(
@@ -70,7 +70,7 @@ class CardRecommandes extends StatelessWidget {
               size: size,
               name: name,
               profession: profession,
-              lieu: lieu,
+              lieu: localization,
               distance: distance,
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/inscriptionScreen/inscription_screen.dart';
+import 'package:flutterbase/screens/Authentification/inscriptionScreen/inscription_screen.dart';
 
 class AccountRow extends StatelessWidget {
   const AccountRow({

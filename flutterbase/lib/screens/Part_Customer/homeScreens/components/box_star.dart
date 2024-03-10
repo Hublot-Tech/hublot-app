@@ -7,17 +7,17 @@ class BoxStar extends StatelessWidget {
     super.key,
     required this.size,
     required this.icon,
-    required this.nbreEtoile,
+    required this.nbrOfStar,
   });
 
   final Size size;
-  final String icon, nbreEtoile;
+  final String icon, nbrOfStar;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       //margin: const EdgeInsets.only(right: 25),
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       width: size.width * 0.2,
       height: size.height * 0.05,
       decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class BoxStar extends StatelessWidget {
         children: [
           SvgPicture.asset(icon),
           textPresentation(
-              mesg: nbreEtoile,
+              mesg: nbrOfStar,
               fontWeight: FontWeight.normal,
               color: Colors.white,
               size: 22)

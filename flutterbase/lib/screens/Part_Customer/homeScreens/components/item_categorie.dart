@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterbase/configuration.dart';
 
-class ItemDeCategories extends StatelessWidget {
-  const ItemDeCategories({
+class ItemCategories extends StatelessWidget {
+  const ItemCategories({
     super.key,
     required this.name,
     required this.icon,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/inscriptionScreen/component/body.dart';
+import 'package:flutterbase/screens/Authentification/inscriptionScreen/component/body.dart';
 
 class InscriptionScreen extends StatelessWidget {
   const InscriptionScreen({super.key});

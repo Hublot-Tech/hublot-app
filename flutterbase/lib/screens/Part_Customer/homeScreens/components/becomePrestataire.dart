@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../prestataireScreen/prestataire_screen.dart';
+import '../../../Authentification/prestataireScreen/prestataire_screen.dart';
 
 class BecomePrestataire extends StatelessWidget {
   const BecomePrestataire({

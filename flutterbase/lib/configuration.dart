@@ -20,12 +20,6 @@ Text textPresentation(
   );
 }
 
-List<Map<String, String>> dataItem = [
-  {"icon": "img/icons8_design 1.svg", "text": "Design"},
-  {"icon": "img/icons8_laptop_play_video 1.svg", "text": "Monteur Vidéo"},
-  {"icon": "img/icons8_subtitles 1.svg", "text": "Transcipteur"},
-  {"icon": "img/icons8_subtitles 1.svg", "text": "Transcipteur"}
-];
 
 List<Map<String, String>> spash_data = [
   {
@@ -48,7 +42,7 @@ List<Map<String, String>> spash_data = [
   },
 ];
 
-List<Map<String, String>> itemCardRecommande = [
+List<Map<String, String>> itemServices = [
   {
     "img": "img/image 1.png",
     "name": "Gishlain Kamga ",

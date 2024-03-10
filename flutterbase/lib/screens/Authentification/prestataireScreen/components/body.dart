@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/clientScreens/component/account_row.dart';
+import 'package:flutterbase/screens/Authentification/clientScreens/component/account_row.dart';
 
-import '../../../configuration.dart';
+import '../../../../configuration.dart';
 import '../../clientScreens/component/body.dart';
 import '../../clientScreens/component/row_prestataire.dart';
 import '../../clientScreens/component/row_reseau_connect.dart';

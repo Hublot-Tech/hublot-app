@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/clientScreens/component/body.dart';
+import 'package:flutterbase/screens/Authentification/clientScreens/component/body.dart';
 
 class ClientScrenn extends StatelessWidget {
   const ClientScrenn({super.key});

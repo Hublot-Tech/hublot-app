@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterbase/configuration.dart';
-import 'package:flutterbase/screens/Partie%20client/homeScreens/components/home_screen.dart';
+import 'package:flutterbase/screens/Part_Customer/homeScreens/components/home_screen.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -10,6 +10,8 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentIndex = 0;
+ 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

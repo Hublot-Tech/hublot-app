@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../configuration.dart';
 
-class HistoriqueCard extends StatelessWidget {
-  const HistoriqueCard({
+class CardHistoric extends StatelessWidget {
+  const CardHistoric({
     super.key,
   });
 

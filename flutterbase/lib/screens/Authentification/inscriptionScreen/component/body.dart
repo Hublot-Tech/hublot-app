@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterbase/configuration.dart';
-import 'package:flutterbase/screens/clientScreens/client_screen.dart';
+import 'package:flutterbase/screens/Authentification/clientScreens/client_screen.dart';
 
 import 'field_form.dart';
 
