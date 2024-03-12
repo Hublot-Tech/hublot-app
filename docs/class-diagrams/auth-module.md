@@ -1,28 +1,5 @@
 ```mermaid
  classDiagram
-      class Locale {
-        <<enumeration>>
-        fr
-        en-US
-      }
-      class ProofStatus {
-        <<enumeration>>
-        InProgress
-        Approved
-        Rejected
-      }
-      class Channel {
-        <<enumeration>>
-        WhatsApp
-        Telegram
-        SMS
-      }
-      class LoginMethod {
-        <<enumeration>>
-        google
-        apple
-        local
-      }
       class Role {
           id: string
           name: string
@@ -64,9 +41,35 @@
       class UserHasRole {
           id: string
       }
-      User "1" --> "*" UserHasRole
-      Role "1" --> "*" UserHasRole
-      User "1" --> "*" OTP
-      User "1" --> "*" IdentityProof
-      User "1" --> "*" Log
+      User "1" -- "*" UserHasRole
+      Role "1" -- "*" UserHasRole
+      User "1" -- "*" OTP
+      User "1" -- "*" IdentityProof
+      User "1" -- "*" Log
+
+      
+      class Locale {
+        <<enumeration>>
+        fr
+        en-US
+      }
+      class ProofStatus {
+        <<enumeration>>
+        Submitted
+        InProgress
+        Approved
+        Rejected
+      }
+      class Channel {
+        <<enumeration>>
+        WhatsApp
+        Telegram
+        SMS
+      }
+      class LoginMethod {
+        <<enumeration>>
+        google
+        apple
+        local
+      }
 ```
