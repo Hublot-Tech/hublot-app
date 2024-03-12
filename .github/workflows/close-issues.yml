@@ -1,0 +1,27 @@
+name: Manage Issues on Project Board
+
+on:
+  project_card:
+    types: [moved]
+
+jobs:
+  closeIssue:
+    if: ${{ github.event_name == 'project_card' && github.event.project_card.column_name == 'Done' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close Issue if moved to Done
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const payload = context.payload;
+            if (payload.action === 'moved') {
+              const octokit = github.getOctokit('${{ secrets.GITHUB_TOKEN }}');
+              const issueNumber = payload.project_card.content_url.split('/').pop();
+              await octokit.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                state: 'closed'
+              });
+            }
