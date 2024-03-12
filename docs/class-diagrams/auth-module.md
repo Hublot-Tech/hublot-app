@@ -2,13 +2,19 @@
  classDiagram
       class Locale {
         <<enumeration>>
-        fr,
+        fr
         en-US
+      }
+      class ProofStatus {
+        <<enumeration>>
+        InProgress
+        Approved
+        Rejected
       }
       class Channel {
         <<enumeration>>
-        WhatsApp,
-        Telegram,
+        WhatsApp
+        Telegram
         SMS
       }
       class LoginMethod {
@@ -40,6 +46,7 @@
           id: string
           fontFaceIDRef: string
           backFaceIDRef: string
+          status: ProofStatus
           createdAt: Date
       }
       class User {
