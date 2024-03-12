@@ -57,8 +57,8 @@
       class UserHasRole {
           id: string
       }
-      User "1" --> "*" UserRole
-      Role "1" --> "*" UserRole
+      User "1" --> "*" UserHasRole
+      Role "1" --> "*" UserHasRole
       User "1" --> "*" OTP
       User "1" --> "*" IdentityProof
       User "1" --> "*" Log
