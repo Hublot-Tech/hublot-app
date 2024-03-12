@@ -1,61 +1,61 @@
 ```mermaid
  classDiagram
-      class Locale{
+      class Locale {
         <<enumeration>>
         fr,
         en-US
       }
-      class Channel{
+      class Channel {
         <<enumeration>>
         WhatsApp,
         Telegram,
         SMS
       }
-      class LoginMethod{
+      class LoginMethod {
         <<enumeration>>
         google
         apple
         local
       }
-      class Role{
-          String roleId
-          String roleName
-          String description
-          DateTime createdAt
+      class Role {
+          id: string
+          name: string
+          description: string
+          createdAt: string
        }
-      class OTP{
-          String otpId  
-          String otpCode
-          Channel channel
-          DateTime expiresAt
-          DateTime createdAt
+      class OTP {
+          id: string  
+          code: string
+          channel: Channel
+          expiresAt: Date
+          createdAt: Date
       }
-      class Log{
-          String logId
-          LoginMethod loginMethod
-          DateTime logInAt
-          DateTime logOutAt
+      class Log {
+          id: string
+          loginMethod: LoginMethod
+          logInAt: Date
+          logOutAt: Date
       }
-      class IdentityProof{
-          String identityProfId
-          String fontFaceIDRef
-          String backFaceIDRef
-          DateTime createdAt
+      class IdentityProof {
+          id: string
+          fontFaceIDRef: string
+          backFaceIDRef: string
+          createdAt: Date
       }
-      class User{
-          String userId
-          String fullname
-          String email
-          String phoneNumber
-          bool isVerified
-          bool isOnline
-          String password
-          Locale locale
-          String address
-          DateTime createdAt
+      class User {
+          id: string
+          fullname: string
+          email: string
+          phoneNumber: string
+          isVerified: boolean
+          isOnline: boolean
+          password: string
+          locale: Locale
+          address: string
+          createdAt: Date
       }
-      class UserRole{
-          String userRoleId
+      class UserRole {
+          id: string
       }
       User "1" --> "*" UserRole
       Role "1" --> "*" UserRole
