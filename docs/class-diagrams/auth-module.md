@@ -54,7 +54,7 @@
           address: string
           createdAt: Date
       }
-      class UserRole {
+      class UserHasRole {
           id: string
       }
       User "1" --> "*" UserRole
