@@ -21,7 +21,7 @@ class RowSeeMore extends StatelessWidget {
         Row(
           children: [
             textPresentation(
-              mesg: msg,
+              msg: msg,
               fontWeight: FontWeight.w400,
               size: 14,
               color: const Color.fromRGBO(117, 120, 132, 1),

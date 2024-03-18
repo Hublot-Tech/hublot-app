@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/Authentification/inscriptionScreen/inscription_screen.dart';
+import 'package:flutterbase/screens/authentification/registrationScreen/register_screen.dart';
 
 class AccountRow extends StatelessWidget {
   const AccountRow({
@@ -10,13 +10,13 @@ class AccountRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, InscriptionScreen.routeName);
+        Navigator.pushNamed(context, RegistrationScreen.routeName);
       },
       child: Row(
         children: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, InscriptionScreen.routeName);
+                Navigator.pushNamed(context, RegistrationScreen.routeName);
               },
               icon: const Icon(
                 Icons.add_circle,

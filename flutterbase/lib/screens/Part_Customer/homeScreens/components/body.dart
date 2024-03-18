@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterbase/configuration.dart';
-import 'package:flutterbase/screens/Part_Customer/homeScreens/components/becomePrestataire.dart';
+import 'package:flutterbase/screens/Part_Customer/homeScreens/components/become_prestataire.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:flutterbase/controller/service.dart';
+import 'package:flutterbase/controller/Service.dart';
 
 import 'box_information.dart';
 import 'box_star.dart';
@@ -38,6 +38,14 @@ class _BodyState extends State<Body> {
         itemCategoris = apiPrestataire.getAllCategories();
       });
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    itemServices = apiPrestataire.getAllServices();
+    itemCategoris = apiPrestataire.getAllCategories();
   }
 
   @override

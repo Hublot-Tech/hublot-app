@@ -31,7 +31,7 @@ class RowReseauConnect extends StatelessWidget {
                 child: Image.asset(icon),
               ),
               const SizedBox(width: 15),
-              textPresentation(mesg: img, fontWeight: FontWeight.w400, size: 15)
+              textPresentation(msg: img, fontWeight: FontWeight.w400, size: 15)
             ],
           ),
         ),

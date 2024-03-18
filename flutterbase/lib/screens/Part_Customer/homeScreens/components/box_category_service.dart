@@ -15,11 +15,11 @@ class BoxCategoryService extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        textPresentation(mesg: name, fontWeight: FontWeight.bold, size: 24),
+        textPresentation(msg: name, fontWeight: FontWeight.bold, size: 24),
         GestureDetector(
           onTap: press,
           child: textPresentation(
-              mesg: "Voir Tout",
+              msg: "Voir Tout",
               fontWeight: FontWeight.bold,
               size: 13,
               color: kCategoriecolor),

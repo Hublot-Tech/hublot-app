@@ -29,12 +29,12 @@ class BoxInformation extends StatelessWidget {
           Row(
             children: [
               textPresentation(
-                  mesg: name,
+                  msg: name,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromRGBO(255, 255, 255, 1),
                   size: 21),
               textPresentation(
-                mesg: profession,
+                msg: profession,
                 fontWeight: FontWeight.bold,
                 color: const Color.fromRGBO(255, 192, 0, 1),
                 size: 21,
@@ -44,7 +44,7 @@ class BoxInformation extends StatelessWidget {
           Row(
             children: [
               textPresentation(
-                  mesg: lieu,
+                  msg: lieu,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                   size: 17),
@@ -57,7 +57,7 @@ class BoxInformation extends StatelessWidget {
                 ),
               ),
               textPresentation(
-                  mesg: distance,
+                  msg: distance,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                   size: 17),
@@ -67,7 +67,7 @@ class BoxInformation extends StatelessWidget {
             children: [
               SvgPicture.asset("img/certifié.svg"),
               textPresentation(
-                mesg: "Vérifié",
+                msg: "Vérifié",
                 fontWeight: FontWeight.normal,
                 size: 12,
                 color: Colors.white,

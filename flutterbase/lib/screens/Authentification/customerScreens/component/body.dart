@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/Authentification/clientScreens/component/account_row.dart';
+import 'package:flutterbase/screens/authentification/customerScreens/component/row_prestataire.dart';
 
 import '../../../../configuration.dart';
-import '../../clientScreens/component/body.dart';
-import '../../clientScreens/component/row_prestataire.dart';
-import '../../clientScreens/component/row_reseau_connect.dart';
+import 'account_row.dart';
+import 'row_reseau_connect.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -26,8 +25,8 @@ class Body extends StatelessWidget {
             ),
             Center(
               child: textPresentation(
-                  mesg:
-                      'Connectez vous pour joindre les prestataires plus proches ',
+                  msg:
+                      'Connectez vous pour decouvrir des services adapter a vos besoins',
                   fontWeight: FontWeight.w600,
                   size: 23),
             ),
@@ -55,7 +54,7 @@ class Body extends StatelessWidget {
               img: "Continuer avec Gmail",
               press: () {},
             ),
-            const AccountRow(),
+            AccountRow(),
             const Row(
               children: [
                 TextWithStyle(text: "Vous acceptez les", colors: Colors.black),
@@ -71,6 +70,24 @@ class Body extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TextWithStyle extends StatelessWidget {
+  const TextWithStyle({
+    super.key,
+    required this.text,
+    required this.colors,
+  });
+  final String text;
+  final Color colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(color: colors, fontSize: 12),
     );
   }
 }

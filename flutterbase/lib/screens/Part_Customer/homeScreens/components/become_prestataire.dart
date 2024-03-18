@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../Authentification/prestataireScreen/prestataire_screen.dart';
+import '../../../authentification/providerScreen/prestataire_screen.dart';
 
 class BecomePrestataire extends StatelessWidget {
   const BecomePrestataire({
@@ -12,7 +12,7 @@ class BecomePrestataire extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, PrestataireScreen.routeName);
+        Navigator.pushNamed(context, ProviderScreen.routeName);
       },
       child: Row(children: [
         Container(

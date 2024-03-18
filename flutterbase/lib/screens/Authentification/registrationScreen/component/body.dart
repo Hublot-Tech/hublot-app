@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterbase/configuration.dart';
-import 'package:flutterbase/screens/Authentification/clientScreens/client_screen.dart';
+import 'package:flutterbase/screens/authentification/customerScreens/customer_screen.dart';
 
 import 'field_form.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     TextEditingController name_controller = TextEditingController();
-  TextEditingController email_controller = TextEditingController();
-  TextEditingController number_controller = TextEditingController();
-  TextEditingController mdp_controller = TextEditingController();
-  
+    TextEditingController email_controller = TextEditingController();
+    TextEditingController number_controller = TextEditingController();
+    TextEditingController mdp_controller = TextEditingController();
+
     return Stack(children: [
       Container(
         decoration: const BoxDecoration(color: ksecondaryColor),
@@ -42,7 +42,7 @@ class Body extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, ClientScrenn.routeName);
+                                  context, CustomerScrenn.routeName);
                             },
                             child: SizedBox(
                               width: 20,
@@ -58,11 +58,11 @@ class Body extends StatelessWidget {
                       children: [
                         const Spacer(),
                         textPresentation(
-                            mesg: "Inscrivez vous chez HUB",
+                            msg: "Inscrivez vous chez HUB",
                             fontWeight: FontWeight.w500,
                             size: 23),
                         textPresentation(
-                            mesg: "LOT",
+                            msg: "LOT",
                             fontWeight: FontWeight.w500,
                             color: Colors.yellow,
                             size: 23),
@@ -71,7 +71,7 @@ class Body extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     textPresentation(
-                        mesg:
+                        msg:
                             "Veuillez vous assurer de la crédibilité de ces informations, car elles seront rigoureusement vérifiées",
                         fontWeight: FontWeight.w300,
                         size: 14),
@@ -159,14 +159,14 @@ class _FormInscriptionState extends State<FormInscription> {
                     padding:
                         const EdgeInsets.only(top: 15, left: 10, right: 10),
                     child: textPresentation(
-                        mesg: "Voir", fontWeight: FontWeight.bold, size: 17),
+                        msg: "Voir", fontWeight: FontWeight.bold, size: 17),
                   ),
                 ),
                 border: const OutlineInputBorder())),
         const SizedBox(height: 24),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, ClientScrenn.routeName);
+            Navigator.pushNamed(context, CustomerScrenn.routeName);
           },
           child: Container(
             width: 390,

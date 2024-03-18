@@ -29,7 +29,7 @@ class BoxStar extends StatelessWidget {
         children: [
           SvgPicture.asset(icon),
           textPresentation(
-              mesg: nbrOfStar,
+              msg: nbrOfStar,
               fontWeight: FontWeight.normal,
               color: Colors.white,
               size: 22)

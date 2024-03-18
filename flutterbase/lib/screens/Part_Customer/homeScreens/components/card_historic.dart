@@ -54,7 +54,7 @@ class CardHistoric extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   textPresentation(
-                      mesg: "Vos recentes recherches",
+                      msg: "Vos recentes recherches",
                       fontWeight: FontWeight.bold,
                       size: 16),
                   const SizedBox(height: 2),

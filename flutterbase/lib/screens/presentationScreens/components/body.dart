@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterbase/configuration.dart';
+import 'package:flutterbase/controller/Service.dart';
 import 'package:flutterbase/screens/Part_Customer/homeScreens/components/home_screen.dart';
 
 class Body extends StatefulWidget {
@@ -10,7 +11,15 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentIndex = 0;
- 
+  ApiPrestataire apiPrestataire = ApiPrestataire();
+  List<Map<String, String>> splahDatas = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    splahDatas = apiPrestataire.getSplashData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,7 @@ class _BodyState extends State<Body> {
                     currentIndex = value;
                   });
                 },
-                itemCount: spash_data.length,
+                itemCount: splahDatas.length,
                 itemBuilder: (context, index) => Container(
                   width: 400,
                   height: 581,
@@ -34,7 +43,7 @@ class _BodyState extends State<Body> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(60),
                     child: Image.asset(
-                      spash_data[index]['img']!,
+                      splahDatas[index]['img']!,
                       //fit: BoxFit.cover,
                     ),
                   ),
@@ -44,19 +53,19 @@ class _BodyState extends State<Body> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                  spash_data.length, (index) => buildot(index: index)),
+                  splahDatas.length, (index) => buildot(index: index)),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 25, left: 25),
               child: Column(
                 children: [
                   textPresentation(
-                      mesg: spash_data[currentIndex]['text']!,
+                      msg: splahDatas[currentIndex]['text']!,
                       size: 26,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 30),
                   textPresentation(
-                      mesg: spash_data[currentIndex]['mig']!,
+                      msg: splahDatas[currentIndex]['mig']!,
                       size: 14,
                       fontWeight: FontWeight.w300),
                 ],

@@ -9,6 +9,7 @@ class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      canRequestFocus: false,
       onTap: () {
         Navigator.pushNamed(context, SearchScreen.routeName);
       },

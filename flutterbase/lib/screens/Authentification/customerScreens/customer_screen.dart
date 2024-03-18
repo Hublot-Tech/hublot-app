@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/Authentification/clientScreens/component/body.dart';
+import 'package:flutterbase/screens/authentification/customerScreens/component/body.dart';
 
-class ClientScrenn extends StatelessWidget {
-  const ClientScrenn({super.key});
+class CustomerScrenn extends StatelessWidget {
+  const CustomerScrenn({super.key});
   static String routeName = "/client";
   @override
   Widget build(BuildContext context) {

@@ -25,7 +25,7 @@ class ItemCategories extends StatelessWidget {
           const Spacer(),
           SvgPicture.asset(icon),
           const SizedBox(width: 6),
-          textPresentation(mesg: name, fontWeight: FontWeight.bold, size: 14),
+          textPresentation(msg: name, fontWeight: FontWeight.bold, size: 14),
           const Spacer(),
         ],
       ),

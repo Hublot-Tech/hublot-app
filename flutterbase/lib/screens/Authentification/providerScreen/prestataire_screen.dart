@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/screens/Authentification/prestataireScreen/components/body.dart';
+import 'package:flutterbase/screens/authentification/providerScreen/components/body.dart';
 
-class PrestataireScreen extends StatelessWidget {
-  const PrestataireScreen({super.key});
+class ProviderScreen extends StatelessWidget {
+  const ProviderScreen({super.key});
   static String routeName = '/prestataire';
   @override
   Widget build(BuildContext context) {
