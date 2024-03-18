@@ -1,6 +1,4 @@
 # HUBLOT Project Analysis
-Application for connecting service providers and customers. The general idea of the project is to design software program connecting service providers and customers
-
 ## Project strengths
 - Database of Qualified Service Providers
 - User-friendly and Intuitive Interface
@@ -62,9 +60,5 @@ To define the basic properties of a service in an on-demand service application,
 - **Pricing:** Service rates, including base costs, any additional fees (spare parts, required work materials, etc.), and accepted payment methods (full payment upfront or after completing a specific stage).
 - **Availability:** Service hours and availability, as well as any geographical restrictions (to be specified during provider registration).
 ## General use case Diagram
-![image](https://github.com/Hublot-Tech/docs/assets/61763373/1e0f39df-2ad5-405f-823d-a63247a8e915)
-### Order management use case
-![image](https://github.com/Hublot-Tech/docs/assets/61763373/96f90648-5271-4a24-83be-7f1cef4de194)
-### Store management use case
-![image](https://github.com/Hublot-Tech/docs/assets/61763373/7cec86d1-e709-4383-a61b-1b5bb23c1d07)
+![image](https://github.com/Hublot-Tech/.github/assets/61763373/b0dff5cf-c463-4f15-bd5d-9195a6ef989a)
 
