@@ -1,20 +1,14 @@
 import {
-  Controller,
-  Get,
-  Query,
-  Post,
   Body,
-  Put,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
   ParseIntPipe,
+  Post,
+  Put,
+  Query,
 } from '@nestjs/common';
-import {
-  CreateUsersDto,
-  GetAllUserDto,
-  UpdateUsersDto,
-  UserDto,
-} from '../dto/users.dto';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -23,7 +17,14 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { UserService } from '../services/users.services';
+import {
+  CreateUserDto,
+  GetAllUsersDto,
+  QueryUserDto,
+  UpdateUsersDto,
+  UserDto,
+} from './dto/users.dto';
+import { UserService } from './users.service';
 
 @ApiTags('User')
 @Controller('user')
@@ -32,10 +33,10 @@ export class UsersController {
 
   @Post()
   @ApiCreatedResponse({
-    type: GetAllUserDto,
+    type: GetAllUsersDto,
     description: 'Successful user registration',
   })
-  register(@Body() createUserDto: CreateUsersDto) {
+  register(@Body() createUserDto: CreateUserDto) {
     const users = this.userService.register(createUserDto);
     return users;
   }
@@ -45,8 +46,8 @@ export class UsersController {
     type: UserDto,
     description: 'list of successfully loaded users',
   })
-  findAll(@Query() query: UserDto) {
-    const user = this.userService.findAll();
+  findAll(@Query() query: QueryUserDto) {
+    const user = this.userService.findAll(query);
     return user;
   }
 
@@ -64,7 +65,7 @@ export class UsersController {
 
   @Put(':id')
   @ApiOkResponse({
-    type: GetAllUserDto,
+    type: GetAllUsersDto,
     description: 'The user has been successfully modified',
   })
   update(
