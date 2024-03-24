@@ -4,14 +4,10 @@ export enum THEME {
   SYSTEM = 'system',
 }
 
-export type Theme = THEME.DARK | THEME.LIGHT | THEME.SYSTEM
+export type Theme = THEME.DARK | THEME.LIGHT | THEME.SYSTEM;
 
-
-export type CustomOptions =Omit<Theme, THEME.SYSTEM>;
+export type CustomOptions = Omit<Theme, THEME.SYSTEM>;
 
 export interface ThemeConfig {
   theme?: string;
 }
-
-
-
