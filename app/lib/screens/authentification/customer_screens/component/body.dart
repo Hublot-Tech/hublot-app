@@ -55,7 +55,7 @@ class Body extends StatelessWidget {
               img: "Continuer avec Gmail",
               press: () {},
             ),
-            AccountRow(),
+            const AccountRow(),
             const Row(
               children: [
                 TextWithStyle(text: "Vous acceptez les", colors: Colors.black),

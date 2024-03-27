@@ -42,7 +42,7 @@ class _BodyState extends State<Body> {
                   padding: const EdgeInsets.all(3),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(60),
-                    child: Image.asset(
+                    child: Image.network(
                       splahDatas[index]['img']!,
                       //fit: BoxFit.cover,
                     ),
