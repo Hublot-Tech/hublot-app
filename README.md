@@ -67,4 +67,3 @@ To define the basic properties of a service in an on-demand service application,
 ![image](https://github.com/Hublot-Tech/docs/assets/61763373/96f90648-5271-4a24-83be-7f1cef4de194)
 ### Store management use case
 ![image](https://github.com/Hublot-Tech/docs/assets/61763373/7cec86d1-e709-4383-a61b-1b5bb23c1d07)
-
