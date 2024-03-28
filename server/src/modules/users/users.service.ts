@@ -1,10 +1,10 @@
-import { NotImplementedException } from '@nestjs/common';
+import { NotImplementedException } from "@nestjs/common";
 import {
   CreateUserDto,
   QueryUserDto,
   UpdateUsersDto,
   UserDto,
-} from './dto/users.dto';
+} from "./dto/users.dto";
 
 export class UserService {
   register(userData: CreateUserDto): Promise<CreateUserDto> {
