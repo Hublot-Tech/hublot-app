@@ -1,4 +1,4 @@
-class ApiPrestataire {
+class HublotProviderApiApi {
   List<Map<String, String>> getAllCategories() {
     List<Map<String, String>> dataItem = [
       {"icon": "img/icons8_design 1.svg", "text": "Design"},
@@ -10,14 +10,14 @@ class ApiPrestataire {
   }
 
   List<String> getAllFilterSearch() {
-    List<String> itemSearch = [
+    List<String> searchItem = [
       'En ligne',
       'proche de moi',
       'Plus évalué',
       'Moins évalué',
     ];
 
-    return itemSearch;
+    return searchItem;
   }
 
   List<Map<String, String>> getSplashData() {
@@ -47,9 +47,10 @@ class ApiPrestataire {
   }
 
   List<Map<String, String>> getAllServices() {
-    List<Map<String, String>> itemCardRecommande = [
+    List<Map<String, String>> dataProvider = [
       {
-        "img": "img/image 1.png",
+        "img":
+            "https://nextjs.org/_next/image?url=%2Flearn%2Fdark%2Fdashboard.png&w=1920&q=75",
         "name": "Gishlain Kamga",
         "profession": "Photographe",
         "note": "4.6",
@@ -57,7 +58,8 @@ class ApiPrestataire {
         "Distance": "3Km",
       },
       {
-        "img": "img/portrait-stylish-professional-photographer.jpg",
+        "img":
+            "https://nextjs.org/_next/image?url=%2Flearn%2Fdark%2Fdashboard.png&w=1920&q=75",
         "name": "Grec Koum",
         "profession": "Photographe",
         "note": "4.6",
@@ -65,7 +67,8 @@ class ApiPrestataire {
         "Distance": "8Km",
       },
       {
-        "img": "img/IMG_3531.JPG",
+        "img":
+            "https://nextjs.org/_next/image?url=%2Flearn%2Fdark%2Fdashboard.png&w=1920&q=75",
         "name": "Pessidjo Germann",
         "profession": "Dev Fullstack",
         "note": "4.6",
@@ -74,6 +77,6 @@ class ApiPrestataire {
       },
     ];
 
-    return itemCardRecommande;
+    return dataProvider;
   }
 }

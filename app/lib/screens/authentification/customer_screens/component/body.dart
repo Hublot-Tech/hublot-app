@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:app/screens/authentification/customer_screens/component/row_prestataire.dart';
+import 'package:app/screens/authentification/customer_screens/component/cross_widget.dart';
 
 import '../../../../configuration.dart';
 import 'account_row.dart';
-import 'row_reseau_connect.dart';
-
+import 'network_widget.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -16,7 +15,7 @@ class Body extends StatelessWidget {
         padding: const EdgeInsets.only(left: 20.0, right: 20),
         child: Column(
           children: [
-            const RowPrestataire(),
+            const CrossWidget(),
             Center(
               child: Image.asset("img/hublot.png"),
             ),
@@ -32,25 +31,25 @@ class Body extends StatelessWidget {
                   size: 23),
             ),
             const SizedBox(height: 20),
-            RowReseauConnect(
+            NetworkWigdet(
               icon: "img/icons_facebook.png",
               img: "Continuer avec Facebook",
               press: () {},
             ),
             const SizedBox(height: 20),
-            RowReseauConnect(
+            NetworkWigdet(
               icon: "img/icons_google.png",
               img: "Continuer avec Google",
               press: () {},
             ),
             const SizedBox(height: 20),
-            RowReseauConnect(
+            NetworkWigdet(
               icon: "img/icons_apple.png",
               img: "Continuer avec Apple",
               press: () {},
             ),
             const SizedBox(height: 20),
-            RowReseauConnect(
+            NetworkWigdet(
               icon: "img/icons_gmail.png",
               img: "Continuer avec Gmail",
               press: () {},

@@ -1,8 +1,8 @@
+import 'package:app/controller/service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/home_screens/components/become_prestataire.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:app/controller/Service.dart';
 
 import 'box_information.dart';
 import 'box_star.dart';
@@ -24,7 +24,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   bool shimmer = false;
-  ApiPrestataire apiPrestataire = ApiPrestataire();
+  HublotProviderApiApi apiPrestataire = HublotProviderApiApi();
   List<Map<String, String>> itemServices = [];
   List<Map<String, String>> itemCategoris = [];
   Future<void> _refresh() {

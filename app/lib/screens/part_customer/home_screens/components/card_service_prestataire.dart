@@ -36,8 +36,8 @@ class CardServicePrestataire extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               child: Image.network(
                 img,
-                width: 387,
-                height: 356,
+                width: 354,
+                height: 436,
                 fit: BoxFit.cover,
               ),
             ),

@@ -1,6 +1,7 @@
+import 'package:app/controller/service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
-import 'package:app/controller/Service.dart';
+
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 
 class Body extends StatefulWidget {
@@ -11,14 +12,14 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentIndex = 0;
-  ApiPrestataire apiPrestataire = ApiPrestataire();
+  HublotProviderApiApi hublotProviderApi = HublotProviderApiApi();
   List<Map<String, String>> splahDatas = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    splahDatas = apiPrestataire.getSplashData();
+    splahDatas = hublotProviderApi.getSplashData();
   }
 
   @override
@@ -37,14 +38,12 @@ class _BodyState extends State<Body> {
                 },
                 itemCount: splahDatas.length,
                 itemBuilder: (context, index) => Container(
-                  width: 400,
-                  height: 581,
                   padding: const EdgeInsets.all(3),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(60),
-                    child: Image.network(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.asset(
                       splahDatas[index]['img']!,
-                      //fit: BoxFit.cover,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -63,7 +62,7 @@ class _BodyState extends State<Body> {
                       msg: splahDatas[currentIndex]['text']!,
                       size: 26,
                       fontWeight: FontWeight.bold),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
                   textPresentation(
                       msg: splahDatas[currentIndex]['mig']!,
                       size: 14,
@@ -71,7 +70,7 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             GestureDetector(
               onTap: currentIndex == 2
                   ? () {

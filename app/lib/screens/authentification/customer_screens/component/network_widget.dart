@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
 
-class RowReseauConnect extends StatelessWidget {
-  const RowReseauConnect({
+class NetworkWigdet extends StatelessWidget {
+  const NetworkWigdet({
     super.key,
     required this.img,
     required this.icon,

@@ -16,7 +16,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  ApiPrestataire apiPrestataire = ApiPrestataire();
+  HublotProviderApiApi apiPrestataire = HublotProviderApiApi();
   List<Map<String, String>> initialList = [];
   List<Map<String, String>> filterList = [];
   List<String> categorieFilterList = [];

@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../presentation_screens/components/presention_screen.dart';
 
-class RowPrestataire extends StatelessWidget {
-  const RowPrestataire({
+class CrossWidget extends StatelessWidget {
+  const CrossWidget({
     super.key,
   });
 
