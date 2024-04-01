@@ -8,7 +8,7 @@ import {
   Post,
   Put,
   Query,
-} from '@nestjs/common';
+} from "@nestjs/common";
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -16,25 +16,25 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
-} from '@nestjs/swagger';
+} from "@nestjs/swagger";
 import {
   CreateUserDto,
   GetAllUsersDto,
   QueryUserDto,
   UpdateUsersDto,
   UserDto,
-} from './dto/users.dto';
-import { UserService } from './users.service';
+} from "./dto/users.dto";
+import { UserService } from "./users.service";
 
-@ApiTags('User')
-@Controller('user')
+@ApiTags("User")
+@Controller("user")
 export class UsersController {
   constructor(private userService: UserService) {}
 
   @Post()
   @ApiCreatedResponse({
     type: GetAllUsersDto,
-    description: 'Successful user registration',
+    description: "Successful user registration",
   })
   register(@Body() createUserDto: CreateUserDto) {
     const users = this.userService.register(createUserDto);
@@ -44,43 +44,43 @@ export class UsersController {
   @Get()
   @ApiOkResponse({
     type: UserDto,
-    description: 'list of successfully loaded users',
+    description: "list of successfully loaded users",
   })
   findAll(@Query() query: QueryUserDto) {
     const user = this.userService.findAll(query);
     return user;
   }
 
-  @Get(':id')
+  @Get(":id")
   @ApiOkResponse({
     type: UserDto,
-    description: 'User information successfully retrieved',
+    description: "User information successfully retrieved",
   })
-  @ApiNotFoundResponse({ description: 'User not found' })
-  @ApiBadRequestResponse({ description: 'Invalid user ID' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  @ApiNotFoundResponse({ description: "User not found" })
+  @ApiBadRequestResponse({ description: "Invalid user ID" })
+  findOne(@Param("id", ParseIntPipe) id: number) {
     const user = this.userService.findOne(id);
     return user;
   }
 
-  @Put(':id')
+  @Put(":id")
   @ApiOkResponse({
     type: GetAllUsersDto,
-    description: 'The user has been successfully modified',
+    description: "The user has been successfully modified",
   })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() updateUsersDto: UpdateUsersDto,
   ) {
     const user = this.userService.update(id, updateUsersDto);
     return user;
   }
 
-  @Delete(':id')
+  @Delete(":id")
   @ApiNoContentResponse({
-    description: 'User successfully deleted',
+    description: "User successfully deleted",
   })
-  delete(@Param('id', ParseIntPipe) id: number) {
+  delete(@Param("id", ParseIntPipe) id: number) {
     this.userService.delete(id);
   }
 }
