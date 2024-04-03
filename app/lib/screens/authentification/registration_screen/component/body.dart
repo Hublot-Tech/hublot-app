@@ -1,3 +1,4 @@
+import 'package:app/screens/part_customer/home_screens/components/hublo_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -58,23 +59,27 @@ class Body extends StatelessWidget {
                       children: [
                         const Spacer(),
                         textPresentation(
-                            msg: "Inscrivez vous chez HUB",
-                            fontWeight: FontWeight.w500,
-                            size: 23),
+                          msg: "Inscrivez vous chez HUB",
+                          fontWeight: FontWeight.w500,
+                          size: 23,
+                        ),
+                        //HublotTextWigdet(),
+
                         textPresentation(
                             msg: "LOT",
                             fontWeight: FontWeight.w500,
-                            color: Colors.yellow,
+                            color: Color.fromARGB(255, 255, 177, 59),
                             size: 23),
                         const Spacer(),
                       ],
                     ),
                     const SizedBox(height: 10),
                     textPresentation(
-                        msg:
-                            "Veuillez vous assurer de la crédibilité de ces informations, car elles seront rigoureusement vérifiées",
-                        fontWeight: FontWeight.w300,
-                        size: 14),
+                      msg:
+                          "Veuillez vous assurer de la crédibilité de ces informations, car elles seront rigoureusement vérifiées",
+                      fontWeight: FontWeight.w100,
+                      size: 14,
+                    ),
                     const SizedBox(height: 20),
                     FormInscription(
                       name_controller: name_controller,

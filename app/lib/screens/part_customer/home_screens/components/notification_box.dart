@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class NotificationBox extends StatelessWidget {
@@ -9,18 +8,18 @@ class NotificationBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //margin: const EdgeInsets.only(right: 20),
-      height: 60,
-      width: 60,
+      margin: const EdgeInsets.only(right: 20),
+      height: 40,
+      width: 40,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(40),
         border: Border.all(color: Colors.white, width: 3),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade500,
             blurRadius: 2,
-            offset: const Offset(4.0, 4.0),
+            offset: const Offset(1.0, 1.0),
             spreadRadius: 1.0,
           ),
           const BoxShadow(
@@ -33,7 +32,7 @@ class NotificationBox extends StatelessWidget {
       ),
       child: const Icon(
         Icons.notifications_none_sharp,
-        size: 40,
+        size: 30,
       ),
     );
   }
