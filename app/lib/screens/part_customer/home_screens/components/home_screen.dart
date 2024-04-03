@@ -23,7 +23,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        Body(),
+        const Body(),
         Container(),
         Container(),
         Container(),
@@ -54,10 +54,17 @@ class _HomeScrennsState extends State<HomeScrenns> {
                 label: "Discussion",
                 activeIcon:
                     SvgPicture.asset("img/chat-bubble-text-oval 1.svg")),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset("img/hamburgers.svg"),
-                label: "Menu",
-                activeIcon: SvgPicture.asset("img/hamburger-menu-1 1.svg")),
+            const BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person_2_outlined,
+                color: Colors.black,
+              ),
+              label: "Compte",
+              activeIcon: Icon(
+                Icons.person_2,
+                color: Colors.black,
+              ),
+            ),
           ]),
     );
   }
