@@ -46,6 +46,15 @@ class HublotProviderApiApi {
     return spashData;
   }
 
+  List<Map<String, String>> getListLanguage() {
+    List<Map<String, String>> listLangue = [
+      {"img": "img/french.png", "name": "Francais"},
+      {"img": "img/english.png", "name": "Anglais"}
+    ];
+
+    return listLangue;
+  }
+
   List<Map<String, String>> getAllServices() {
     List<Map<String, String>> dataProvider = [
       {

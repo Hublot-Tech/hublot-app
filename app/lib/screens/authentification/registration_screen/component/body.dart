@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/customer_screens/customer_screen.dart';
 
+import 'button_custom.dart';
 import 'field_form.dart';
 
 class Body extends StatelessWidget {
@@ -169,43 +170,13 @@ class _FormInscriptionState extends State<FormInscription> {
                 ),
                 border: const OutlineInputBorder())),
         const SizedBox(height: 24),
-        GestureDetector(
-          onTap: () {
+        ButtomCustom(
+          press: () {
             Navigator.pushNamed(context, CustomerScrenn.routeName);
-          },
-          child: Container(
-            width: 390,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: ksecondaryColor,
-            ),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "S'inscrire",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 3, top: 10),
-                    width: 6,
-                    height: 6,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 236, 213, 7),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          }, msg: "S'inscrire",
         ),
       ],
     ));
   }
 }
+

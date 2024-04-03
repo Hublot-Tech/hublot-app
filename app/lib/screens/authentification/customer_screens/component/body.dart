@@ -87,7 +87,7 @@ class TextWithStyle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(color: colors, fontSize: 12),
+      style: TextStyle(color: colors, fontSize: 14),
     );
   }
 }

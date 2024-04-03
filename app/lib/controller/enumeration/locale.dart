@@ -1,1 +1,1 @@
-enum Locale {fr,enUS}
+enum LocalLanguage { fr, enUS }

@@ -23,10 +23,12 @@ Text textPresentation(
 class EspaceMenuWidget extends StatelessWidget {
   const EspaceMenuWidget({
     super.key,
+    this.taille = 20,
   });
+  final double taille;
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(height: 20);
+    return SizedBox(height: taille);
   }
 }

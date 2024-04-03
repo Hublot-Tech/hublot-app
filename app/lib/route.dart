@@ -1,3 +1,5 @@
+import 'package:app/screens/part_customer/account_tab/account_tab.dart';
+import 'package:app/screens/part_customer/language_screen/language_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/part_customer/answer_screen/answer_screen.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
@@ -17,4 +19,6 @@ final Map<String, WidgetBuilder> route = {
   HomeScrenns.routeName: (context) => const HomeScrenns(),
   SearchScreen.routeName: (context) => const SearchScreen(),
   AnswerScreen.routeName: (context) => const AnswerScreen(),
+  AccountTab.routeName:(context) => const AccountTab(),
+  LanguageScreen.routeName:(context) => const LanguageScreen()
 };

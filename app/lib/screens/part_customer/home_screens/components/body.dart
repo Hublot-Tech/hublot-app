@@ -57,29 +57,132 @@ class _BodyState extends State<Body> {
       color: Colors.white,
       backgroundColor: kyellowColor,
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const EspaceMenuWidget(),
-                const HublotTextWigdet(),
-                const EspaceMenuWidget(),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BecomePrestataire(),
-                    NotificationBox(),
-                  ],
-                ),
-                const EspaceMenuWidget(),
-                const SearchBox(),
-                const EspaceMenuWidget(),
-                shimmer
-                    ? Shimmer.fromColors(
-                        baseColor: Colors.white,
-                        highlightColor: Colors.transparent,
-                        child: Column(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const EspaceMenuWidget(),
+                  const HublotTextWigdet(),
+                  const EspaceMenuWidget(),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BecomePrestataire(),
+                      NotificationBox(),
+                    ],
+                  ),
+                  const EspaceMenuWidget(),
+                  const SearchBox(),
+                  const EspaceMenuWidget(),
+                  shimmer
+                      ? Shimmer.fromColors(
+                          baseColor: Colors.white,
+                          highlightColor: Colors.transparent,
+                          child: Column(
+                            children: [
+                              BoxCategoryService(
+                                  name: "Catégories", press: () {}),
+                              const SizedBox(height: 10),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: List.generate(
+                                      itemCategoris.length,
+                                      (index) => ItemCategories(
+                                          name: itemCategoris[index]['text']!,
+                                          icon: itemCategoris[index]['icon']!)),
+                                ),
+                              ),
+
+                              const EspaceMenuWidget(), //column deleted
+                              const CardHistoric(),
+                              const EspaceMenuWidget(),
+                              RowSeeMore(
+                                  name: "Recommandés",
+                                  msg: "Liste basé sur votre position",
+                                  press: () {}),
+                              const EspaceMenuWidget(),
+                              SizedBox(
+                                height: 400,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: itemServices.length,
+                                  itemBuilder: (context, index) {
+                                    return CardServicePrestataire(
+                                      img: itemServices[index]['img']!,
+                                      distance: itemServices[index]
+                                          ['Distance']!,
+                                      profession: itemServices[index]
+                                          ['profession']!,
+                                      localization: itemServices[index]
+                                          ['lieu']!,
+                                      name: itemServices[index]['name']!,
+                                      note: itemServices[index]['note']!,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const EspaceMenuWidget(),
+                              RowSeeMore(
+                                  name: "Annonceurs proches",
+                                  msg: "Liste basé sur votre position",
+                                  press: () {}),
+                              const EspaceMenuWidget(),
+                              Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: ksecondaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(23)),
+                                  ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(23),
+                                    child: Image.asset(
+                                      "img/portrait-stylish-professional-photographer.jpg",
+                                      width: 387,
+                                      height: 356,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Spacer(),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            right: size.width * 0.02, top: 10),
+                                        child: BoxStar(
+                                          size: size,
+                                          icon: 'img/icons8_star 2.svg',
+                                          nbrOfStar: '4.6',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: size.height * 0.3),
+                                    child: Center(
+                                      child: BoxInformation(
+                                        size: size,
+                                        name: "Grec Koum,",
+                                        profession: "Photographe",
+                                        lieu: "Douala,akwa",
+                                        distance: "3km",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      : Column(
                           children: [
                             BoxCategoryService(
                                 name: "Catégories", press: () {}),
@@ -176,103 +279,8 @@ class _BodyState extends State<Body> {
                             ),
                           ],
                         ),
-                      )
-                    : Column(
-                        children: [
-                          BoxCategoryService(name: "Catégories", press: () {}),
-                          const SizedBox(height: 10),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: List.generate(
-                                  itemCategoris.length,
-                                  (index) => ItemCategories(
-                                      name: itemCategoris[index]['text']!,
-                                      icon: itemCategoris[index]['icon']!)),
-                            ),
-                          ),
-
-                          const EspaceMenuWidget(), //column deleted
-                          const CardHistoric(),
-                          const EspaceMenuWidget(),
-                          RowSeeMore(
-                              name: "Recommandés",
-                              msg: "Liste basé sur votre position",
-                              press: () {}),
-                          const EspaceMenuWidget(),
-                          SizedBox(
-                            height: 400,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: itemServices.length,
-                              itemBuilder: (context, index) {
-                                return CardServicePrestataire(
-                                  img: itemServices[index]['img']!,
-                                  distance: itemServices[index]['Distance']!,
-                                  profession: itemServices[index]
-                                      ['profession']!,
-                                  localization: itemServices[index]['lieu']!,
-                                  name: itemServices[index]['name']!,
-                                  note: itemServices[index]['note']!,
-                                );
-                              },
-                            ),
-                          ),
-                          const EspaceMenuWidget(),
-                          RowSeeMore(
-                              name: "Annonceurs proches",
-                              msg: "Liste basé sur votre position",
-                              press: () {}),
-                          const EspaceMenuWidget(),
-                          Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: ksecondaryColor,
-                                    borderRadius: BorderRadius.circular(23)),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(23),
-                                child: Image.asset(
-                                  "img/portrait-stylish-professional-photographer.jpg",
-                                  width: 387,
-                                  height: 356,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  const Spacer(),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        right: size.width * 0.02, top: 10),
-                                    child: BoxStar(
-                                      size: size,
-                                      icon: 'img/icons8_star 2.svg',
-                                      nbrOfStar: '4.6',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: size.height * 0.3),
-                                child: Center(
-                                  child: BoxInformation(
-                                    size: size,
-                                    name: "Grec Koum,",
-                                    profession: "Photographe",
-                                    lieu: "Douala,akwa",
-                                    distance: "3km",
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

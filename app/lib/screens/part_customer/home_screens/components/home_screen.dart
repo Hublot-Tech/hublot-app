@@ -1,3 +1,4 @@
+import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -27,7 +28,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
         Container(),
         Container(),
         Container(),
-        Container()
+        const AccountTab()
       ][_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.amber,
