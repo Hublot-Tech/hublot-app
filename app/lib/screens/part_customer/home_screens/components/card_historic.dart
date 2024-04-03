@@ -14,7 +14,7 @@ class CardHistoric extends StatelessWidget {
       onTap: () {},
       child: Stack(children: [
         Container(
-          //margin: const EdgeInsets.only(right: 20),
+          margin: const EdgeInsets.only(right: 20),
           width: 390,
           height: 72,
           decoration: BoxDecoration(
@@ -62,10 +62,11 @@ class CardHistoric extends StatelessWidget {
                 ],
               ),
             ),
-            const Spacer(),
+            Spacer(),
             IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.arrow_forward_outlined))
+                icon: const Icon(Icons.arrow_forward_outlined)),
+            Spacer(),
           ],
         ),
       ]),
