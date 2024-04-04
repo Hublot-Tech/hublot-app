@@ -26,7 +26,7 @@ class Body extends StatelessWidget {
             Center(
               child: textPresentation(
                   msg:
-                      'Connectez vous pour decouvrir des services adapter a vos besoins',
+                      'Connectez vous pour decouvrir des Prestataires adapter a vos besoins',
                   fontWeight: FontWeight.w600,
                   size: 23),
             ),
@@ -87,7 +87,7 @@ class TextWithStyle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(color: colors, fontSize: 14),
+      style: TextStyle(color: colors, fontSize: 12),
     );
   }
 }

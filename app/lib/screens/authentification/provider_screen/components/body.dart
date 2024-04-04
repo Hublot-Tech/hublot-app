@@ -26,8 +26,7 @@ class Body extends StatelessWidget {
             ),
             Center(
               child: textPresentation(
-                  msg:
-                      'Connectez vous pour joindre les prestataires plus proches ',
+                  msg: 'Connectez vous pour joindre les services plus proches ',
                   fontWeight: FontWeight.w600,
                   size: 23),
             ),

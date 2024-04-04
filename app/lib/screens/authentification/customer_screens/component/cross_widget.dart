@@ -1,3 +1,4 @@
+import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,7 +18,7 @@ class CrossWidget extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, PresentationScreen.routeName);
+              Navigator.pushNamed(context, HomeScrenns.routeName);
             },
             child: SizedBox(
               width: 26,

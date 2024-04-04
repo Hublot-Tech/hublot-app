@@ -1,4 +1,5 @@
 import 'package:app/configuration.dart';
+import 'package:app/screens/authentification/customer_screens/customer_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -56,6 +57,10 @@ class Body extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             GestureDetector(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, CustomerScrenn.routeName, (route) => false);
+              },
               child: Container(
                 width: size.width * 0.87,
                 height: size.height * 0.064,
