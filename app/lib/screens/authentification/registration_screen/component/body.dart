@@ -1,4 +1,3 @@
-import 'package:app/screens/part_customer/home_screens/components/hublo_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -12,10 +11,10 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController name_controller = TextEditingController();
-    TextEditingController email_controller = TextEditingController();
-    TextEditingController number_controller = TextEditingController();
-    TextEditingController mdp_controller = TextEditingController();
+    TextEditingController nameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController numberController = TextEditingController();
+    TextEditingController mdpController = TextEditingController();
 
     return Stack(children: [
       Container(
@@ -83,10 +82,10 @@ class Body extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     FormInscription(
-                      name_controller: name_controller,
-                      email_controller: email_controller,
-                      mdp_controller: mdp_controller,
-                      number_controler: number_controller,
+                      name_controller: nameController,
+                      email_controller: emailController,
+                      mdp_controller: mdpController,
+                      number_controler: numberController,
                     )
                   ],
                 ),

@@ -2,7 +2,6 @@ import 'package:app/screens/part_customer/home_screens/components/home_screen.da
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../presentation_screens/components/presention_screen.dart';
 
 class CrossWidget extends StatelessWidget {
   const CrossWidget({
