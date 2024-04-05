@@ -1,5 +1,6 @@
 import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/customer_screens/customer_screen.dart';
+import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -102,7 +103,10 @@ class Body extends StatelessWidget {
                   InfoWidget(name: "Paramètres"),
                   const EspaceMenuWidget(taille: 15),
                   SettingsRow(
-                    press: () {},
+                    press: () {
+                      Navigator.pushReplacementNamed(
+                          context, CityScreen.routeName);
+                    },
                     icon: "img/icons8_city 1.svg",
                     ville: "Ville",
                     info: "Toutes les villes",
@@ -110,8 +114,8 @@ class Body extends StatelessWidget {
                   ),
                   SettingsRow(
                     press: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, LanguageScreen.routeName, (route) => false);
+                      Navigator.pushReplacementNamed(
+                          context, LanguageScreen.routeName);
                     },
                     icon: "img/icons8_Earth_Globe 1.svg",
                     ville: "Langue",

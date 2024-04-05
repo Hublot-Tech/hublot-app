@@ -8,10 +8,11 @@ Text textPresentation(
     {required String msg,
     double size = 30,
     Color color = kprimaryColor,
+    TextAlign textAlign=TextAlign.center,
     required FontWeight fontWeight}) {
   return Text(
     msg,
-    textAlign: TextAlign.center,
+    textAlign: textAlign,
     style: TextStyle(
       fontWeight: fontWeight,
       color: color,

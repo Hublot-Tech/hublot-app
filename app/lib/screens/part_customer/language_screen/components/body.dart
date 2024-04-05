@@ -3,6 +3,9 @@ import 'package:app/screens/authentification/registration_screen/component/butto
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../city_screen_choice/components/navigation_row.dart';
+import 'hublo_version.dart';
+
 class Body extends StatefulWidget {
   const Body({super.key});
 
@@ -18,24 +21,12 @@ class _BodyState extends State<Body> {
       child: Column(
         children: [
           const EspaceMenuWidget(taille: 40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const SizedBox(width: 20),
-              IconButton(
-                  onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, HomeScrenns.routeName, (route) => false);
-                  },
-                  icon: const Icon(Icons.arrow_back_ios_sharp)),
-              const SizedBox(width: 40),
-              textPresentation(
-                msg: "Choix de votre langue",
-                fontWeight: FontWeight.bold,
-                size: 24,
-              ),
-              const Spacer(),
-            ],
+          NavigationRow(
+            press: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, HomeScrenns.routeName, (route) => false);
+            },
+            name: 'Choix de votre langue',
           ),
           const EspaceMenuWidget(taille: 40),
           Row(
@@ -47,13 +38,9 @@ class _BodyState extends State<Body> {
             ],
           ),
           const SizedBox(height: 100),
-          ButtomCustom(press: () {}, msg: "Confirmer"),
+          ButtomCustom(press: () {}, msg: "Confirmer",color: kprimaryColor,),
           const SizedBox(height: 100),
-          textPresentation(
-            msg: "Version 1.1",
-            fontWeight: FontWeight.w300,
-            size: 13,
-          ),
+          VersionHublo(),
         ],
       ),
     );
@@ -91,3 +78,4 @@ class _BodyState extends State<Body> {
     );
   }
 }
+

@@ -20,6 +20,22 @@ class HublotProviderApiApi {
     return searchItem;
   }
 
+  List<String> getAllCity() {
+    List<String> searchItem = [
+      'Douala',
+      'Yaoundé',
+      'Kribi',
+      'Édéa',
+      'Garoua',
+      'Bamenda',
+      'Bafoussam',
+      'Maroua',
+      'Limbé'
+    ];
+
+    return searchItem;
+  }
+
   List<Map<String, String>> getSplashData() {
     List<Map<String, String>> spashData = [
       {

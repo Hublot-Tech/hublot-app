@@ -6,9 +6,11 @@ class ButtomCustom extends StatelessWidget {
     super.key,
     required this.press,
     required this.msg,
+    this.color=ksecondaryColor,
   });
   final GestureCancelCallback press;
   final String msg;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -18,7 +20,7 @@ class ButtomCustom extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: ksecondaryColor,
+          color: color,
         ),
         child: Center(
           child: Row(
