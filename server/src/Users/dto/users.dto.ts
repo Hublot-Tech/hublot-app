@@ -86,83 +86,29 @@ export class UpdateUsersDto extends OmitType(CreateUsersDto, [
   'isVerified',
 ] as const) {}
 
-export class UserDto {
-  @ApiProperty({
-    example: 'Wonder',
-    description: 'User fullname',
-    required: true,
-  })
-  fullname: string;
-
-  @ApiProperty({
-    example: 'wonder@gmail.com',
-    description: 'User email',
-    required: true,
-  })
-  email: string;
-
-  @ApiProperty({
-    example: '237 693 xxx xxx',
-    description: 'User phone number',
-    required: true,
-  })
-  phoneNumber: string;
-
-  @ApiProperty({
-    example: true,
-    description: 'User verification status',
-    default: false,
-  })
-  isVerified: boolean;
-
-  @ApiProperty({
-    example: true,
-    description: 'User online status',
-    default: false,
-  })
-  isOnline: boolean;
-
-  @ApiProperty({
-    example: 'Douala',
-    description: 'Locale information for account creation',
-    required: true,
-  })
-  locale: string;
-
-  @ApiProperty({
-    example: 'Lobbessou',
-    description: 'User address for account creation',
-    required: true,
-  })
-  address: string;
-
-  @ApiProperty({
-    example: 'Hublot@##*(373#@',
-    description: 'User password',
-    required: true,
-  })
-  password: string;
-
+export class UserDto extends CreateUsersDto {
   @ApiProperty({
     description: 'Timestamp of last update',
     required: true,
     default: new Date(),
   })
-  updated_at: Date;
+  updatedAt: Date;
 
   @ApiProperty({
     description: 'Timestamp of creation',
     required: true,
     default: new Date(),
   })
-  created_at: Date;
+  createdAt: Date;
 
   @ApiProperty({
     description: 'Timestamp of deletion',
     required: true,
     default: new Date(),
   })
-  deleted_at: Date;
+  deletedAt: Date;
 }
 
-export class GetAllUserDto extends OmitType(UserDto, ['password'] as const) {}
+export class GetAllUserDto {
+  users: UserDto[]
+}
