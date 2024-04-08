@@ -29,7 +29,7 @@ class _RowCityState extends State<RowCity> {
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.only(left: 40, top: 10),
         decoration: BoxDecoration(
-          color: isSelect ? Colors.white : Color.fromRGBO(100, 100, 100, 0.06),
+          color: isSelect ? Colors.white : const Color.fromRGBO(100, 100, 100, 0.06),
           border: isSelect
               ? Border.all(color: kyellowColor, width: 2)
               : const Border(),

@@ -100,7 +100,7 @@ class Body extends StatelessWidget {
                     color: kprimaryColor,
                   ),
                   const EspaceMenuWidget(taille: 10),
-                  InfoWidget(name: "Paramètres"),
+                  const InfoWidget(name: "Paramètres"),
                   const EspaceMenuWidget(taille: 15),
                   SettingsRow(
                     press: () {
@@ -126,7 +126,7 @@ class Body extends StatelessWidget {
                     color: kprimaryColor,
                   ),
                   const EspaceMenuWidget(taille: 10),
-                  InfoWidget(name: "Autres"),
+                  const InfoWidget(name: "Autres"),
                   const EspaceMenuWidget(taille: 15),
                   SettingsRow(
                     press: () {

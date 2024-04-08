@@ -30,8 +30,8 @@ class SettingsRow extends StatelessWidget {
             hasInfo
                 ? textPresentation(
                     msg: info, fontWeight: FontWeight.w300, size: 19)
-                : Text(""),
-            SizedBox(width: 5),
+                : const Text(""),
+            const SizedBox(width: 5),
             const Icon(Icons.arrow_forward_ios_rounded),
           ],
         ),

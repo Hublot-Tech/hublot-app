@@ -1,4 +1,4 @@
-package com.example.flutterbase
+package com.HUBLO
 
 import io.flutter.embedding.android.FlutterActivity
 

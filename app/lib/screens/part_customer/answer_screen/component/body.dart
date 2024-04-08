@@ -63,7 +63,7 @@ class _BodyState extends State<Body> {
                     onPressed: () {
                       Navigator.pushNamed(context, HomeScrenns.routeName);
                     },
-                    icon: Icon(Icons.arrow_back_ios_new)),
+                    icon: const Icon(Icons.arrow_back_ios_new)),
                 const NotificationBox(),
               ],
             ),
@@ -79,7 +79,7 @@ class _BodyState extends State<Body> {
                   prefixIcon: const Icon(Icons.search),
                   suffixIcon: IconButton(
                       onPressed: clearController,
-                      icon: Icon(Icons.cancel_rounded)),
+                      icon: const Icon(Icons.cancel_rounded)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30)),
                 ),
@@ -104,7 +104,7 @@ class _BodyState extends State<Body> {
                             right: 20,
                             left: 20,
                           ),
-                          margin: EdgeInsets.only(right: 10),
+                          margin: const EdgeInsets.only(right: 10),
                           //  width: 150,
                           height: 40,
                           decoration: BoxDecoration(
@@ -118,7 +118,7 @@ class _BodyState extends State<Body> {
                         )),
               ),
             ),
-            EspaceMenuWidget(),
+            const EspaceMenuWidget(),
             filterList.isNotEmpty
                 ? Expanded(
                     child: ListView.builder(
@@ -133,7 +133,7 @@ class _BodyState extends State<Body> {
                           )),
                     ),
                   )
-                : Center(
+                : const Center(
                     child: Text("Aucun resultat disponible"),
                   )
           ],

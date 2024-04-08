@@ -16,7 +16,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   HublotProviderApiApi hublotProviderApiApi = HublotProviderApiApi();
   List<String> initialList = [];
   List<String> finalList = [];

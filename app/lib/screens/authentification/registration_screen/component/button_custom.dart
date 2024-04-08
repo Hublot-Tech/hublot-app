@@ -29,7 +29,7 @@ class ButtomCustom extends StatelessWidget {
               Text(
                 msg,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,
                 ),

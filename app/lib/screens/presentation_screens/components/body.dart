@@ -97,10 +97,10 @@ class _BodyState extends State<Body> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 3, top: 9),
+                        margin: const EdgeInsets.only(left: 3, top: 9),
                         width: 5,
                         height: 5,
-                        decoration: BoxDecoration(color: kyellowColor),
+                        decoration: const BoxDecoration(color: kyellowColor),
                       ),
                     ],
                   ),

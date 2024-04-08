@@ -6,7 +6,7 @@ class SearchScreen extends StatelessWidget {
   static String routeName = '/searh';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Body(),
     );
   }

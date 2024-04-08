@@ -74,8 +74,7 @@ class HublotProviderApiApi {
   List<Map<String, String>> getAllServices() {
     List<Map<String, String>> dataProvider = [
       {
-        "img":
-            "https://nextjs.org/_next/image?url=%2Flearn%2Fdark%2Fdashboard.png&w=1920&q=75",
+        "img": "img/portrait-stylish-professional-photographer.jpg",
         "name": "Gishlain Kamga",
         "profession": "Photographe",
         "note": "4.6",
@@ -83,8 +82,7 @@ class HublotProviderApiApi {
         "Distance": "3Km",
       },
       {
-        "img":
-            "https://nextjs.org/_next/image?url=%2Flearn%2Fdark%2Fdashboard.png&w=1920&q=75",
+        "img": "img/front-view-woman-holding-photo-camera.jpg",
         "name": "Grec Koum",
         "profession": "Photographe",
         "note": "4.6",
@@ -92,8 +90,7 @@ class HublotProviderApiApi {
         "Distance": "8Km",
       },
       {
-        "img":
-            "https://nextjs.org/_next/image?url=%2Flearn%2Fdark%2Fdashboard.png&w=1920&q=75",
+        "img": "img/IMG_3531.JPG",
         "name": "Pessidjo Germann",
         "profession": "Dev Fullstack",
         "note": "4.6",

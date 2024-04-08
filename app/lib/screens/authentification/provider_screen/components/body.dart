@@ -1,5 +1,8 @@
+import 'package:app/controller/function_api.dart';
+import 'package:app/controller/google_sign_it.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/authentification/customer_Screens/component/account_row.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../configuration.dart';
 import '../../customer_screens/component/body.dart';
@@ -37,16 +40,18 @@ class Body extends StatelessWidget {
               press: () {},
             ),
             const SizedBox(height: 20),
-            NetworkWigdet(
+            const NetworkWigdet(
               icon: "img/icons_google.png",
               img: "Continuer avec Google",
-              press: () {},
+              press: asignIn,
             ),
             const SizedBox(height: 20),
             NetworkWigdet(
               icon: "img/icons_apple.png",
               img: "Continuer avec Apple",
-              press: () {},
+              press: () async {
+                await GoogleSignInAPi.signOut();
+              },
             ),
             const SizedBox(height: 20),
             NetworkWigdet(
@@ -71,5 +76,18 @@ class Body extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> asignIn() async {
+  GoogleSignInAccount? user = await GoogleSignInAPi.login();
+  debugPrint(user!.displayName.toString());
+  final auth = await user.authentication;
+  String? idToken = auth.idToken;
+
+  debugPrint(auth.idToken);
+  if (idToken != null) {
+    // call the server with ID token
+    postIdToken(idToken);
   }
 }

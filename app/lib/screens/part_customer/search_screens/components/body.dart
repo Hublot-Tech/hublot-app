@@ -11,7 +11,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  TextEditingController _controler = TextEditingController();
+  final TextEditingController _controler = TextEditingController();
   List<Map<String, String>> initialList = [
     {
       "img": "img/image 1.png",

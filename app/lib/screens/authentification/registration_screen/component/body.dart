@@ -68,7 +68,7 @@ class Body extends StatelessWidget {
                         textPresentation(
                             msg: "LOT",
                             fontWeight: FontWeight.w500,
-                            color: Color.fromARGB(255, 255, 177, 59),
+                            color: const Color.fromARGB(255, 255, 177, 59),
                             size: 23),
                         const Spacer(),
                       ],

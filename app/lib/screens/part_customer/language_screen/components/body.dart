@@ -40,7 +40,7 @@ class _BodyState extends State<Body> {
           const SizedBox(height: 100),
           ButtomCustom(press: () {}, msg: "Confirmer",color: kprimaryColor,),
           const SizedBox(height: 100),
-          VersionHublo(),
+          const VersionHublo(),
         ],
       ),
     );
