@@ -20,6 +20,7 @@ export class AuthController {
     type: UserAuthResponseDto,
     description: "Successful user registration",
   })
+  // @UseGuards(new AuthGuard('local'))
   @Post("login")
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
