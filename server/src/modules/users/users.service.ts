@@ -17,8 +17,8 @@ export class UserService {
     throw new NotImplementedException(`Method not implemented yet, ${userId}`);
   }
 
-  findByEmail(): Promise<UserDto> {
-    throw new NotImplementedException(`Method not implemented yet`);
+  findByEmail(email: string): Promise<UserDto> {
+    throw new NotImplementedException(`Method not implemented yet ${email}`);
   }
 
   findAll(query: QueryUserDto): Promise<UserDto[]> {

@@ -6,11 +6,11 @@ import {
   UseGuards,
   Body,
 } from "@nestjs/common";
-import { AuthService } from "../authService/auth.service";
-import { JwtAuthGuard } from "../JWT/jwt-auth-guard/jwt-auth-guard.guard";
-import { AuthenticationDto } from "../dto/AuthenticationDto";
+import { AuthService } from "./auth.service";
+import { JwtAuthGuard } from "./jwt-auth/jwt-auth-guard/jwt-auth-guard.guard";
+import { AuthenticationDto } from "./dto/AuthenticationDto";
 import { ApiTags } from "@nestjs/swagger";
-import { LocalAuthGuard } from "../JWT/local-auth/local-auth.guard";
+import { LocalAuthGuard } from "./local/local-auth.guard";
 
 @ApiTags("Login")
 @Controller()
