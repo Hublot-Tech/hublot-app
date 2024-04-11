@@ -24,20 +24,24 @@ export class AuthGuard implements CanActivate {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
-    ]);
+    ]);    
+
     if (isPublic) {
       return true;
     }
-
+  
     if (!token) {
       throw new UnauthorizedException();
     }
+
     try {
+      
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
-
+      
       request["user"] = payload;
+
     } catch {
       throw new UnauthorizedException();
     }
