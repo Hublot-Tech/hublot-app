@@ -32,3 +32,7 @@ export class UserAuthResponseDto {
   @IsDateString()
   success: Boolean;
 }
+
+export class AuthGoogleLoginDto {
+  idToken: string;
+}

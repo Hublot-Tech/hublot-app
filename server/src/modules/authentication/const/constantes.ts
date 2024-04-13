@@ -1,5 +1,3 @@
 export const jwtConstants = {
-  secret: "qwertyuiop",
+  secret: process.env.JWT_KEY,
 };
-
-export const SALT_ROUND = 10;

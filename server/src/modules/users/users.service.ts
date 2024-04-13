@@ -10,16 +10,18 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { User } from "./shema/users.schema";
 import * as bcrypt from "bcrypt";
-import { SALT_ROUND } from "../authentication/const/constantes";
 
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async register(userData: UserDto): Promise<CreateUserDto> {
-    userData.password = await bcrypt.hash(userData.password, SALT_ROUND);
-    userData.createdAt = new Date();
+  async register(userData: CreateUserDto): Promise<CreateUserDto> {
+    userData.password = await bcrypt.hash(
+      userData.password,
+      parseInt(process.env.SALT_ROUND_DCRIPT),
+    );
+
     const createdUser = new this.userModel(userData);
     return createdUser.save();
   }

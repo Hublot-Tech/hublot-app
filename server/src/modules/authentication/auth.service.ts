@@ -26,7 +26,7 @@ export class AuthService {
 
     return {
       access_token: await this.jwtService.signAsync(payload, {
-        secret: jwtConstants.secret,
+        secret: process.env.JWT_KEY,
       }),
       success: true,
     };
