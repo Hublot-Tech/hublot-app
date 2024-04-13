@@ -1,11 +1,8 @@
-import {
-  Injectable,
-  Dependencies,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { Injectable, Dependencies } from "@nestjs/common";
 import { UserService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
 import { jwtConstants } from "./const/constantes";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 @Dependencies(UserService, JwtService)
@@ -16,21 +13,22 @@ export class AuthService {
   ) {}
 
   async signIn(email: string, pass: string) {
-    // const user = await this.usersService.findByEmail(email);
-    // if (user?.password !== pass) {
-    //   throw new UnauthorizedException();
-    // }
-    // const payload = { username: user.email, sub: user.password };
-    // return {
-    //   access_token: await this.jwtService.signAsync(payload),
-    // };
+    const user = await this.usersService.findByEmail(email);
+    const isMatch = await bcrypt.compare(pass, user.password);
+    if (!isMatch) {
+      return {
+        message:
+          "Incorrect email or password, please check your connection settings",
+        success: false,
+      };
+    }
+    const payload = { username: user.email, sub: user.password };
 
-    const payload = { username: email, sub: pass };
-    
     return {
-      access_token: await this.jwtService.signAsync(payload,{
+      access_token: await this.jwtService.signAsync(payload, {
         secret: jwtConstants.secret,
       }),
+      success: true,
     };
   }
 

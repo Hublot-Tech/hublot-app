@@ -3,26 +3,24 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
-  Post,
   Put,
   Query,
 } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
-  ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from "@nestjs/swagger";
 import {
-  CreateUserDto,
-  GetAllUsersDto,
+  GetAllUserResponseDto,
+  GetOneUserResponseDto,
   QueryUserDto,
   UpdateUsersDto,
-  UserDto,
 } from "./dto/users.dto";
 import { UserService } from "./users.service";
 
@@ -31,56 +29,69 @@ import { UserService } from "./users.service";
 export class UsersController {
   constructor(private userService: UserService) {}
 
-  @Post()
-  @ApiCreatedResponse({
-    type: GetAllUsersDto,
-    description: "Successful user registration",
-  })
-  register(@Body() createUserDto: CreateUserDto) {
-    const users = this.userService.register(createUserDto);
-    return users;
-  }
-
   @Get()
   @ApiOkResponse({
-    type: UserDto,
+    type: GetAllUserResponseDto,
     description: "list of successfully loaded users",
   })
-  findAll(@Query() query: QueryUserDto) {
-    const user = this.userService.findAll(query);
+  async findAll(@Query() query: QueryUserDto) {
+    const user = await this.userService.findAll(query);
     return user;
   }
 
   @Get(":id")
   @ApiOkResponse({
-    type: UserDto,
+    type: GetOneUserResponseDto,
     description: "User information successfully retrieved",
   })
   @ApiNotFoundResponse({ description: "User not found" })
   @ApiBadRequestResponse({ description: "Invalid user ID" })
-  findOne(@Param("id", ParseIntPipe) id: number) {
-    const user = this.userService.findOne(id);
-    return user;
+  async findOne(@Param("id") id: any) {
+    try {
+      const user = await this.userService.findOne(id);
+
+      return {
+        data: user,
+        success: true,
+      };
+    } catch (error) {
+      return {
+        message: `User with id ${id} not found!`,
+        success: false,
+        error: error,
+      };
+    }
   }
 
   @Put(":id")
   @ApiOkResponse({
-    type: GetAllUsersDto,
+    type: GetOneUserResponseDto,
     description: "The user has been successfully modified",
   })
-  update(
+  async update(
     @Param("id", ParseIntPipe) id: number,
     @Body() updateUsersDto: UpdateUsersDto,
   ) {
-    const user = this.userService.update(id, updateUsersDto);
-    return user;
+    try {
+      const user = await this.userService.update(id, updateUsersDto);
+      return user;
+    } catch (error) {
+      return {
+        message: `the user with this id:${id} could not be edited`,
+        success: false,
+        error: error,
+      };
+    }
   }
 
   @Delete(":id")
   @ApiNoContentResponse({
     description: "User successfully deleted",
   })
-  delete(@Param("id", ParseIntPipe) id: number) {
-    this.userService.delete(id);
+  async delete(@Param("id") id: any) {
+    const deletedUser = await this.userService.delete(id);
+    if (!deletedUser) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
   }
 }

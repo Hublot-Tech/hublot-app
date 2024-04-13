@@ -1,19 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString } from "class-validator";
+import { IsDateString, IsEmail, IsString } from "class-validator";
 
 export class SignInDto {
   @ApiProperty({
     description: "Email utilisé pour créer le compte",
     required: true,
   })
-  @IsDateString()
+  @IsEmail()
   email: string;
 
   @ApiProperty({
     description: "Password used to create account",
     required: true,
   })
-  @IsDateString()
+  @IsString()
   password: string;
 }
 
@@ -23,12 +23,12 @@ export class UserAuthResponseDto {
     required: true,
   })
   @IsDateString()
-  token: string;
+  access_token: string;
 
   @ApiProperty({
-    description: "Token expiry date",
+    description: "Define authentication status",
     required: true,
   })
   @IsDateString()
-  token_expired_at: Date;
+  success: Boolean;
 }

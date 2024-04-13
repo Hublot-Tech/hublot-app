@@ -9,12 +9,14 @@ import { Request } from "express";
 import { jwtConstants } from "../const/constantes";
 import { Reflector } from "@nestjs/core";
 import { IS_PUBLIC_KEY } from "../decorator/metaData";
+import { UserService } from "src/modules/users/users.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private reflector: Reflector,
+    private userService: UserService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -24,24 +26,24 @@ export class AuthGuard implements CanActivate {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
-    ]);    
+    ]);
 
     if (isPublic) {
       return true;
     }
-  
+
     if (!token) {
       throw new UnauthorizedException();
     }
 
     try {
-      
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
-      
-      request["user"] = payload;
 
+      let authUser = await this.userService.findByEmail(payload?.username);
+
+      request["user"] = authUser;
     } catch {
       throw new UnauthorizedException();
     }

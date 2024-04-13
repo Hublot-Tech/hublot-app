@@ -6,7 +6,7 @@ import {
   IsDateString,
   IsEmail,
   IsEnum,
-  IsNumber,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   IsUUID,
@@ -87,52 +87,95 @@ export class GetUserByIdDto {
   id: string;
 }
 
-export class UpdateUsersDto extends OmitType(CreateUserDto, [
-  "password",
-  "email",
-  "isVerified",
-] as const) {}
-
 export class QueryUserDto {
   @ApiProperty()
-  @IsNumber()
   perpage: number;
 
   @ApiProperty()
-  @IsNumber()
   page: number;
+
+  @ApiProperty()
+  limit: number;
 }
 
 export class UserDto extends CreateUserDto {
   @ApiProperty({
     description: "Timestamp of last update",
     required: true,
-    default: new Date(),
   })
   @IsDateString()
+  @IsOptional()
   updatedAt: Date;
 
   @ApiProperty({
     description: "Timestamp of creation",
-    required: true,
-    default: new Date(),
+    required: false,
   })
   @IsDateString()
+  @IsOptional()
   createdAt: Date;
-
   @ApiProperty({
     description: "Timestamp of deletion",
-    required: true,
-    default: new Date(),
+    required: false,
   })
   @IsDateString()
+  @IsOptional()
   deletedAt: Date;
 }
+
+export class UpdateUsersDto extends OmitType(UserDto, [
+  "password",
+  "email",
+  "isVerified",
+] as const) {}
 
 export class GetAllUsersDto extends QueryUserDto {
   @IsArray()
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
-  users: UserDto[];
+  data: UserDto;
+}
+
+export class UserRegisterDto {
+  @IsArray()
+  @ApiProperty()
+  @ValidateNested()
+  @Type(() => UserDto)
+  data: UserDto[];
+  @ApiProperty({
+    description: "Timestamp of last update",
+    required: true,
+  })
+  success: boolean;
+}
+
+export class GetAllUserResponseDto {
+  @IsArray()
+  @ApiProperty()
+  @ValidateNested()
+  @Type(() => UserDto)
+  data: UserDto;
+  @ApiProperty()
+  @ValidateNested()
+  @Type(() => QueryUserDto)
+  meta: QueryUserDto;
+  @ApiProperty({
+    description: "Timestamp of last update",
+    required: true,
+  })
+  success: boolean;
+}
+
+export class GetOneUserResponseDto {
+  @IsArray()
+  @ApiProperty()
+  @ValidateNested()
+  @Type(() => UserDto)
+  data: UserDto;
+  @ApiProperty({
+    description: "Timestamp of last update",
+    required: true,
+  })
+  success: boolean;
 }

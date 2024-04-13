@@ -1,4 +1,5 @@
 export const jwtConstants = {
-  secret:
-    "qwertyuiop",
+  secret: "qwertyuiop",
 };
+
+export const SALT_ROUND = 10;
