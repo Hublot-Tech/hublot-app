@@ -46,9 +46,11 @@ export class CreateUserDto {
   phoneNumber: string;
 
   @IsBoolean()
+  @IsOptional()
   isVerified: boolean = false;
 
   @IsBoolean()
+  @IsOptional()
   isOnline: boolean = false;
 
   @ApiProperty({
@@ -168,7 +170,6 @@ export class GetAllUserResponseDto {
 }
 
 export class GetOneUserResponseDto {
-  @IsArray()
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
@@ -178,4 +179,17 @@ export class GetOneUserResponseDto {
     required: true,
   })
   success: boolean;
+}
+
+export class SocialAuthDto {
+  @ApiProperty({
+    description: "Device token",
+    required: true,
+  })
+  idToken: string;
+  @ApiProperty({
+    description: "Network used for connection",
+    required: true,
+  })
+  social_mode: string;
 }

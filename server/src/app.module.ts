@@ -4,12 +4,18 @@ import { AppService } from "./app.service";
 import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./modules/authentication/auth.module";
 import { MongooseModule } from "@nestjs/mongoose";
+import { ConfigModule } from "@nestjs/config";
+import configuration from "./config/configuration";
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
-    MongooseModule.forRoot("mongodb://localhost:27017/hublot"),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
+    MongooseModule.forRoot(process.env.DATABASE_HOST),
   ],
   controllers: [AppController],
   providers: [AppService],

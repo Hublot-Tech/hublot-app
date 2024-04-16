@@ -6,6 +6,8 @@ import { AuthGuard } from "../authentication/auth-guard/auth.guard";
 import { JwtService } from "@nestjs/jwt";
 import { MongooseModule } from "@nestjs/mongoose";
 import { User, UserSchema } from "./shema/users.schema";
+import { ConfigModule } from "@nestjs/config";
+import configuration from "src/config/configuration";
 
 @Module({
   imports: [
