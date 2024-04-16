@@ -145,7 +145,7 @@ export class UserRegisterDto {
   @Type(() => UserDto)
   data: UserDto;
   @ApiProperty({
-    description: "Request with success",
+    description: "Define request status",
   })
   success: boolean;
 }
@@ -161,7 +161,7 @@ export class GetAllUserResponseDto {
   @Type(() => QueryUserDto)
   meta: QueryUserDto;
   @ApiProperty({
-    description: "Request with success",
+    description: "Define request status",
   })
   success: boolean;
 }
@@ -172,7 +172,7 @@ export class GetOneUserResponseDto {
   @Type(() => UserDto)
   data: UserDto;
   @ApiProperty({
-    description: "Request with success",
+    description: "Define request status",
   })
   success: boolean;
 }
