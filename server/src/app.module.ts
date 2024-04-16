@@ -5,8 +5,7 @@ import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./modules/authentication/auth.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ConfigModule } from "@nestjs/config";
-import configuration from "./config/configuration";
-
+ 
 @Module({
   imports: [
     UsersModule,

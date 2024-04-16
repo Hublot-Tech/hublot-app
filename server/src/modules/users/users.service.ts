@@ -45,7 +45,7 @@ export class UserService {
       .find()
       .limit(query.limit ?? 10)
       .skip(query.page ?? 1)
-      .exec()) as unknown as UserDto;
+      .exec()) as unknown as UserDto[];
 
     return {
       data: allUser,

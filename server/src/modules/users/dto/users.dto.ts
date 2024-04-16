@@ -140,14 +140,12 @@ export class GetAllUsersDto extends QueryUserDto {
 }
 
 export class UserRegisterDto {
-  @IsArray()
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
-  data: UserDto[];
+  data: UserDto;
   @ApiProperty({
-    description: "Timestamp of last update",
-    required: true,
+    description: "Request with success",
   })
   success: boolean;
 }
@@ -157,14 +155,13 @@ export class GetAllUserResponseDto {
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
-  data: UserDto;
+  data: UserDto[];
   @ApiProperty()
   @ValidateNested()
   @Type(() => QueryUserDto)
   meta: QueryUserDto;
   @ApiProperty({
-    description: "Timestamp of last update",
-    required: true,
+    description: "Request with success",
   })
   success: boolean;
 }
@@ -175,9 +172,8 @@ export class GetOneUserResponseDto {
   @Type(() => UserDto)
   data: UserDto;
   @ApiProperty({
-    description: "Timestamp of last update",
-    required: true,
-  })
+    description: "Request with success",
+   })
   success: boolean;
 }
 

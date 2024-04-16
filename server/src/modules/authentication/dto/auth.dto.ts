@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString, IsEmail, IsString } from "class-validator";
+import { IsBoolean, IsDateString, IsEmail, IsString } from "class-validator";
 
 export class SignInDto {
   @ApiProperty({
@@ -23,13 +23,13 @@ export class UserAuthResponseDto {
     required: true,
   })
   @IsDateString()
-  access_token: string;
+  accessToken: string;
 
   @ApiProperty({
     description: "Define authentication status",
     required: true,
   })
-  @IsDateString()
+  @IsBoolean()
   success: Boolean;
 }
 
