@@ -173,7 +173,7 @@ export class GetOneUserResponseDto {
   data: UserDto;
   @ApiProperty({
     description: "Request with success",
-   })
+  })
   success: boolean;
 }
 
