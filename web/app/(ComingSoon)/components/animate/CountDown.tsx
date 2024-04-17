@@ -8,7 +8,7 @@ const Countdown = () => {
 
   useEffect(() => {
     // Set the date we're counting down to
-    const countDownDate = new Date("Apr 15, 2024 14:00:00").getTime();
+    const countDownDate = new Date("May 06, 2024 14:00:00").getTime();
 
     const intervalId = setInterval(function() {
       // Get today's date and time
