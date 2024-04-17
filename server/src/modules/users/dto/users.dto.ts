@@ -6,6 +6,7 @@ import {
   IsDateString,
   IsEmail,
   IsEnum,
+  IsNumber,
   IsOptional,
   IsPhoneNumber,
   IsString,
@@ -91,12 +92,15 @@ export class GetUserByIdDto {
 
 export class QueryUserDto {
   @ApiProperty()
+  @IsOptional()
   perpage: number;
 
   @ApiProperty()
+  @IsOptional()
   page: number;
 
   @ApiProperty()
+  @IsOptional()
   limit: number;
 }
 
@@ -145,7 +149,7 @@ export class UserRegisterDto {
   @Type(() => UserDto)
   data: UserDto;
   @ApiProperty({
-    description: "Define request status",
+    description: "Define authentication status",
   })
   success: boolean;
 }
@@ -161,7 +165,7 @@ export class GetAllUserResponseDto {
   @Type(() => QueryUserDto)
   meta: QueryUserDto;
   @ApiProperty({
-    description: "Define request status",
+    description: "Define authentication status",
   })
   success: boolean;
 }
@@ -172,7 +176,7 @@ export class GetOneUserResponseDto {
   @Type(() => UserDto)
   data: UserDto;
   @ApiProperty({
-    description: "Define request status",
+    description: "Define authentication status",
   })
   success: boolean;
 }
@@ -187,5 +191,5 @@ export class SocialAuthDto {
     description: "Network used for connection",
     required: true,
   })
-  social_mode: string;
+  socialMode: string;
 }

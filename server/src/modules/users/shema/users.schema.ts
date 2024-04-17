@@ -40,17 +40,7 @@ export class User extends Document {
 
   constructor(userDto: UserDto) {
     super();
-    this.fullname = userDto.fullname;
-    this.email = userDto.email;
-    this.phoneNumber = userDto.phoneNumber;
-    this.isVerified = userDto.isVerified;
-    this.isOnline = userDto.isOnline;
-    this.locale = userDto.locale;
-    this.address = userDto.address;
-    this.password = userDto.password;
-    this.createdAt = userDto.createdAt;
-    this.updatedAt = userDto.updatedAt;
-    this.deletedAt = userDto.deletedAt;
+    Object.assign(this, userDto);
   }
 }
 

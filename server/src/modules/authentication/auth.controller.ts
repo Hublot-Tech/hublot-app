@@ -2,7 +2,7 @@ import { Body, Controller, Post, Request, Get } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { SignInDto, UserAuthResponseDto } from "./dto/auth.dto";
 import { ApiCreatedResponse } from "@nestjs/swagger";
-import { SkipAuth } from "./decorator/metaData";
+import { Public } from "./decorator/metaData";
 import { UserService } from "../users/users.service";
 import {
   GetOneUserResponseDto,
@@ -24,7 +24,7 @@ export class AuthController {
     type: UserAuthResponseDto,
     description: "Successful user registration",
   })
-  @SkipAuth()
+  @Public()
   @Post("login")
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
@@ -34,7 +34,7 @@ export class AuthController {
     type: UserAuthResponseDto,
     description: "Successful user registration",
   })
-  @SkipAuth()
+  @Public()
   @Post("social-auth")
   socialAuth(@Body() signInDto: SocialAuthDto) {
     return this.authGuard.getProfileByToken(signInDto);
@@ -56,7 +56,7 @@ export class AuthController {
     };
   }
 
-  @SkipAuth()
+  @Public()
   @Post("register")
   @ApiCreatedResponse({
     type: UserRegisterDto,

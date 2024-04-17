@@ -29,7 +29,7 @@ import { UserService } from "./users.service";
 export class UsersController {
   constructor(private userService: UserService) {}
 
-  @Get()
+  @Get("")
   @ApiOkResponse({
     type: GetAllUserResponseDto,
     description: "list of successfully loaded users",
