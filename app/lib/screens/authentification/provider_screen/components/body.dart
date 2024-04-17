@@ -31,7 +31,7 @@ class Body extends StatelessWidget {
               child: textPresentation(
                   msg: 'Connectez vous pour joindre les services plus proches ',
                   fontWeight: FontWeight.w600,
-                  size: 23),
+                  size: 13),
             ),
             const SizedBox(height: 20),
             NetworkWigdet(

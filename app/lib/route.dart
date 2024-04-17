@@ -1,6 +1,7 @@
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
+import 'package:app/screens/part_provider/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/part_customer/answer_screen/answer_screen.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
@@ -16,11 +17,12 @@ final Map<String, WidgetBuilder> route = {
   PresentationScreen.routeName: (context) => const PresentationScreen(),
   CustomerScrenn.routeName: (context) => const CustomerScrenn(),
   ProviderScreen.routeName: (context) => const ProviderScreen(),
-  RegistrationScreen.routeName: (context) => const RegistrationScreen(),
+  RegistrationScreen.routeName: (context) =>  RegistrationScreen(),
   HomeScrenns.routeName: (context) => const HomeScrenns(),
   SearchScreen.routeName: (context) => const SearchScreen(),
   AnswerScreen.routeName: (context) => const AnswerScreen(),
   AccountTab.routeName: (context) => const AccountTab(),
   LanguageScreen.routeName: (context) => const LanguageScreen(),
-  CityScreen.routeName: (context) => const CityScreen()
+  CityScreen.routeName: (context) => const CityScreen(),
+  HomeScreen.routeName:(context) => const HomeScreen()
 };

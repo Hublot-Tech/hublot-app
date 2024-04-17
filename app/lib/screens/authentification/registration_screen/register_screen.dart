@@ -12,3 +12,6 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 }
+/// cette class est le formulaire d'inscription a hublo
+/// constituer de plusieurs textfield
+/// prends en argument une fonction void press qui regiride le user apres s'etre inscris

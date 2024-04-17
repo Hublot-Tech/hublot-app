@@ -7,6 +7,7 @@ class BoxCategoryService extends StatelessWidget {
     super.key,
     required this.name,
     required this.press,
+    ///sert ici tout simplement
   });
   final String name;
   final GestureCancelCallback press;

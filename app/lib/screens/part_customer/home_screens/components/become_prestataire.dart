@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../authentification/provider_screen/prestataire_screen.dart';
-
-class BecomePrestataire extends StatelessWidget {
-  const BecomePrestataire({
+/// la BecomeRowBox sert de box pour envoyer vers
+class BecomeRowBox extends StatelessWidget {
+  const BecomeRowBox({
     super.key,
+    required this.text,
+    required this.press,
   });
-
+  final String text;
+  final GestureCancelCallback press;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, ProviderScreen.routeName);
-      },
+      onTap: press,
       child: Row(children: [
         Container(
           //  margin: const EdgeInsets.only(left: 20),
@@ -42,9 +42,9 @@ class BecomePrestataire extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SvgPicture.asset("img/profil.svg"),
-              const Text(
-                "Devenir prestataire",
-                style: TextStyle(fontSize: 15),
+              Text(
+                text,
+                style: const TextStyle(fontSize: 15),
               ),
               const Icon(Icons.keyboard_arrow_down_sharp),
             ],

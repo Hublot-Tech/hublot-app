@@ -4,6 +4,7 @@ import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/home_screens/components/become_prestataire.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../authentification/provider_screen/prestataire_screen.dart';
 import 'box_information.dart';
 import 'box_star.dart';
 import 'card_service_prestataire.dart';
@@ -67,10 +68,16 @@ class _BodyState extends State<Body> {
                   const EspaceMenuWidget(),
                   const HublotTextWigdet(),
                   const EspaceMenuWidget(),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      BecomePrestataire(),
+                      BecomeRowBox(
+                        text: "Devenir prestataire",
+                        press: () {
+                          Navigator.pushNamed(
+                              context, ProviderScreen.routeName);
+                        },
+                      ),
                       NotificationBox(),
                     ],
                   ),
