@@ -4,11 +4,12 @@ const kCategoriecolor = Color.fromRGBO(30, 136, 229, 1);
 const kyellowColor = Color.fromRGBO(255, 192, 0, 1);
 const kprimaryColor = Color.fromRGBO(10, 17, 40, 1);
 const ksecondaryColor = Color.fromRGBO(100, 100, 100, 1);
+const kbottonColor = Color.fromRGBO(100, 100, 100, 40);
 Text textPresentation(
     {required String msg,
     double size = 30,
     Color color = kprimaryColor,
-    TextAlign textAlign=TextAlign.center,
+    TextAlign textAlign = TextAlign.center,
     required FontWeight fontWeight}) {
   return Text(
     msg,

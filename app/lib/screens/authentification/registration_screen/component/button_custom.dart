@@ -1,33 +1,39 @@
 import 'package:app/configuration.dart';
 import 'package:flutter/material.dart';
 
-class ButtomCustom extends StatelessWidget {
+class ButtomCustom extends StatefulWidget {
   const ButtomCustom({
     super.key,
     required this.press,
     required this.msg,
-    this.color=ksecondaryColor,
+    this.color = kbottonColor,
   });
   final GestureCancelCallback press;
   final String msg;
   final Color color;
+
+  @override
+  State<ButtomCustom> createState() => _ButtomCustomState();
+}
+
+class _ButtomCustomState extends State<ButtomCustom> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: press,
+      onTap: widget.press,
       child: Container(
         width: 390,
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: color,
+          color: widget.color,
         ),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                msg,
+                widget.msg,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 20,

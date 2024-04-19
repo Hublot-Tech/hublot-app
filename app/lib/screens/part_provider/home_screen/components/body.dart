@@ -7,6 +7,7 @@ import 'package:app/screens/part_customer/home_screens/components/hublo_text_wid
 import 'package:app/screens/part_customer/home_screens/components/notification_box.dart';
 import 'package:app/screens/part_customer/home_screens/components/row_see_more.dart';
 import 'package:app/screens/part_customer/home_screens/components/search_box.dart';
+import 'package:app/screens/part_provider/add_service/description_service/description_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -165,7 +166,7 @@ class _BodyState extends State<Body> {
                   name: "Vos services",
                   msg: "Liste basé sur le niveau de demandes",
                   press: () {}),
-              EspaceMenuWidget(),
+              const EspaceMenuWidget(),
               Padding(
                 padding: const EdgeInsets.only(right: 22),
                 child: Stack(children: [
@@ -174,7 +175,10 @@ class _BodyState extends State<Body> {
                       left: size.width * 0.3,
                       top: size.height * 0.17,
                       child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, DescriptionScreen.routeName);
+                          },
                           child:
                               SvgPicture.asset("img/icons8_Plus_Key 1.svg"))),
                 ]),

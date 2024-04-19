@@ -39,6 +39,7 @@ dependencies:
   shimmer: ^3.0.0
   google_sign_in: ^6.1.6
   http: ^1.1.0
+  google_fonts: ^6.2.0
   
 
 dev_dependencies:

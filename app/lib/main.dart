@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.white,
+      theme: ThemeData(primaryColor: Colors.amber),
       routes: route,
       debugShowCheckedModeBanner: false,
       initialRoute: PresentationScreen.routeName,
