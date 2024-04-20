@@ -1,11 +1,13 @@
 import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/registration_screen/component/button_custom.dart';
 import 'package:app/screens/part_provider/add_service/description_service/components/background_add_service.dart';
+import 'package:app/screens/part_provider/add_service/detail_offer/detail_offer_screen.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../description_service/description_screen.dart';
+import 'add_service_box.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -54,24 +56,20 @@ class _BodyState extends State<Body> {
                 Container(
                   height: getProportionateScreenHeight(50),
                   width: getProportionateScreenWidth(290),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                     top: BorderSide(),
                     bottom: BorderSide(),
                   )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      textPresentation(
-                          msg: "Ajouter une offre ",
-                          fontWeight: FontWeight.normal,
-                          size: getProportionateScreenWidth(20)),
-                      Image.asset("img/addService.png"),
-                    ],
-                  ),
+                  child: AddServiceBox(msg: "Ajouter une offre ",press: (){},),
                 ),
-                EspaceMenuWidget(taille: 300),
-                ButtomCustom(press: () {}, msg: "Confirmer", isValided: true)
+                const EspaceMenuWidget(taille: 300),
+                ButtomCustom(
+                    press: () {
+                      Navigator.pushNamed(context, DetailOfferScreen.routeName);
+                    },
+                    msg: "Confirmer",
+                    isValided: true)
               ],
             ),
           ),
@@ -80,3 +78,4 @@ class _BodyState extends State<Body> {
     );
   }
 }
+
