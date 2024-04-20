@@ -19,13 +19,13 @@ import {
 import {
   GetAllUserResponseDto,
   GetOneUserResponseDto,
-  UpdateUsersDto,
+  UpdateUserDto,
 } from "./dto/users.dto";
 import { UserService } from "./users.service";
 import { BulkQueryDto, ResponseMetadataDto, ResponseStatus } from "../dto";
 
-@ApiTags("User")
-@Controller("user")
+@ApiTags("Users")
+@Controller("users")
 export class UsersController {
   constructor(private userService: UserService) {}
 
@@ -53,23 +53,13 @@ export class UsersController {
   @ApiNotFoundResponse({ description: "User not found" })
   @ApiBadRequestResponse({ description: "Invalid user ID" })
   async findOne(@Param("id") userId: any): Promise<GetOneUserResponseDto> {
-    try {
-      const user = await this.userService.findOne(userId);
+    const user = await this.userService.findOne(userId);
 
-      return new GetOneUserResponseDto({
-        data: user,
-        message: "Successfully retrieved user",
-        status: ResponseStatus.SUCCESS,
-      });
-    } catch (error) {
-      throw new HttpException(
-        new ResponseMetadataDto({
-          message: error.message,
-          status: ResponseStatus.ERROR,
-        }),
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return new GetOneUserResponseDto({
+      data: user,
+      message: "Successfully retrieved user",
+      status: ResponseStatus.SUCCESS,
+    });
   }
 
   @Put(":id")
@@ -79,7 +69,7 @@ export class UsersController {
   })
   async update(
     @Param("id") userId: string,
-    @Body() updateUsersDto: UpdateUsersDto,
+    @Body() updateUsersDto: UpdateUserDto,
   ): Promise<GetOneUserResponseDto> {
     try {
       const user = await this.userService.update(userId, updateUsersDto);

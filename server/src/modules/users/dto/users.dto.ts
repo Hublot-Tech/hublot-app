@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from "@nestjs/swagger";
+import { ApiProperty, OmitType, PartialType } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import {
   IsArray,
@@ -112,17 +112,20 @@ export class UserDto extends CreateUserDto {
   }
 }
 
-export class UpdateUsersDto extends OmitType(UserDto, [
-  "password",
-  "email",
-  "isVerified",
-] as const) {}
+export class UpdateUserDto extends PartialType(
+  OmitType(UserDto, ["password", "email", "isVerified"] as const),
+) {}
 
 export class RegisterUserResponseDto extends ResponseMetadataDto {
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
   data: UserDto;
+
+  constructor(responseBody: RegisterUserResponseDto) {
+    super(responseBody);
+    Object.assign(this, responseBody);
+  }
 }
 
 export class GetAllUserResponseDto extends BulkResponseMetadataDto {
@@ -150,16 +153,16 @@ export class GetOneUserResponseDto extends ResponseMetadataDto {
   }
 }
 
-export class SocialAuthDto {
+export class GoogleSignInDto {
   @ApiProperty({
-    description: "Device token",
-    required: true,
+    description: "Id token",
   })
+  @IsString()
   idToken: string;
 
   @ApiProperty({
     description: "Network used for connection",
-    required: true,
   })
+  @IsString()
   socialMode: string;
 }

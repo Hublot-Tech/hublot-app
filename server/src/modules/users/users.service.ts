@@ -2,7 +2,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import * as bcrypt from "bcrypt";
 import { Model } from "mongoose";
 import { BulkQueryDto } from "../dto/response.dto";
-import { CreateUserDto, UpdateUsersDto, UserDto } from "./dto/users.dto";
+import { CreateUserDto, UpdateUserDto, UserDto } from "./dto/users.dto";
 import { User } from "./schema/users.schema";
 import { NotFoundException } from "@nestjs/common";
 
@@ -46,7 +46,7 @@ export class UserService {
     if (!user) throw new NotFoundException(`User with id ${userId} not found`);
   }
 
-  async update(userId: string, data: UpdateUsersDto): Promise<UserDto> {
+  async update(userId: string, data: UpdateUserDto): Promise<UserDto> {
     const user = await this.userModel
       .findByIdAndUpdate(
         userId,
