@@ -1,11 +1,13 @@
 import { Injectable, UnprocessableEntityException } from "@nestjs/common";
-import { OAuth2Client, TokenPayload } from "google-auth-library";
-import { CreateUserDto, Locale } from "src/modules/users/dto/users.dto";
-import { AuthGoogleLoginDto } from "../dto/auth.dto";
-
 import { JwtService } from "@nestjs/jwt";
-import { UserService } from "src/modules/users/users.service";
-import { jwtConstants } from "src/constants/constants";
+import { OAuth2Client, TokenPayload } from "google-auth-library";
+import { jwtConstants } from "../../../constants/constants";
+import {
+  CreateUserDto,
+  GoogleSignInDto,
+  Locale,
+} from "../../users/dto/users.dto";
+import { UserService } from "../../users/users.service";
 
 @Injectable()
 export class SocialAuthService {
@@ -21,7 +23,7 @@ export class SocialAuthService {
     );
   }
 
-  async getProfileByToken(loginDto: AuthGoogleLoginDto): Promise<string> {
+  async getProfileByToken(loginDto: GoogleSignInDto): Promise<string> {
     const ticket = await this.google.verifyIdToken({
       idToken: loginDto.idToken,
       audience: [process.env.AUTH_GOOGLE_CLIENT_ID],
