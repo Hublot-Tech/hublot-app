@@ -1,4 +1,6 @@
 import 'package:app/configuration.dart';
+import 'package:app/screens/part_provider/add_service/service_offer/service_offer_screen.dart';
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -18,7 +20,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     TextEditingController nameService = TextEditingController();
     TextEditingController descriptionService = TextEditingController();
-
+    bool isValided;
     return BackgroundAddService(
       widget: Column(
         children: [
@@ -39,15 +41,15 @@ class _BodyState extends State<Body> {
               ],
             ),
           ),
-          const SizedBox(height: 150),
+          SizedBox(height: getProportionateScreenHeight(150)),
           textPresentation(
               msg: "Description du services",
               fontWeight: FontWeight.bold,
-              size: 21.5),
+              size: getProportionateScreenWidth(24.2)),
           textPresentation(
               msg: "Pour  faciliter l’échange avec vos potentiels ",
               fontWeight: FontWeight.normal,
-              size: 11),
+              size: getProportionateScreenWidth(11)),
           EspaceMenuWidget(),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -56,6 +58,11 @@ class _BodyState extends State<Body> {
               children: [
                 TextField(
                   controller: nameService,
+                  onSubmitted: (value) {
+                    setState(() {
+                      isValided = isSubmitted(nameService, descriptionService);
+                    });
+                  },
                   decoration: InputDecoration(
                     hintText: "Nom du service ",
                     contentPadding: EdgeInsets.only(left: 30, top: 30),
@@ -68,6 +75,11 @@ class _BodyState extends State<Body> {
                 TextField(
                   controller: descriptionService,
                   maxLines: 14,
+                  onSubmitted: (value) {
+                    setState(() {
+                      isValided = isSubmitted(nameService, descriptionService);
+                    });
+                  },
                   decoration: InputDecoration(
                     hintText: "Description du service ",
                     contentPadding: EdgeInsets.only(left: 30, top: 32),
@@ -79,7 +91,9 @@ class _BodyState extends State<Body> {
                 EspaceMenuWidget(taille: 30),
                 ButtomCustom(
                   msg: 'Confirmer',
-                  press: () {},
+                  press: () {
+                    Navigator.pushNamed(context, ServiceOfferScreen.routeName);
+                  },
                   isValided: true,
                 )
               ],
@@ -94,9 +108,9 @@ class _BodyState extends State<Body> {
 /*
 
 */
-Color getButtonColor(TextEditingController nameService,
+bool isSubmitted(TextEditingController nameService,
     TextEditingController descriptionService) {
   bool isTextEntered =
       nameService.text.isNotEmpty && descriptionService.text.isNotEmpty;
-  return isTextEntered ? Colors.blue : kprimaryColor;
+  return isTextEntered;
 }

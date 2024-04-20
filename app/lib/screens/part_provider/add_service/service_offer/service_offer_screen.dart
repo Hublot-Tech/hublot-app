@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 
-class DescriptionScreen extends StatelessWidget {
-  const DescriptionScreen({super.key});
-  static String routeName = "/descriptionScreen";
+class ServiceOfferScreen extends StatelessWidget {
+  const ServiceOfferScreen({super.key});
+  static String routeName = "/service_offer";
 
   @override
   Widget build(BuildContext context) {
