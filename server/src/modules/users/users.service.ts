@@ -1,73 +1,59 @@
-import {
-  CreateUserDto,
-  GetAllUserResponseDto,
-  GetOneUserResponseDto,
-  QueryUserDto,
-  UpdateUsersDto,
-  UserDto,
-} from "./dto/users.dto";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { User } from "./shema/users.schema";
 import * as bcrypt from "bcrypt";
+import { Model } from "mongoose";
+import { BulkQueryDto } from "../dto/response.dto";
+import { CreateUserDto, UpdateUsersDto, UserDto } from "./dto/users.dto";
+import { User } from "./schema/users.schema";
+import { NotFoundException } from "@nestjs/common";
 
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async register(userData: CreateUserDto): Promise<CreateUserDto> {
-    userData.password = await bcrypt.hash(
-      userData.password,
-      parseInt(process.env.SALT_ROUND_DCRIPT),
-    );
-
-    const createdUser = new this.userModel(userData);
-    return createdUser.save();
+  async register(userData: CreateUserDto): Promise<UserDto> {
+    const createdUser = await new this.userModel({
+      ...userData,
+      password: bcrypt.hashSync(
+        userData.password,
+        parseInt(process.env.SALT_ROUND_DCRIPT),
+      ),
+    }).save();
+    return new UserDto(createdUser.toJSON());
   }
 
-  findOne(userId: number): Promise<GetOneUserResponseDto> {
-    return this.userModel
-      .findById(userId)
-      .exec() as unknown as Promise<GetOneUserResponseDto>;
+  async findOne(userId: string): Promise<UserDto> {
+    const user = await this.userModel.findById(userId).exec();
+    return new UserDto(user.toJSON());
   }
 
-  findByEmail(email: string): Promise<UserDto> {
-    return this.userModel
-      .findOne({ email })
-      .exec() as unknown as Promise<UserDto>;
+  async findByEmail(email: string): Promise<UserDto> {
+    const user = await this.userModel.findOne({ email }).exec();
+    return new UserDto(user.toJSON());
   }
 
-  async findAll(query: QueryUserDto): Promise<GetAllUserResponseDto> {
-    const count = await this.userModel.countDocuments({}).exec();
-    const page_total = Math.ceil(count / (query.limit ?? 10));
-    const allUser = (await this.userModel
+  async findAll(query: BulkQueryDto): Promise<UserDto[]> {
+    const users = await this.userModel
       .find()
-      .limit(query.limit ?? 10)
+      .limit(query.perpage ?? 10)
       .skip(query.page ?? 1)
-      .exec()) as unknown as UserDto[];
-
-    return {
-      data: allUser,
-      meta: {
-        perpage: page_total,
-        page: query.page ?? 1,
-        limit: query.limit ?? 10,
-      },
-      success: true,
-    };
+      .exec();
+    return users.map((user) => new UserDto(user.toJSON()));
   }
 
-  delete(userId: number): Promise<boolean> {
-    return this.userModel
-      .findByIdAndDelete(userId)
-      .exec() as unknown as Promise<boolean>;
+  async delete(userId: string): Promise<void> {
+    const user = await this.userModel.findByIdAndDelete(userId).exec();
+    if (!user) throw new NotFoundException(`User with id ${userId} not found`);
   }
 
-  update(userId: number, data: UpdateUsersDto): Promise<UserDto> {
-    data.updatedAt = new Date();
-    return this.userModel
-      .findByIdAndUpdate(userId, data, { new: true })
-      .exec() as unknown as Promise<UserDto>;
+  async update(userId: string, data: UpdateUsersDto): Promise<UserDto> {
+    const user = await this.userModel
+      .findByIdAndUpdate(
+        userId,
+        { ...data, updatedAt: new Date() },
+        { new: true },
+      )
+      .exec();
+    return new UserDto(user.toJSON());
   }
 }
