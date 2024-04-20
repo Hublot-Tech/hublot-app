@@ -174,7 +174,7 @@ class _FormInscriptionState extends State<FormInscription> {
           press: () {
             Navigator.pushNamed(context, HomeScreen.routeName);
           },
-          msg: "S'inscrire",
+          msg: "S'inscrire", isValided: true,
         ),
       ],
     ));

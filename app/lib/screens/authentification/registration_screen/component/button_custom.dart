@@ -6,11 +6,12 @@ class ButtomCustom extends StatefulWidget {
     super.key,
     required this.press,
     required this.msg,
-    this.color = kbottonColor,
+    this.color = kbottonColor, required this.isValided,
   });
   final GestureCancelCallback press;
   final String msg;
   final Color color;
+  final bool isValided;
 
   @override
   State<ButtomCustom> createState() => _ButtomCustomState();
@@ -26,7 +27,7 @@ class _ButtomCustomState extends State<ButtomCustom> {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: widget.color,
+          color:widget.isValided?kprimaryColor:widget.color,
         ),
         child: Center(
           child: Row(

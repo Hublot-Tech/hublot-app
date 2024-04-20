@@ -19,7 +19,6 @@ class _BodyState extends State<Body> {
     TextEditingController nameService = TextEditingController();
     TextEditingController descriptionService = TextEditingController();
 
-    
     return BackgroundAddService(
       widget: Column(
         children: [
@@ -79,9 +78,9 @@ class _BodyState extends State<Body> {
                 ),
                 EspaceMenuWidget(taille: 30),
                 ButtomCustom(
-                  color: getButtonColor(nameService, descriptionService),
                   msg: 'Confirmer',
                   press: () {},
+                  isValided: true,
                 )
               ],
             )),

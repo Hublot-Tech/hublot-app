@@ -95,7 +95,7 @@ class _BodyState extends State<Body> {
               ButtomCustom(
                 press: () {},
                 msg: 'Confirmer',
-                color: kprimaryColor,
+                isValided: true,
               ),
               const EspaceMenuWidget(taille: 40),
               const VersionHublo(),

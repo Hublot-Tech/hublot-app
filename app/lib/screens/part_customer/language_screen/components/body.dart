@@ -38,7 +38,7 @@ class _BodyState extends State<Body> {
             ],
           ),
           const SizedBox(height: 100),
-          ButtomCustom(press: () {}, msg: "Confirmer",color: kprimaryColor,),
+          ButtomCustom(press: () {}, msg: "Confirmer",color: kprimaryColor, isValided: true),
           const SizedBox(height: 100),
           const VersionHublo(),
         ],
