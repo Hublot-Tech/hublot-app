@@ -43,7 +43,8 @@ class BackgroundAddService extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30)),
                 child: SingleChildScrollView(
-                    controller: scroolController, child: widget),
+                    controller: scroolController,
+                     child: widget),
               );
             }),
       ],

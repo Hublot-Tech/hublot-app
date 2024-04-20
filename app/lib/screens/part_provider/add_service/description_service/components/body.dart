@@ -19,7 +19,7 @@ class _BodyState extends State<Body> {
     TextEditingController nameService = TextEditingController();
     TextEditingController descriptionService = TextEditingController();
 
-    int val = 2;
+    
     return BackgroundAddService(
       widget: Column(
         children: [
