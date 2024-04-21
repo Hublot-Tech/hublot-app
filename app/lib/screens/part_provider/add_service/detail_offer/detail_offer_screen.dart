@@ -10,6 +10,9 @@ class DetailOfferScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return const Body();
+    return const Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Body(),
+    );
   }
 }
