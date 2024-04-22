@@ -3,84 +3,112 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
-  ParseIntPipe,
-  Post,
   Put,
   Query,
 } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
-  ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from "@nestjs/swagger";
 import {
-  CreateUserDto,
-  GetAllUsersDto,
-  QueryUserDto,
-  UpdateUsersDto,
-  UserDto,
+  GetAllUserResponseDto,
+  GetOneUserResponseDto,
+  UpdateUserDto,
 } from "./dto/users.dto";
 import { UserService } from "./users.service";
+import { BulkQueryDto, ResponseMetadataDto, ResponseStatus } from "../dto";
 
-@ApiTags("User")
-@Controller("user")
+@ApiTags("Users")
+@Controller("users")
 export class UsersController {
   constructor(private userService: UserService) {}
 
-  @Post()
-  @ApiCreatedResponse({
-    type: GetAllUsersDto,
-    description: "Successful user registration",
-  })
-  register(@Body() createUserDto: CreateUserDto) {
-    const users = this.userService.register(createUserDto);
-    return users;
-  }
-
   @Get()
   @ApiOkResponse({
-    type: UserDto,
+    type: GetAllUserResponseDto,
     description: "list of successfully loaded users",
   })
-  findAll(@Query() query: QueryUserDto) {
-    const user = this.userService.findAll(query);
-    return user;
+  async findAll(@Query() query: BulkQueryDto): Promise<GetAllUserResponseDto> {
+    const users = await this.userService.findAll(query);
+    return new GetAllUserResponseDto({
+      data: users,
+      page: query.page ?? 1,
+      perpage: query.perpage ?? 10,
+      status: ResponseStatus.SUCCESS,
+      message: "Successfully retrieved users",
+    });
   }
 
   @Get(":id")
   @ApiOkResponse({
-    type: UserDto,
+    type: GetOneUserResponseDto,
     description: "User information successfully retrieved",
   })
   @ApiNotFoundResponse({ description: "User not found" })
   @ApiBadRequestResponse({ description: "Invalid user ID" })
-  findOne(@Param("id", ParseIntPipe) id: number) {
-    const user = this.userService.findOne(id);
-    return user;
+  async findOne(@Param("id") userId: any): Promise<GetOneUserResponseDto> {
+    const user = await this.userService.findOne(userId);
+
+    return new GetOneUserResponseDto({
+      data: user,
+      message: "Successfully retrieved user",
+      status: ResponseStatus.SUCCESS,
+    });
   }
 
   @Put(":id")
   @ApiOkResponse({
-    type: GetAllUsersDto,
+    type: GetOneUserResponseDto,
     description: "The user has been successfully modified",
   })
-  update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() updateUsersDto: UpdateUsersDto,
-  ) {
-    const user = this.userService.update(id, updateUsersDto);
-    return user;
+  async update(
+    @Param("id") userId: string,
+    @Body() updateUsersDto: UpdateUserDto,
+  ): Promise<GetOneUserResponseDto> {
+    try {
+      const user = await this.userService.update(userId, updateUsersDto);
+      return new GetOneUserResponseDto({
+        data: user,
+        message: "Successfully retrieved user",
+        status: ResponseStatus.SUCCESS,
+      });
+    } catch (error) {
+      throw new HttpException(
+        new ResponseMetadataDto({
+          message: error.message,
+          status: ResponseStatus.ERROR,
+        }),
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Delete(":id")
   @ApiNoContentResponse({
+    type: ResponseMetadataDto,
     description: "User successfully deleted",
   })
-  delete(@Param("id", ParseIntPipe) id: number) {
-    this.userService.delete(id);
+  async delete(@Param("id") userId: string): Promise<ResponseMetadataDto> {
+    try {
+      await this.userService.delete(userId);
+      return new ResponseMetadataDto({
+        message: "Successfully deleted user",
+        status: ResponseStatus.ERROR,
+      });
+    } catch (error) {
+      throw new HttpException(
+        new ResponseMetadataDto({
+          message: error.message,
+          status: ResponseStatus.ERROR,
+        }),
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
