@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,8 +18,8 @@ class BecomeRowBox extends StatelessWidget {
       child: Row(children: [
         Container(
           //  margin: const EdgeInsets.only(left: 20),
-          height: 40,
-          width: 200,
+          height: getProportionateScreenHeight(40),
+          width: getProportionateScreenWidth(180),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -44,7 +45,7 @@ class BecomeRowBox extends StatelessWidget {
               SvgPicture.asset("img/profil.svg"),
               Text(
                 text,
-                style: const TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: getProportionateScreenWidth(14)),
               ),
               const Icon(Icons.keyboard_arrow_down_sharp),
             ],

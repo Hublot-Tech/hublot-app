@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,8 +16,8 @@ class CardHistoric extends StatelessWidget {
       child: Stack(children: [
         Container(
           margin: const EdgeInsets.only(right: 20),
-          width: 390,
-          height: 72,
+          width: getProportionateScreenWidth(390),
+          height: getProportionateScreenHeight(72),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(6),
@@ -40,8 +41,8 @@ class CardHistoric extends StatelessWidget {
         Row(
           children: [
             Container(
-                width: 83,
-                height: 72,
+                width: getProportionateScreenWidth(83),
+                height: getProportionateScreenHeight(72),
                 decoration: const BoxDecoration(
                   color: Color.fromRGBO(30, 136, 229, 0.1),
                 ),
@@ -56,7 +57,7 @@ class CardHistoric extends StatelessWidget {
                   textPresentation(
                       msg: "Vos recentes recherches",
                       fontWeight: FontWeight.bold,
-                      size: 16),
+                      size: getProportionateScreenWidth(16)),
                   const SizedBox(height: 2),
                   const Text("Consultez l'historique de votre \nnavigation..."),
                 ],

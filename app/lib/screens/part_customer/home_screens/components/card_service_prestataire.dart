@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -26,8 +27,8 @@ class CardServicePrestataire extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              width: size.width * 0.9,
-              height: size.height * 0.39,
+              width: getProportionateScreenWidth(330),
+              height: getProportionateScreenHeight(300),
               decoration: BoxDecoration(
                   color: ksecondaryColor,
                   borderRadius: BorderRadius.circular(23)),
@@ -36,8 +37,8 @@ class CardServicePrestataire extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               child: Image.network(
                 img,
-                width: 387,
-                height: 356,
+                width: getProportionateScreenWidth(387),
+                height: getProportionateScreenHeight(356),
                 fit: BoxFit.cover,
               ),
             ),
@@ -46,8 +47,8 @@ class CardServicePrestataire extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(left: 18, top: 20),
                   padding: const EdgeInsets.all(8),
-                  width: 40,
-                  height: 40,
+                  width: getProportionateScreenWidth(40),
+                  height: getProportionateScreenHeight(40),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
                     color: const Color.fromRGBO(255, 192, 0, 1),

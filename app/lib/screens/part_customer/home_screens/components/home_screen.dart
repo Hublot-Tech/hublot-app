@@ -1,4 +1,5 @@
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -22,6 +23,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: [
         const Body(),

@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 
 class HublotTextWigdet extends StatelessWidget {
@@ -7,17 +8,19 @@ class HublotTextWigdet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        Spacer(),
+        const Spacer(),
         Text(
           "HUB",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: getProportionateScreenWidth(25),
+              fontWeight: FontWeight.bold),
         ),
         Text(
           "LOT",
           style: TextStyle(
-              fontSize: 25,
+              fontSize: getProportionateScreenWidth(25),
               fontWeight: FontWeight.bold,
               color: Color.fromARGB(255, 255, 177, 59)),
         ),

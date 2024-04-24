@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 
 class NotificationBox extends StatelessWidget {
@@ -9,8 +10,8 @@ class NotificationBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 20),
-      height: 40,
-      width: 40,
+      height: getProportionateScreenHeight(40),
+      width: getProportionateScreenWidth(40),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(40),
@@ -30,9 +31,9 @@ class NotificationBox extends StatelessWidget {
           )
         ],
       ),
-      child: const Icon(
+      child: Icon(
         Icons.notifications_none_sharp,
-        size: 30,
+        size: getProportionateScreenWidth(30),
       ),
     );
   }

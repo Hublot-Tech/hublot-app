@@ -1,4 +1,5 @@
 import 'package:app/controller/service.dart';
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
 
@@ -17,7 +18,6 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     splahDatas = hublotProviderApi.getSplashData();
   }
@@ -60,17 +60,18 @@ class _BodyState extends State<Body> {
                 children: [
                   textPresentation(
                       msg: splahDatas[currentIndex]['text']!,
-                      size: 26,
+                      size: getProportionateScreenWidth(20),
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 10),
                   textPresentation(
                       msg: splahDatas[currentIndex]['mig']!,
-                      size: 14,
+                      size: getProportionateScreenWidth(14),
                       fontWeight: FontWeight.w300),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: getProportionateScreenWidth(20)),
+            //boutton de Decouvrir
             GestureDetector(
               onTap: currentIndex == 2
                   ? () {
@@ -78,8 +79,8 @@ class _BodyState extends State<Body> {
                     }
                   : () {},
               child: Container(
-                width: 390,
-                height: 60,
+                width: getProportionateScreenWidth(340),
+                height: getProportionateScreenHeight(60),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
                   color: currentIndex == 2 ? kprimaryColor : ksecondaryColor,
@@ -88,18 +89,18 @@ class _BodyState extends State<Body> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         "Découvrir",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: getProportionateScreenWidth(20),
                           color: Colors.white,
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 3, top: 9),
-                        width: 5,
-                        height: 5,
+                        width: getProportionateScreenWidth(5),
+                        height: getProportionateScreenHeight(5),
                         decoration: const BoxDecoration(color: kyellowColor),
                       ),
                     ],
@@ -107,7 +108,7 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: getProportionateScreenWidth(20)),
           ],
         ),
       ),
@@ -118,8 +119,8 @@ class _BodyState extends State<Body> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 2),
       margin: const EdgeInsets.all(4),
-      height: 15,
-      width: 15,
+      height: getProportionateScreenHeight(15),
+      width: getProportionateScreenWidth(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
         color: currentIndex == index ? kprimaryColor : ksecondaryColor,

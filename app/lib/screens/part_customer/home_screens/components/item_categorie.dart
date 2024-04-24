@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -14,8 +15,8 @@ class ItemCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 10),
-      width: 140,
-      height: 40,
+      width: getProportionateScreenWidth(125),
+      height: getProportionateScreenHeight(40),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(60),
           color: const Color.fromRGBO(100, 100, 100, 0.15)),
@@ -24,7 +25,7 @@ class ItemCategories extends StatelessWidget {
         children: [
           const Spacer(),
           SvgPicture.asset(icon),
-          const SizedBox(width: 6),
+          SizedBox(width: getProportionateScreenWidth(6)),
           textPresentation(msg: name, fontWeight: FontWeight.bold, size: 14),
           const Spacer(),
         ],

@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../configuration.dart';
@@ -7,6 +8,7 @@ class BoxCategoryService extends StatelessWidget {
     super.key,
     required this.name,
     required this.press,
+
     ///sert ici tout simplement
   });
   final String name;
@@ -24,7 +26,7 @@ class BoxCategoryService extends StatelessWidget {
             child: textPresentation(
                 msg: "Voir Tout",
                 fontWeight: FontWeight.bold,
-                size: 13,
+                size: getProportionateScreenWidth(13),
                 color: kCategoriecolor),
           )
         ],

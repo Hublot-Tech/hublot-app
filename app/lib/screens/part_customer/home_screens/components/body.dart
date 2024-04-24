@@ -1,4 +1,5 @@
 import 'package:app/controller/service.dart';
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/home_screens/components/become_prestataire.dart';
@@ -78,7 +79,7 @@ class _BodyState extends State<Body> {
                               context, ProviderScreen.routeName);
                         },
                       ),
-                      NotificationBox(),
+                      const NotificationBox(),
                     ],
                   ),
                   const EspaceMenuWidget(),
@@ -115,7 +116,7 @@ class _BodyState extends State<Body> {
                                   press: () {}),
                               const EspaceMenuWidget(),
                               SizedBox(
-                                height: 400,
+                                height: getProportionateScreenHeight(400),
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: itemServices.length,
@@ -152,8 +153,8 @@ class _BodyState extends State<Body> {
                                     borderRadius: BorderRadius.circular(23),
                                     child: Image.asset(
                                       "img/portrait-stylish-professional-photographer.jpg",
-                                      width: 387,
-                                      height: 356,
+                                      width: getProportionateScreenWidth(387),
+                                      height: getProportionateScreenHeight(356),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -239,51 +240,6 @@ class _BodyState extends State<Body> {
                                 msg: "Liste basé sur votre position",
                                 press: () {}),
                             const EspaceMenuWidget(),
-                            Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: ksecondaryColor,
-                                      borderRadius: BorderRadius.circular(23)),
-                                ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(23),
-                                  child: Image.asset(
-                                    "img/portrait-stylish-professional-photographer.jpg",
-                                    width: 387,
-                                    height: 356,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Spacer(),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: size.width * 0.02, top: 10),
-                                      child: BoxStar(
-                                        size: size,
-                                        icon: 'img/icons8_star 2.svg',
-                                        nbrOfStar: '4.6',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: size.height * 0.3),
-                                  child: Center(
-                                    child: BoxInformation(
-                                      size: size,
-                                      name: "Grec Koum,",
-                                      profession: "Photographe",
-                                      lieu: "Douala,akwa",
-                                      distance: "3km",
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                 ],
@@ -292,6 +248,61 @@ class _BodyState extends State<Body> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MistakeWidget extends StatelessWidget {
+  const MistakeWidget({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: ksecondaryColor, borderRadius: BorderRadius.circular(23)),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(23),
+          child: Image.asset(
+            "img/portrait-stylish-professional-photographer.jpg",
+            width: 387,
+            height: 356,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Row(
+          children: [
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.only(right: size.width * 0.02, top: 10),
+              child: BoxStar(
+                size: size,
+                icon: 'img/icons8_star 2.svg',
+                nbrOfStar: '4.6',
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: size.height * 0.3),
+          child: Center(
+            child: BoxInformation(
+              size: size,
+              name: "Grec Koum,",
+              profession: "Photographe",
+              lieu: "Douala,akwa",
+              distance: "3km",
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

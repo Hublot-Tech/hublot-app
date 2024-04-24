@@ -1,3 +1,4 @@
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/part_customer/search_screens/search_screen.dart';
 
@@ -9,7 +10,7 @@ class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 20),
+      padding: EdgeInsets.only(right: getProportionateScreenWidth(20)),
       child: TextField(
         canRequestFocus: false,
         onTap: () {
@@ -18,9 +19,9 @@ class SearchBox extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: IconButton(
               onPressed: () {},
-              icon: const Icon(
+              icon: Icon(
                 Icons.search,
-                size: 30,
+                size: getProportionateScreenWidth(30),
               )),
           contentPadding: const EdgeInsets.only(left: 30),
           label: const Text("Que recherchez vous?"),
