@@ -23,16 +23,25 @@ export class HublotPackage extends Document {
   hublotId: string;
 
   @Prop({
+    type: String,
+    required: true,
+  })
+  name: string;
+
+  @Prop({
     type: Number,
     required: true,
   })
   price: number;
 
+  @Prop({ type: String })
+  description: string;
+
   @Prop({
-    type: String,
+    type: Number,
     required: true,
   })
-  name: string;
+  estimated_duration: number;
 
   @Prop({
     type: Date,
