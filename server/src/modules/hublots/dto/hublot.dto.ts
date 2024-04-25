@@ -16,7 +16,7 @@ import {
   ValidateNested,
 } from "class-validator";
 import { Document } from "mongoose";
-import { Hublot, Vote } from "../schemas/hublot.schema";
+import { Hublot } from "../schemas/hublot.schema";
 import {
   CreateHublotPackageDto,
   UpdateHublotPackageDto,
@@ -59,21 +59,6 @@ export class UpdateHublotDto extends OmitType(PartialType(CreateHublotDto), [
   packages?: UpdateHublotPackageDto[];
 }
 
-export class VoteDto extends Vote {
-  @ApiProperty()
-  @IsNumber()
-  upvotes: number;
-
-  @ApiProperty()
-  @IsNumber()
-  downvotes: number;
-
-  constructor(props: Vote) {
-    super(props);
-    Object.assign(this, props);
-  }
-}
-
 export class HublotDetailsDto
   extends CreateHublotDto
   implements Omit<Hublot, keyof Document>
@@ -86,10 +71,13 @@ export class HublotDetailsDto
   @ApiProperty()
   category: string;
 
+  @IsNumber()
   @ApiProperty()
-  @ValidateNested()
-  @Type(() => Vote)
-  vote: Vote;
+  upVotes: number;
+
+  @IsNumber()
+  @ApiProperty()
+  downVotes: number;
 
   @ApiProperty()
   @IsBoolean()

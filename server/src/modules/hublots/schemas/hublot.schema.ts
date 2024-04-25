@@ -1,18 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
-@Schema()
-export class Vote {
-  @Prop({ type: Number, required: true })
-  upvotes: number;
-
-  @Prop({ type: Number, required: true })
-  downvotes: number;
-
-  constructor(props: Vote) {
-    Object.assign(this, props);
-  }
-}
 
 @Schema({
   autoCreate: true,
@@ -51,11 +39,11 @@ export class Hublot extends Document {
   @Prop({ type: String, required: true })
   address: string;
 
-  @Prop({
-    type: Vote,
-    required: true,
-  })
-  vote: Vote;
+  @Prop({ type: Number, required: true })
+  upVotes: number;
+
+  @Prop({ type: Number, required: true })
+  downVotes: number;
 
   @Prop({
     type: Boolean,
