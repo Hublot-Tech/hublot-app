@@ -71,6 +71,20 @@ class HublotProviderApiApi {
     return listLangue;
   }
 
+  List<Map<String, String>> getBasicOffer() {
+    List<Map<String, String>> listOffer = [
+      {"Nombres de photos": "10", "": ""}
+    ];
+    return listOffer;
+  }
+
+  List<Map<String, String>> getStandarOffer() {
+    List<Map<String, String>> listOffer = [
+      {"Nombres de photos": "30", "Qualités des photos": "1080 px"}
+    ];
+    return listOffer;
+  }
+
   List<Map<String, String>> getAllServices() {
     List<Map<String, String>> dataProvider = [
       {
