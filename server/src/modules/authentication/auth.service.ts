@@ -21,7 +21,7 @@ export class AuthService {
     }
     const payload = { username: user.email };
     return this.jwtService.sign(payload, {
-      secret: jwtConstants.secret,
+      secret: process.env.JWT_KEY,
     });
   }
 

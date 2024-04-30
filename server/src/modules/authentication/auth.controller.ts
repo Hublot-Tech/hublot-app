@@ -21,6 +21,7 @@ import { AuthGuard } from "./auth.guard";
 import { AuthService } from "./auth.service";
 import { SignInDto, SignInResponseDto } from "./dto/auth.dto";
 import { SocialAuthService } from "./google/google-auth.service";
+import { Public } from "./decorator/auth.decorator";
 
 @ApiTags("Auth")
 @Controller("auth")
@@ -36,6 +37,7 @@ export class AuthController {
     description: "Successfully signed user in",
   })
   @Post("login")
+  @Public()
   async signIn(@Body() signInDto: SignInDto): Promise<SignInResponseDto> {
     const accessToken = await this.authService.signIn(
       signInDto.email,
@@ -53,6 +55,7 @@ export class AuthController {
     description: "Successful user registration",
   })
   @Post("google-login")
+  @Public()
   async googleSignIn(
     @Body() signInDto: GoogleSignInDto,
   ): Promise<SignInResponseDto> {
@@ -81,6 +84,7 @@ export class AuthController {
     });
   }
 
+  @Public()
   @Post("register")
   @ApiCreatedResponse({
     type: RegisterUserResponseDto,
