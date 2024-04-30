@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsDateString, IsEmail, IsString } from "class-validator";
+import { IsEmail, IsJWT, IsString } from "class-validator";
+import { ResponseMetadataDto } from "src/modules/dto";
 
 export class SignInDto {
   @ApiProperty({
@@ -17,20 +18,18 @@ export class SignInDto {
   password: string;
 }
 
-export class UserAuthResponseDto {
+export class SignInResponseDto extends ResponseMetadataDto {
   @ApiProperty({
-    description: "Valid token",
+    description: "Valid access token",
     required: true,
   })
-  @IsDateString()
+  @IsJWT()
   accessToken: string;
 
-  @ApiProperty({
-    description: "Define authentication status",
-    required: true,
-  })
-  @IsBoolean()
-  success: Boolean;
+  constructor(responseBody: SignInResponseDto) {
+    super(responseBody);
+    Object.assign(this, responseBody);
+  }
 }
 
 export class AuthGoogleLoginDto {

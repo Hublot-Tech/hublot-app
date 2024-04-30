@@ -7,13 +7,16 @@ import { ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, forbidUnknownValues: true }),
+  );
 
   // Swagger initialise
   const config = new DocumentBuilder()
     .setTitle("Hublot")
     .setDescription(
-      "Hublot for connecting service providers and customers. The general idea of the project is to design software program connecting service providers and customers",
+      `Hublot for connecting service providers and customers. 
+      The general idea of the project is to design software program connecting service providers and customers`,
     )
     .setVersion("1.0")
     .build();

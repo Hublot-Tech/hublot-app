@@ -1,17 +1,28 @@
-import { Body, Controller, Post, Request, Get } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { SignInDto, UserAuthResponseDto } from "./dto/auth.dto";
-import { ApiCreatedResponse } from "@nestjs/swagger";
-import { Public } from "./decorator/metaData";
-import { UserService } from "../users/users.service";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
+import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
+import { ResponseMetadataDto, ResponseStatus } from "../dto";
 import {
   GetOneUserResponseDto,
-  SocialAuthDto,
+  RegisterUserResponseDto,
+  GoogleSignInDto,
   UserDto,
-  UserRegisterDto,
 } from "../users/dto/users.dto";
-import { SocialAuthService } from "./social-auth/social-auth.service";
+import { UserService } from "../users/users.service";
+import { AuthGuard } from "./auth.guard";
+import { AuthService } from "./auth.service";
+import { SignInDto, SignInResponseDto } from "./dto/auth.dto";
+import { SocialAuthService } from "./google/google-auth.service";
 
+@ApiTags("Auth")
 @Controller("auth")
 export class AuthController {
   constructor(
@@ -21,59 +32,78 @@ export class AuthController {
   ) {}
 
   @ApiCreatedResponse({
-    type: UserAuthResponseDto,
-    description: "Successful user registration",
+    type: SignInResponseDto,
+    description: "Successfully signed user in",
   })
-  @Public()
   @Post("login")
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
+  async signIn(@Body() signInDto: SignInDto): Promise<SignInResponseDto> {
+    const accessToken = await this.authService.signIn(
+      signInDto.email,
+      signInDto.password,
+    );
+    return new SignInResponseDto({
+      accessToken,
+      message: "Successfully signed user in",
+      status: ResponseStatus.SUCCESS,
+    });
   }
 
   @ApiCreatedResponse({
-    type: UserAuthResponseDto,
+    type: SignInResponseDto,
     description: "Successful user registration",
   })
-  @Public()
-  @Post("social-auth")
-  socialAuth(@Body() signInDto: SocialAuthDto) {
-    return this.authGuard.getProfileByToken(signInDto);
+  @Post("google-login")
+  async googleSignIn(
+    @Body() signInDto: GoogleSignInDto,
+  ): Promise<SignInResponseDto> {
+    const accessToken = await this.authGuard.getProfileByToken(signInDto);
+    return new SignInResponseDto({
+      accessToken,
+      message: "Successfully signed user in",
+      status: ResponseStatus.SUCCESS,
+    });
   }
 
   @Get("profile")
+  @UseGuards(AuthGuard)
   @ApiCreatedResponse({
     type: GetOneUserResponseDto,
     description: "Successful user registration",
   })
-  async getProfile(@Request() req) {
-    let user = req.user;
-    user.isOnline = true;
-    let authUser = await this.userService.update(user._id, user);
-
-    return {
+  async getProfile(@Req() req): Promise<GetOneUserResponseDto> {
+    const authUser = await this.userService.update(req.user._id, {
+      isOnline: true,
+    });
+    return new GetOneUserResponseDto({
       data: authUser,
-      success: true,
-    };
+      message: "Successfully retrieved user profile",
+      status: ResponseStatus.SUCCESS,
+    });
   }
 
-  @Public()
   @Post("register")
   @ApiCreatedResponse({
-    type: UserRegisterDto,
+    type: RegisterUserResponseDto,
     description: "Successful user registration",
   })
-  async register(@Body() createUserDto: UserDto) {
+  async register(
+    @Body() createUserDto: UserDto,
+  ): Promise<RegisterUserResponseDto> {
     try {
       const users = await this.userService.register(createUserDto);
-      return {
+      return new RegisterUserResponseDto({
         data: users,
-        success: true,
-      };
+        status: ResponseStatus.SUCCESS,
+        message: "Successfully  register user",
+      });
     } catch (error) {
-      return {
-        message: error.message,
-        success: false,
-      };
+      throw new HttpException(
+        new ResponseMetadataDto({
+          message: error.message,
+          status: ResponseStatus.ERROR,
+        }),
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

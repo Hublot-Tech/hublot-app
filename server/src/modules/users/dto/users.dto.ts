@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from "@nestjs/swagger";
+import { ApiProperty, OmitType, PartialType } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import {
   IsArray,
@@ -13,6 +13,7 @@ import {
   MinLength,
   ValidateNested,
 } from "class-validator";
+import { BulkResponseMetadataDto, ResponseMetadataDto } from "../../dto";
 
 export enum Locale {
   FR = "fr",
@@ -23,7 +24,6 @@ export class CreateUserDto {
   @ApiProperty({
     example: "Wonder",
     description: "The name is required to create a new account",
-    required: true,
   })
   @IsString({ message: "Fullname is required" })
   @MinLength(3, { message: "Name must be at least 3 characters long" })
@@ -32,7 +32,6 @@ export class CreateUserDto {
   @ApiProperty({
     example: "wonder@gmail.com",
     description: "The name is required to create a new account",
-    required: true,
   })
   @IsEmail()
   email: string;
@@ -40,7 +39,6 @@ export class CreateUserDto {
   @ApiProperty({
     example: "237 693 xxx xxx",
     description: "The phoneNumber is required to create a new account",
-    required: true,
   })
   @IsPhoneNumber()
   phoneNumber: string;
@@ -51,20 +49,18 @@ export class CreateUserDto {
 
   @IsBoolean()
   @IsOptional()
-  isOnline: boolean = false;
+  isOnline: boolean = true;
 
   @ApiProperty({
     example: "Douala",
     description: "The locale is required to create a new account",
-    required: true,
   })
   @IsEnum(Locale)
-  locale: string;
+  locale: Locale;
 
   @ApiProperty({
     example: "Lobbessou",
     description: "The address is required to create a new account",
-    required: true,
   })
   @IsString()
   address: string;
@@ -72,123 +68,101 @@ export class CreateUserDto {
   @ApiProperty({
     example: "Hublot@##*(373#@",
     description: "The name is required to create a new account",
-    required: true,
   })
   @IsString()
   @MinLength(3, { message: "Password must be at least 3 characters long" })
   password: string;
+
+  constructor(createUser: CreateUserDto) {
+    Object.assign(this, createUser);
+  }
 }
 
 export class GetUserByIdDto {
   @ApiProperty({
     example: "Wonder",
     description: "The user ID is required to obtain a user account.",
-    required: true,
   })
   @IsUUID()
   id: string;
 }
 
-export class QueryUserDto {
-  @ApiProperty()
-  @IsOptional()
-  perpage: number;
-
-  @ApiProperty()
-  @IsOptional()
-  page: number;
-
-  @ApiProperty()
-  @IsOptional()
-  limit: number;
-}
-
 export class UserDto extends CreateUserDto {
   @ApiProperty({
     description: "Timestamp of last update",
-    required: true,
   })
   @IsDateString()
-  @IsOptional()
   updatedAt: Date;
 
   @ApiProperty({
     description: "Timestamp of creation",
-    required: false,
   })
   @IsDateString()
-  @IsOptional()
   createdAt: Date;
+
   @ApiProperty({
     description: "Timestamp of deletion",
-    required: false,
   })
   @IsDateString()
-  @IsOptional()
   deletedAt: Date;
+
+  constructor(user: UserDto) {
+    super(user);
+    Object.assign(this, user);
+  }
 }
 
-export class UpdateUsersDto extends OmitType(UserDto, [
-  "password",
-  "email",
-  "isVerified",
-] as const) {}
+export class UpdateUserDto extends PartialType(
+  OmitType(UserDto, ["password", "email", "isVerified"] as const),
+) {}
 
-export class GetAllUsersDto extends QueryUserDto {
-  @IsArray()
+export class RegisterUserResponseDto extends ResponseMetadataDto {
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
   data: UserDto;
+
+  constructor(responseBody: RegisterUserResponseDto) {
+    super(responseBody);
+    Object.assign(this, responseBody);
+  }
 }
 
-export class UserRegisterDto {
-  @ApiProperty()
-  @ValidateNested()
-  @Type(() => UserDto)
-  data: UserDto;
-  @ApiProperty({
-    description: "Define authentication status",
-  })
-  success: boolean;
-}
-
-export class GetAllUserResponseDto {
+export class GetAllUserResponseDto extends BulkResponseMetadataDto {
   @IsArray()
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
   data: UserDto[];
-  @ApiProperty()
-  @ValidateNested()
-  @Type(() => QueryUserDto)
-  meta: QueryUserDto;
-  @ApiProperty({
-    description: "Define authentication status",
-  })
-  success: boolean;
+
+  constructor(response: GetAllUserResponseDto) {
+    super(response);
+    Object.assign(this, response);
+  }
 }
 
-export class GetOneUserResponseDto {
+export class GetOneUserResponseDto extends ResponseMetadataDto {
   @ApiProperty()
   @ValidateNested()
   @Type(() => UserDto)
   data: UserDto;
-  @ApiProperty({
-    description: "Define authentication status",
-  })
-  success: boolean;
+
+  constructor(response: GetOneUserResponseDto) {
+    super(response);
+    Object.assign(this, response);
+  }
 }
 
-export class SocialAuthDto {
+export class GoogleSignInDto {
   @ApiProperty({
-    description: "Device token",
-    required: true,
+    description: "Id token",
   })
+  @IsString()
   idToken: string;
+
   @ApiProperty({
     description: "Network used for connection",
-    required: true,
   })
+  @IsString()
   socialMode: string;
 }
