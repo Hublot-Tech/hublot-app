@@ -3,6 +3,7 @@ import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
 import 'package:app/screens/part_provider/add_service/description_service/description_screen.dart';
 import 'package:app/screens/part_provider/add_service/detail_offer/detail_offer_screen.dart';
+import 'package:app/screens/part_provider/description_service/description_service_screen.dart';
 import 'package:app/screens/part_provider/home_screen/home_screen.dart';
 import 'package:app/screens/part_provider/add_service/service_offer/service_offer_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +21,16 @@ final Map<String, WidgetBuilder> route = {
   PresentationScreen.routeName: (context) => const PresentationScreen(),
   CustomerScrenn.routeName: (context) => const CustomerScrenn(),
   ProviderScreen.routeName: (context) => const ProviderScreen(),
-  RegistrationScreen.routeName: (context) =>  RegistrationScreen(),
+  RegistrationScreen.routeName: (context) => RegistrationScreen(),
   HomeScrenns.routeName: (context) => const HomeScrenns(),
   SearchScreen.routeName: (context) => const SearchScreen(),
   AnswerScreen.routeName: (context) => const AnswerScreen(),
   AccountTab.routeName: (context) => const AccountTab(),
   LanguageScreen.routeName: (context) => const LanguageScreen(),
   CityScreen.routeName: (context) => const CityScreen(),
-  HomeScreen.routeName:(context) => const HomeScreen(),
-  DescriptionScreen.routeName:(context) => const DescriptionScreen(),
-  ServiceOfferScreen.routeName:(context) => const ServiceOfferScreen(),
-  DetailOfferScreen.routeName:(context) => const DetailOfferScreen()
- };
+  HomeScreen.routeName: (context) => const HomeScreen(),
+  DescriptionScreen.routeName: (context) => const DescriptionScreen(),
+  ServiceOfferScreen.routeName: (context) => const ServiceOfferScreen(),
+  DetailOfferScreen.routeName: (context) => const DetailOfferScreen(),
+  DescriptionService.routeName: (context) => const DescriptionService()
+};
