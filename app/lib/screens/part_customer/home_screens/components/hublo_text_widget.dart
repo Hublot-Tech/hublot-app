@@ -18,7 +18,7 @@ class HublotTextWigdet extends StatelessWidget {
               fontWeight: FontWeight.bold),
         ),
         Text(
-          "LOT",
+          "LOTS",
           style: TextStyle(
               fontSize: getProportionateScreenWidth(25),
               fontWeight: FontWeight.bold,
