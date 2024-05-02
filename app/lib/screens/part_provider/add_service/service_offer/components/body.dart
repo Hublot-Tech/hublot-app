@@ -7,7 +7,6 @@ import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../description_service/description_screen.dart';
 import 'add_service_box.dart';
 
 class Body extends StatefulWidget {
