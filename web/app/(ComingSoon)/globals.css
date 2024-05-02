@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} 
+
+body {
+
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.landing-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.countdown {
+  text-align: center;
+}
+
+#countdown-timer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.timer {
+  margin: 0 10px;
+}
+
+.timer span {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.timer span:first-child {
+  font-size: 36px;
+}
+
+@media (max-width: 768px) {
+  .timer span {
+    font-size: 18px;
+  }
+}
+
+/* mmm------------------Moving letters -------------------mmm */
+
+.moving-letters {
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.ml9 {
+  font-weight: 200;
+}
+
+.ml9 .text-wrapper {
+  display: inline-block;
+  padding-top: 0.2em;
+  padding-right: 0.05em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+}
+
+.ml9 .letter {
+  transform-origin: 50% 100%;
+  display: inline-block;
+  line-height: 1em;
+}
