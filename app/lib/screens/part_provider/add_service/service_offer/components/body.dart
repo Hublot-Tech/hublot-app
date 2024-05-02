@@ -2,12 +2,11 @@ import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/registration_screen/component/button_custom.dart';
 import 'package:app/screens/part_provider/add_service/description_service/components/background_add_service.dart';
 import 'package:app/screens/part_provider/add_service/detail_offer/detail_offer_screen.dart';
-import 'package:app/screens/part_provider/description_service/description_service_screen.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'add_service_box.dart';
+import 'cross_widget.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -22,21 +21,10 @@ class _BodyState extends State<Body> {
     return BackgroundAddService(
       widget: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 21, top: 21),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, DescriptionService.routeName);
-                  },
-                  child: SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: SvgPicture.asset("img/croix.svg"),
-                  ),
-                ),
-              ],
+          const Padding(
+            padding: EdgeInsets.only(left: 21, top: 21),
+            child: CrossWidgetClick(
+              routeName: 'DescriptionService.routeName',
             ),
           ),
           SizedBox(height: getProportionateScreenHeight(150)),
@@ -61,7 +49,10 @@ class _BodyState extends State<Body> {
                     top: BorderSide(),
                     bottom: BorderSide(),
                   )),
-                  child: AddServiceBox(msg: "Ajouter une offre ",press: (){},),
+                  child: AddServiceBox(
+                    msg: "Ajouter une offre ",
+                    press: () {},
+                  ),
                 ),
                 const EspaceMenuWidget(taille: 300),
                 ButtomCustom(
@@ -78,4 +69,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
-
