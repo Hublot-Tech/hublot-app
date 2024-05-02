@@ -2,6 +2,7 @@ import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/registration_screen/component/button_custom.dart';
 import 'package:app/screens/part_provider/add_service/description_service/components/background_add_service.dart';
 import 'package:app/screens/part_provider/add_service/detail_offer/detail_offer_screen.dart';
+import 'package:app/screens/part_provider/description_service/description_service_screen.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,7 +29,7 @@ class _BodyState extends State<Body> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, DescriptionScreen.routeName);
+                    Navigator.pushNamed(context, DescriptionService.routeName);
                   },
                   child: SizedBox(
                     width: 20,

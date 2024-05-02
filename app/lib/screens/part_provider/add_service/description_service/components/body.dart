@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:app/configuration.dart';
-import 'package:app/screens/part_provider/add_service/service_offer/service_offer_screen.dart';
+import 'package:app/screens/part_provider/description_service/description_service_screen.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,7 +28,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     TextEditingController nameService = TextEditingController();
     TextEditingController descriptionService = TextEditingController();
-    bool isValided;
+   // bool isValided;
     return BackgroundAddService(
       widget: Column(
         children: [
@@ -70,11 +70,6 @@ class _BodyState extends State<Body> {
               children: [
                 TextField(
                   controller: nameService,
-                  onSubmitted: (value) {
-                    setState(() {
-                      isValided = isSubmitted(nameService, descriptionService);
-                    });
-                  },
                   decoration: InputDecoration(
                     hintText: "Nom du service ",
                     contentPadding: const EdgeInsets.only(left: 30, top: 30),
@@ -87,11 +82,6 @@ class _BodyState extends State<Body> {
                 TextField(
                   controller: descriptionService,
                   maxLines: 5,
-                  onSubmitted: (value) {
-                    setState(() {
-                      isValided = isSubmitted(nameService, descriptionService);
-                    });
-                  },
                   decoration: InputDecoration(
                     hintText: "Description du service ",
                     contentPadding: const EdgeInsets.only(left: 30, top: 32),
@@ -169,7 +159,7 @@ class _BodyState extends State<Body> {
                 ButtomCustom(
                   msg: 'Confirmer',
                   press: () {
-                    Navigator.pushNamed(context, ServiceOfferScreen.routeName);
+                    Navigator.pushNamed(context, DescriptionService.routeName);
                   },
                   isValided: true,
                 )

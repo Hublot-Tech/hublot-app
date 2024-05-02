@@ -73,14 +73,16 @@ class HublotProviderApiApi {
 
   List<Map<String, String>> getBasicOffer() {
     List<Map<String, String>> listOffer = [
-      {"Nombres de photos": "10", "": ""}
+      {"name": "Nombres de photos", "nbre": "10"},
+      {"name": "fff", "nbre": "34"}
     ];
     return listOffer;
   }
 
   List<Map<String, String>> getStandarOffer() {
     List<Map<String, String>> listOffer = [
-      {"Nombres de photos": "30", "Qualités des photos": "1080 px"}
+      {"name": "Nombres de photos", "nbre": "30"},
+      {"name": "Qualités des photos", "nbre": "1080 px"}
     ];
     return listOffer;
   }

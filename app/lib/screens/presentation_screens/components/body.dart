@@ -20,6 +20,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     splahDatas = hublotProviderApi.getSplashData();
+    debugPrint(splahDatas.length.toString());
   }
 
   @override
