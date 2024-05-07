@@ -1,4 +1,5 @@
 import 'package:app/configuration.dart';
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 
 class ButtomCustom extends StatefulWidget {
@@ -23,11 +24,11 @@ class _ButtomCustomState extends State<ButtomCustom> {
     return GestureDetector(
       onTap: widget.press,
       child: Container(
-        width: 390,
-        height: 50,
+        width: getProportionateScreenWidth(390),
+        height: getProportionateScreenHeight(50),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color:widget.isValided?kprimaryColor:widget.color,
+          color: widget.isValided ? kprimaryColor : widget.color,
         ),
         child: Center(
           child: Row(
