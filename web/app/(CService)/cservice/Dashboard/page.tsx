@@ -4,7 +4,7 @@ import Aside from '../../components/ui/common/Aside'
 
 function Dashboard() {
   return (
-      "Dashboard"
+      <h1 className=''>Dashboard</h1>
   )
 }
 

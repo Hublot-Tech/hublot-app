@@ -1,14 +1,10 @@
 import React from 'react'
-import Dashboard from './Dashboard/page'
-import Aside from '../components/ui/common/Aside'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 function CService() {
-  return (
-    <div>
-        <Aside />
-    </div>
-
-  )
+  // redirect to automatic /Dashboard
+  redirect('/cservice/dashboard')
 }
 
 export default CService

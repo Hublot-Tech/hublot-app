@@ -5,7 +5,7 @@ import Image from 'next/image'
 const Aside = () => {
   
   return (
-    <aside id="default-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+    <aside id="default-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 " aria-label="Sidebar">
       <div id="menu-head" className='flex items-center justify-center text-center text-primary  h-24'>C.service</div>
       <div id="menu" className="h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <SideMenu />

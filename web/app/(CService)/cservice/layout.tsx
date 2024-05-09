@@ -1,4 +1,4 @@
-import './globals.css';
+import Aside from '../components/ui/common/Aside';
 
 export const metadata = {
   title: 'C.Service - Hublots CM',
@@ -11,10 +11,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className=''>
-        <div>{children}</div>
-      </body>
-    </html>
+    <main className='flex flex-col min-h-screen items-center justify-between '>
+        <Aside />
+        <div className='ml-64'>
+            {children}
+        </div>
+    </main>
   );
 }
