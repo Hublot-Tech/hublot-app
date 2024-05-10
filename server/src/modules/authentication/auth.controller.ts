@@ -34,7 +34,7 @@ export class AuthController {
 
   @ApiCreatedResponse({
     type: SignInResponseDto,
-    description: "Successfully signed user in",
+    description: "User Successfully signed in",
   })
 
   @Public()
@@ -46,7 +46,7 @@ export class AuthController {
     );
     return new SignInResponseDto({
       accessToken,
-      message: "Successfully signed user in",
+      message: "User Successfully signed in",
       status: ResponseStatus.SUCCESS,
     });
   }
@@ -94,11 +94,11 @@ export class AuthController {
     @Body() createUserDto: UserDto,
   ): Promise<RegisterUserResponseDto> {
     try {
-      const users = await this.userService.register(createUserDto);
+      const user = await this.userService.register(createUserDto);
       return new RegisterUserResponseDto({
-        data: users,
+        data: user,
         status: ResponseStatus.SUCCESS,
-        message: "Successfully  register user",
+        message: "Successfully register user",
       });
     } catch (error) {
       throw new HttpException(
