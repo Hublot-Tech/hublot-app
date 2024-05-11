@@ -24,6 +24,7 @@ class BoxDateBlots extends StatelessWidget {
       child: TextFormField(
         validator: (value) {
           controller.text = value!;
+          return null;
         },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
