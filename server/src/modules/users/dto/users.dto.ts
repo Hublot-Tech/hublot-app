@@ -20,6 +20,14 @@ export enum Locale {
   EN_US = "en-US",
 }
 
+export enum Role {
+  PROV = "provider",
+  CLIENT = "client",
+  PARTNER = "partner",
+  SUPPORT = "support",
+  ADMIN = "admin",
+}
+
 export class CreateUserDto {
   @ApiProperty({
     example: "Wonder",
@@ -31,7 +39,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     example: "wonder@gmail.com",
-    description: "The name is required to create a new account",
+    description: "The email is required to create a new account",
   })
   @IsEmail()
   email: string;
@@ -52,11 +60,18 @@ export class CreateUserDto {
   isOnline: boolean = true;
 
   @ApiProperty({
-    example: "Douala",
-    description: "The locale is required to create a new account",
+    example: "FR",
+    description: "The locale is the default language of the user. Required to create a new account",
   })
   @IsEnum(Locale)
   locale: Locale;
+
+  @ApiProperty({
+    example: "provider",
+    description: "The role property is the Role of the user. Required to create a new account",
+  })
+  @IsEnum(Role)
+  role: Role;
 
   @ApiProperty({
     example: "Lobbessou",

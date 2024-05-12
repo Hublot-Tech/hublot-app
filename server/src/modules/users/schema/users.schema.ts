@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
-import { Locale, UserDto } from "../dto/users.dto";
+import { Locale, Role,  UserDto } from "../dto/users.dto";
+import { Service } from "src/modules/service/schema/service.schema";
 
 @Schema()
 export class User extends Document {
@@ -49,6 +50,13 @@ export class User extends Document {
   @Prop({
     type: String,
     required: true,
+    default: Role.CLIENT,
+  })
+  role: string;
+
+  @Prop({
+    type: String,
+    required: true,
   })
   address: string;
 
@@ -57,6 +65,10 @@ export class User extends Document {
     required: true,
   })
   password: string;
+
+  //reference to the provider
+  @Prop({  type: [{ type: Types.ObjectId, ref: 'Owner' }] })
+  services: Service[]  
 
   @Prop({
     type: Date,
@@ -76,6 +88,7 @@ export class User extends Document {
     required: false,
   })
   deletedAt: Date;
+
 
   toJSON() {
     const user = this.toObject();
