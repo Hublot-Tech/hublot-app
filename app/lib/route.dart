@@ -4,6 +4,7 @@ import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
 import 'package:app/screens/part_provider/add_service/description_service/description_screen.dart';
 import 'package:app/screens/part_provider/add_service/detail_offer/detail_offer_screen.dart';
+import 'package:app/screens/part_provider/authentification/phone_number_screnn/phone_number_screen.dart';
 import 'package:app/screens/part_provider/blot_preview_screen/blot_preview_screen.dart';
 import 'package:app/screens/part_provider/blot_screen/blot_screen.dart';
 import 'package:app/screens/part_provider/description_service/description_service_screen.dart';
@@ -37,5 +38,6 @@ final Map<String, WidgetBuilder> route = {
   DetailOfferScreen.routeName: (context) => const DetailOfferScreen(),
   DescriptionService.routeName: (context) => const DescriptionService(),
   BlotScreen.routeName:(context) => const BlotScreen(),
-  BlotPreviewScrenn.routeName:(context)=>const BlotPreviewScrenn()
+  BlotPreviewScrenn.routeName:(context)=>const BlotPreviewScrenn(),
+  PhoneNumberScreen.routeName:(context)=>const PhoneNumberScreen()
 };
