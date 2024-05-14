@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
