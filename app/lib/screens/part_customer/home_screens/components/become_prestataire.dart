@@ -9,49 +9,67 @@ class BecomeRowBox extends StatelessWidget {
     required this.text,
     required this.press,
   });
+
   final String text;
   final GestureCancelCallback press;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: press,
-      child: Row(children: [
-        Container(
-          //  margin: const EdgeInsets.only(left: 20),
-          height: getProportionateScreenHeight(40),
-          width: getProportionateScreenWidth(180),
-          decoration: BoxDecoration(
+      child: BecomeRowBoxContainer(
+        text: text,
+      ),
+    );
+  }
+}
+
+class BecomeRowBoxContainer extends StatelessWidget {
+  const BecomeRowBoxContainer({
+    super.key,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: getProportionateScreenHeight(40),
+      width: getProportionateScreenWidth(185),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade500,
+            blurRadius: 2,
+            offset: const Offset(4.0, 4.0),
+            spreadRadius: 1.0,
+          ),
+          const BoxShadow(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white, width: 3),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade500,
-                blurRadius: 2,
-                offset: const Offset(4.0, 4.0),
-                spreadRadius: 1.0,
-              ),
-              const BoxShadow(
-                color: Colors.white,
-                blurRadius: 15,
-                offset: Offset(-4.0, -4.0),
-                spreadRadius: 1.0,
-              )
-            ],
+            blurRadius: 15,
+            offset: Offset(-4.0, -4.0),
+            spreadRadius: 1.0,
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10), // Marge à gauche
+            child: SvgPicture.asset("img/profil.svg"),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SvgPicture.asset("img/profil.svg"),
-              Text(
-                text,
-                style: TextStyle(fontSize: getProportionateScreenWidth(14)),
-              ),
-              const Icon(Icons.keyboard_arrow_down_sharp),
-            ],
+          Text(
+            text,
+            style: TextStyle(fontSize: getProportionateScreenWidth(14)),
           ),
-        ),
-      ]),
+          const Icon(Icons.keyboard_arrow_down_sharp),
+        ],
+      ),
     );
   }
 }
