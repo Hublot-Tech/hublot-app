@@ -35,8 +35,8 @@ class BecomeRowBoxContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: getProportionateScreenHeight(40),
-      width: getProportionateScreenWidth(185),
+      height: getProportionateScreenHeight(50),
+      width: getProportionateScreenWidth(190),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -65,7 +65,9 @@ class BecomeRowBoxContainer extends StatelessWidget {
           ),
           Text(
             text,
-            style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+            style: TextStyle(
+                fontSize: getProportionateScreenWidth(14),
+                fontFamily: 'ProximaNova'),
           ),
           const Icon(Icons.keyboard_arrow_down_sharp),
         ],
