@@ -82,9 +82,13 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: Mark Simonson Proxima Nova Regular
+     - family: Mark_Simonson
        fonts:
-         - asset: font/Mark Simonson  Proxima Nova Regular.otf
+         - asset: font/Mark_Simonson_Proxima.otf
+
+     - family: ProximaNova
+       fonts:
+         - asset: font/ProximaNova-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
