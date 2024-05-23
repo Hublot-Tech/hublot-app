@@ -11,9 +11,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className='flex flex-col min-h-screen items-center justify-between '>
+    <main className='flex min-h-screen'>
         <Aside />
-        <div className='ml-64'>
+        <div className='ml-64 flex flex-1 flex-col p-4 md:p-6'>
             {children}
         </div>
     </main>
