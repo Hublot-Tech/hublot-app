@@ -20,10 +20,10 @@ Text textPresentation(
     msg,
     textAlign: textAlign,
     style: TextStyle(
-      fontWeight: fontWeight,
-      color: color,
-      fontSize: size,
-    ),
+        fontWeight: fontWeight,
+        color: color,
+        fontSize: size,
+        fontFamily: 'ProximaNova'),
   );
 }
 
