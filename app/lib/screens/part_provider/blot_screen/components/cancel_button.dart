@@ -1,10 +1,12 @@
 import 'package:app/configuration.dart';
 import 'package:app/size_configuration.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class CancelButtom extends StatelessWidget {
   const CancelButtom({
-    super.key, required this.press,
+    super.key,
+    required this.press,
   });
   final GestureCancelCallback press;
   @override

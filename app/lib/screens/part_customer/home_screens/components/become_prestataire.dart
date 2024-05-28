@@ -1,4 +1,5 @@
 import 'package:app/size_configuration.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,9 +18,8 @@ class BecomeRowBox extends StatelessWidget {
       onTap: press,
       child: Row(children: [
         Container(
-          //  margin: const EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.symmetric(vertical: 4),
           height: getProportionateScreenHeight(40),
-          width: getProportionateScreenWidth(180),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,6 @@
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 const kCategoriecolor = Color.fromRGBO(30, 136, 229, 1);
 const kyellowColor = Color.fromRGBO(255, 192, 0, 1);
@@ -15,10 +16,12 @@ Text textPresentation(
     double size = 30,
     Color color = kprimaryColor,
     TextAlign textAlign = TextAlign.center,
+    TextOverflow overflow = TextOverflow.visible,
     required FontWeight fontWeight}) {
   return Text(
     msg,
     textAlign: textAlign,
+    overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontWeight: fontWeight,
       color: color,

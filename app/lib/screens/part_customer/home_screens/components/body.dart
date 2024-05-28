@@ -111,8 +111,8 @@ class _BodyState extends State<Body> {
                               const CardHistoric(),
                               const EspaceMenuWidget(),
                               RowSeeMore(
-                                  name: "Recommandés",
-                                  msg: "Liste basé sur votre position",
+                                  name: "Recommandés@@",
+                                  msg: "Liste basé sur votre position@@",
                                   press: () {}),
                               const EspaceMenuWidget(),
                               SizedBox(
@@ -145,44 +145,53 @@ class _BodyState extends State<Body> {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                        color: ksecondaryColor,
-                                        borderRadius:
-                                            BorderRadius.circular(23)),
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(23),
-                                    child: Image.asset(
-                                      "img/portrait-stylish-professional-photographer.jpg",
-                                      width: getProportionateScreenWidth(387),
-                                      height: getProportionateScreenHeight(356),
-                                      fit: BoxFit.cover,
+                                      color: ksecondaryColor,
+                                      borderRadius: BorderRadius.circular(23),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Spacer(),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            right: size.width * 0.02, top: 10),
-                                        child: BoxStar(
-                                          size: size,
-                                          icon: 'img/icons8_star 2.svg',
-                                          nbrOfStar: '4.6',
+                                    child: Column(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(23),
+                                          child: Image.asset(
+                                            "img/portrait-stylish-professional-photographer.jpg",
+                                            width: getProportionateScreenWidth(
+                                                387),
+                                            height:
+                                                getProportionateScreenHeight(
+                                                    356),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(top: size.height * 0.3),
-                                    child: Center(
-                                      child: BoxInformation(
-                                        size: size,
-                                        name: "Grec Koum,",
-                                        profession: "Photographe",
-                                        lieu: "Douala,akwa",
-                                        distance: "3km",
-                                      ),
+                                        Row(
+                                          children: [
+                                            const Spacer(),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: size.width * 0.02,
+                                                  top: 10),
+                                              child: BoxStar(
+                                                size: size,
+                                                icon: 'img/icons8_star 2.svg',
+                                                nbrOfStar: '4.6',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: size.height * 0.3),
+                                          child: Center(
+                                            child: BoxInformation(
+                                              size: size,
+                                              name: "Grec Koum,",
+                                              profession: "Photographe",
+                                              lieu: "Douala,akwa",
+                                              distance: "3km@@",
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -237,7 +246,7 @@ class _BodyState extends State<Body> {
                             const EspaceMenuWidget(),
                             RowSeeMore(
                                 name: "Annonceurs proches",
-                                msg: "Liste basé sur votre position",
+                                msg: "Liste basé sur votre position@",
                                 press: () {}),
                             const EspaceMenuWidget(),
                           ],

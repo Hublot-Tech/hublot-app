@@ -1,10 +1,8 @@
-
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
 import 'package:app/screens/part_provider/add_service/description_service/description_screen.dart';
 import 'package:app/screens/part_provider/add_service/detail_offer/detail_offer_screen.dart';
-import 'package:app/screens/part_provider/authentification/phone_number_screnn/phone_number_screen.dart';
 import 'package:app/screens/part_provider/blot_preview_screen/blot_preview_screen.dart';
 import 'package:app/screens/part_provider/blot_screen/blot_screen.dart';
 import 'package:app/screens/part_provider/description_service/description_service_screen.dart';
@@ -25,7 +23,7 @@ final Map<String, WidgetBuilder> route = {
   PresentationScreen.routeName: (context) => const PresentationScreen(),
   CustomerScrenn.routeName: (context) => const CustomerScrenn(),
   ProviderScreen.routeName: (context) => const ProviderScreen(),
-  RegistrationScreen.routeName: (context) =>const  RegistrationScreen(),
+  RegistrationScreen.routeName: (context) => const RegistrationScreen(),
   HomeScrenns.routeName: (context) => const HomeScrenns(),
   SearchScreen.routeName: (context) => const SearchScreen(),
   AnswerScreen.routeName: (context) => const AnswerScreen(),
@@ -37,7 +35,6 @@ final Map<String, WidgetBuilder> route = {
   ServiceOfferScreen.routeName: (context) => const ServiceOfferScreen(),
   DetailOfferScreen.routeName: (context) => const DetailOfferScreen(),
   DescriptionService.routeName: (context) => const DescriptionService(),
-  BlotScreen.routeName:(context) => const BlotScreen(),
-  BlotPreviewScrenn.routeName:(context)=>const BlotPreviewScrenn(),
-  PhoneNumberScreen.routeName:(context)=>const PhoneNumberScreen()
+  BlotScreen.routeName: (context) => const BlotScreen(),
+  BlotPreviewScrenn.routeName: (context) => const BlotPreviewScrenn(),
 };

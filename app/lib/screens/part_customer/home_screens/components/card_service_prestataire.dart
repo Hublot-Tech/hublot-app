@@ -20,32 +20,21 @@ class CardServicePrestataire extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: SizedBox(
-        width: size.width,
-        child: Stack(
-          children: [
-            Container(
-              width: getProportionateScreenWidth(330),
-              height: getProportionateScreenHeight(300),
-              decoration: BoxDecoration(
-                  color: ksecondaryColor,
-                  borderRadius: BorderRadius.circular(23)),
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Image.network(
-                img,
-                width: getProportionateScreenWidth(387),
-                height: getProportionateScreenHeight(356),
-                fit: BoxFit.cover,
-              ),
-            ),
-            Row(
+    return Container(
+      width: getProportionateScreenWidth(330),
+      margin: const EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          color: ksecondaryColor, borderRadius: BorderRadius.circular(23)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: size.width * 0.8,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 18, top: 20),
                   padding: const EdgeInsets.all(8),
                   width: getProportionateScreenWidth(40),
                   height: getProportionateScreenHeight(40),
@@ -55,30 +44,22 @@ class CardServicePrestataire extends StatelessWidget {
                   ),
                   child: SvgPicture.asset("img/icons8_thumbs_up_1 1.svg"),
                 ),
-                const Spacer(),
+                BoxStar(
+                  size: size,
+                  icon: 'img/icons8_star 2.svg',
+                  nbrOfStar: note,
+                )
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: size.width * 0.64, top: 10, right: size.width * 0.01),
-              child: BoxStar(
-                size: size,
-                icon: 'img/icons8_star 2.svg',
-                nbrOfStar: note,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: size.height * 0.3, left: 22),
-              child: BoxInformation(
-                size: size,
-                name: name,
-                profession: profession,
-                lieu: localization,
-                distance: distance,
-              ),
-            ),
-          ],
-        ),
+          ),
+          BoxInformation(
+            size: size,
+            name: name,
+            profession: profession,
+            lieu: localization,
+            distance: distance,
+          ),
+        ],
       ),
     );
   }

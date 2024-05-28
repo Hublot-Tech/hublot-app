@@ -1,10 +1,13 @@
 import 'package:app/configuration.dart';
 import 'package:app/size_configuration.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class AddServiceBox extends StatelessWidget {
   const AddServiceBox({
-    super.key, required this.msg, required this.press,
+    super.key,
+    required this.msg,
+    required this.press,
   });
   final String msg;
   final GestureCancelCallback press;

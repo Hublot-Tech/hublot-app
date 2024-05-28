@@ -16,7 +16,6 @@ class BoxStar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //margin: const EdgeInsets.only(right: 25),
       padding: const EdgeInsets.all(8),
       width: size.width * 0.2,
       height: size.height * 0.05,

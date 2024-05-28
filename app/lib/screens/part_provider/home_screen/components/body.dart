@@ -63,7 +63,7 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BecomeRowBox(
-                    text: 'Devenir partenaire',
+                    text: 'Devenir partenaires',
                     press: () {},
                   ),
                   const NotificationBox(),
