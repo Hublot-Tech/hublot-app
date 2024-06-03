@@ -28,7 +28,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     TextEditingController nameService = TextEditingController();
     TextEditingController descriptionService = TextEditingController();
-   // bool isValided;
+    // bool isValided;
     return BackgroundAddService(
       widget: Column(
         children: [
@@ -178,55 +178,57 @@ class _BodyState extends State<Body> {
         builder: (builder) {
           return SizedBox(
             height: getProportionateScreenHeight(150),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      pictureFromCamera();
-                    },
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.camera,
-                          color: Colors.white,
-                          size: 80,
-                        ),
-                        const EspaceMenuWidget(taille: 10),
-                        textPresentation(
-                            msg: "Caméra",
+            child: Padding(
+              padding: EdgeInsets.only(top: getProportionateScreenWidth(30)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        pictureFromCamera();
+                      },
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.camera,
                             color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                            size: getProportionateScreenWidth(20))
-                      ],
+                            size: 50,
+                          ),
+                          const EspaceMenuWidget(taille: 10),
+                          textPresentation(
+                              msg: "Caméra",
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              size: getProportionateScreenWidth(20))
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: getProportionateScreenWidth(40)),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      pictureFromGallerie();
-                    },
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.image,
-                          color: Colors.white,
-                          size: 80,
-                        ),
-                        const EspaceMenuWidget(taille: 10),
-                        textPresentation(
-                            msg: "Gallerie",
-                            fontWeight: FontWeight.normal,
+                  SizedBox(width: getProportionateScreenWidth(40)),
+              Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        pictureFromGallerie();
+                      },
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.image,
                             color: Colors.white,
-                            size: getProportionateScreenWidth(20))
-                      ],
+                            size: 50,
+                          ),
+                          const EspaceMenuWidget(taille: 10),
+                          textPresentation(
+                              msg: "Gallerie",
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                              size: getProportionateScreenWidth(20))
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           );
         });

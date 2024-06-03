@@ -1,4 +1,6 @@
+import 'package:app/modules/shipping_services/page/shipping_service_screen.dart';
 import 'package:app/size_configuration.dart';
+import 'package:app/utilitis/navigations/Nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -52,13 +54,25 @@ class CardServicePrestataire extends StatelessWidget {
               ],
             ),
           ),
-          BoxInformation(
-            size: size,
-            name: name,
-            profession: profession,
-            lieu: localization,
-            distance: distance,
-          ),
+          Expanded(
+            child: GestureDetector(
+                onTap: () =>
+                    {Nav.toReplacement(context, const ShippingServices())},
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      BoxInformation(
+                        size: size,
+                        name: name,
+                        profession: profession,
+                        lieu: localization,
+                        distance: distance,
+                      ),
+                    ],
+                  ),
+                )),
+          )
         ],
       ),
     );
