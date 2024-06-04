@@ -90,7 +90,8 @@ class HublotProviderApiApi {
   List<Map<String, String>> getAllServices() {
     List<Map<String, String>> dataProvider = [
       {
-        "img": "img/portrait-stylish-professional-photographer.jpg",
+        "img":
+            "https://www.cidj.com/sites/default/files/2019-08/photographe.jpg",
         "name": "Gishlain Kamga",
         "profession": "Photographe",
         "note": "4.6",
@@ -98,7 +99,8 @@ class HublotProviderApiApi {
         "Distance": "3Km",
       },
       {
-        "img": "img/front-view-woman-holding-photo-camera.jpg",
+        "img":
+            "https://www.travailler-a-domicile.fr/wp-content/uploads/2016/06/photographe-mode-inde.jpg",
         "name": "Grec Koum",
         "profession": "Photographe",
         "note": "4.6",
@@ -106,7 +108,8 @@ class HublotProviderApiApi {
         "Distance": "8Km",
       },
       {
-        "img": "img/IMG_3531.JPG",
+        "img":
+            "https://static.iquesta.com/images/iquesta/article/software-developer-6521720_1280.png",
         "name": "Pessidjo Germann",
         "profession": "Dev Fullstack",
         "note": "4.6",
@@ -116,5 +119,101 @@ class HublotProviderApiApi {
     ];
 
     return dataProvider;
+  }
+
+  List<Map<String, String>> getAllDataPromo() {
+    List<Map<String, String>> dataPromo = [
+      {
+        "img": "img/promo1.png",
+      },
+      {
+        "img": "img/promo3.png",
+      },
+      {
+        "img": "img/promo2.png",
+      }
+    ];
+
+    return dataPromo;
+  }
+
+   List<Map<String, String>> getFreeSubscription() {
+    List<Map<String, String>> dataFreeSubscription = [
+      {
+        "icon":"img/service-icon.svg",
+        "offer":"3 services"
+      },
+      {
+        "icon":"img/offre-icon.svg",
+        "offer":"3 offres"
+      },
+      {
+        "icon":"img/offre-icon.svg",
+        "offer":"15% commissions"
+      },
+      {
+        "icon":"img/transaction-icon.svg",
+        "offer":"3 transactions"
+      },
+      
+    ];
+    
+    List<Map<String, String>> dataExtraSubscription = [
+      {
+        "icon":"img/service-icon.svg",
+        "offer":"10 services"
+      },
+      {
+        "icon":"img/offre-icon.svg",
+        "offer":"10 offres"
+      },
+      {
+        "icon":"img/offre-icon.svg",
+        "offer":"10% commissions"
+      },
+      {
+        "icon":"img/transaction-icon.svg",
+        "offer":"25 transactions"
+      },
+      {
+        "icon":"img/promotion-icon.svg",
+        "offer":"02 promotions"
+      },
+      {
+        "icon":"img/assistance-icon.svg",
+        "offer":"Assistance 24h/24"
+      },
+      
+    ];
+
+    List<Map<String, String>> dataPremiumSubscription = [
+      {
+        "icon":"img/service-icon.svg",
+        "offer":"Services illimités"
+      },
+      {
+        "icon":"img/offre-icon.svg",
+        "offer":"Offres illimités"
+      },
+      {
+        "icon":"img/offre-icon.svg",
+        "offer":"5% commissions"
+      },
+      {
+        "icon":"img/transaction-icon.svg",
+        "offer":"Transactions illimités"
+      },
+      {
+        "icon":"img/promotion-icon.svg",
+        "offer":"Promotions illimités"
+      },
+      {
+        "icon":"img/assistance-icon.svg",
+        "offer":"Assistance 24h/24"
+      },
+      
+    ];
+
+    return dataFreeSubscription;
   }
 }
