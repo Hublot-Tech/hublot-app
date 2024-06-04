@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:app/controller/interfaces/services.dart';
 
 class ShippingServices extends StatefulWidget {
-  const ShippingServices({super.key});
+  const ShippingServices({Key? key, this.data}) : super(key: key);
+
   static String routeName = 'shipping_services';
+  final Services? data;
 
   @override
-  State<StatefulWidget> createState() => _ShippingServices();
+  State<StatefulWidget> createState() => _ShippingServices(data: data);
 }
 
-// ignore: unused_element
 class _ShippingServices extends State<ShippingServices> {
+  _ShippingServices({required this.data});
+
+  final Services? data;
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Center(
-        child: Text(
-          'Hello',
-          style: TextStyle(color: Colors.redAccent),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Shipping Services'),
+        ),
+        body: Center(
+          child: Text(
+            data!.name,
+            style: TextStyle(color: Colors.redAccent),
+          ),
         ),
       ),
     );

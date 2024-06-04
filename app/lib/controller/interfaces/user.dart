@@ -1,4 +1,4 @@
-import 'enumeration/locale.dart';
+import '../enumeration/locale.dart';
 
 class User {
   late String ids;
@@ -7,7 +7,7 @@ class User {
   LocalLanguage? locale;
   DateTime? createdAt;
 
-  User(String id,String fullnamed) {
+  User(String id, String fullnamed) {
     ids = id;
     fullname = fullnamed;
   }

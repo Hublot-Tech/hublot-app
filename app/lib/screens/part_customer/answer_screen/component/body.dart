@@ -1,3 +1,4 @@
+import 'package:app/controller/interfaces/services.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/part_customer/home_screens/components/card_service_prestataire.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
@@ -17,8 +18,8 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   HublotProviderApiApi apiPrestataire = HublotProviderApiApi();
-  List<Map<String, String>> initialList = [];
-  List<Map<String, String>> filterList = [];
+  List<Map<Services, Services>> initialList = [];
+  List<Map<Services, Services>> filterList = [];
   List<String> categorieFilterList = [];
   TextEditingController _controler = TextEditingController();
   void updateList(String value) {
@@ -123,14 +124,12 @@ class _BodyState extends State<Body> {
                 ? Expanded(
                     child: ListView.builder(
                       itemCount: filterList.length,
-                      itemBuilder: ((context, index) => CardServicePrestataire(
-                            distance: filterList[index]['Distance']!,
-                            img: filterList[index]['img']!,
-                            localization: filterList[index]['lieu']!,
-                            name: filterList[index]['name']!,
-                            note: filterList[index]['note']!,
-                            profession: filterList[index]['profession']!,
-                          )),
+                      itemBuilder: (context, index) {
+                        final MapEntry<Services, Services> entry =
+                            filterList[index].entries.first;
+                        final Services serviceData = entry.value;
+                        return CardServicePrestataire(serviceData: serviceData);
+                      },
                     ),
                   )
                 : const Center(

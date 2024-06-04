@@ -1,3 +1,6 @@
+import 'package:app/controller/interfaces/prestataire.dart';
+import 'package:app/controller/interfaces/services.dart';
+
 class HublotProviderApiApi {
   List<Map<String, String>> getAllCategories() {
     List<Map<String, String>> dataItem = [
@@ -87,33 +90,48 @@ class HublotProviderApiApi {
     return listOffer;
   }
 
-  List<Map<String, String>> getAllServices() {
-    List<Map<String, String>> dataProvider = [
+  List<Map<Services, Services>> getAllServices() {
+    List<Map<Services, Services>> dataProvider = [
       {
-        "img": "img/portrait-stylish-professional-photographer.jpg",
-        "name": "Gishlain Kamga",
-        "profession": "Photographe",
-        "note": "4.6",
-        "lieu": "Douala,akwa",
-        "Distance": "3Km",
+        Services(
+          img: "img/portrait-stylish-professional-photographer.jpg",
+          name: "Gishlain Kamga",
+          profession: "Photographe",
+          note: "4.6",
+          lieu: "Douala,akwa",
+          distance: "3Km",
+          like: true,
+          favorite: true,
+          prestataire: Prestataire(name: 'Steves', firstname: 'Wonder'),
+        ): Services(
+          img: "img/portrait-stylish-professional-photographer.jpg",
+          name: "Gishlain Kamga",
+          profession: "Photographe",
+          note: "4.6",
+          lieu: "Douala,akwa",
+          like: false,
+          favorite: false,
+          distance: "3Km",
+          prestataire: Prestataire(name: 'Steves', firstname: 'Wonder'),
+        )
       },
-      {
-        "img": "img/front-view-woman-holding-photo-camera.jpg",
-        "name": "Grec Koum",
-        "profession": "Photographe",
-        "note": "4.6",
-        "lieu": "Douala,akwa",
-        "Distance": "8Km",
-      },
-      {
-        "img": "img/IMG_3531.JPG",
-        "name": "Pessidjo Germann",
-        "profession": "Dev Fullstack",
-        "note": "4.6",
-        "lieu": "Douala,pk21",
-        "Distance": "8Km",
-      },
+      // Ajoutez d'autres éléments si nécessaire
     ];
+
+    // Convertir List<Map<String, dynamic>> en List<Map<String, String>>
+    // List<Map<String, String>> services = dataProvider.map((service) {
+    //   return {
+    //     "img": service["img"] as String? ?? '',
+    //     "name": service["name"] as String? ?? '',
+    //     "profession": service["profession"] as String? ?? '',
+    //     "note": service["note"] as String? ?? '',
+    //     "lieu": service["lieu"] as String? ?? '',
+    //     "Distance": service["Distance"] as String? ?? '',
+    //     "rates": service["rates"] as String? ?? '',
+    //     "prestataire":
+    //         (service["prestataire"] as Map<String, String>)["name"] ?? '',
+    //   };
+    // }).toList();
 
     return dataProvider;
   }

@@ -1,4 +1,5 @@
 import 'package:app/configuration.dart';
+import 'package:app/controller/interfaces/services.dart';
 import 'package:app/controller/service.dart';
 import 'package:app/screens/part_customer/home_screens/components/become_prestataire.dart';
 import 'package:app/screens/part_customer/home_screens/components/box_category_service.dart';
@@ -24,7 +25,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   bool shimmer = false;
   HublotProviderApiApi apiPrestataire = HublotProviderApiApi();
-  List<Map<String, String>> itemServices = [];
+  List<Map<Services, Services>> itemServices = [];
   List<Map<String, String>> itemCategoris = [];
   Future<void> _refresh() {
     setState(() {
@@ -195,14 +196,10 @@ class _BodyState extends State<Body> {
                   scrollDirection: Axis.horizontal,
                   itemCount: itemServices.length,
                   itemBuilder: (context, index) {
-                    return CardServicePrestataire(
-                      img: itemServices[index]['img']!,
-                      distance: itemServices[index]['Distance']!,
-                      profession: itemServices[index]['profession']!,
-                      localization: itemServices[index]['lieu']!,
-                      name: itemServices[index]['name']!,
-                      note: itemServices[index]['note']!,
-                    );
+                    final MapEntry<Services, Services> entry =
+                        itemServices[index].entries.first;
+                    final Services serviceData = entry.value;
+                    return CardServicePrestataire(serviceData: serviceData);
                   },
                 ),
               ),

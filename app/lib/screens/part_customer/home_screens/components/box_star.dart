@@ -1,3 +1,4 @@
+import 'package:app/controller/interfaces/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -6,12 +7,11 @@ class BoxStar extends StatelessWidget {
   const BoxStar({
     super.key,
     required this.size,
-    required this.icon,
-    required this.nbrOfStar,
+    required this.serviceData,
   });
 
   final Size size;
-  final String icon, nbrOfStar;
+  final Services serviceData;
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +26,38 @@ class BoxStar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SvgPicture.asset(icon),
+          AddFavorite(serviceData: serviceData),
           textPresentation(
-              msg: nbrOfStar,
+              msg: serviceData.note,
               fontWeight: FontWeight.normal,
               color: Colors.white,
               size: 22)
         ],
       ),
+    );
+  }
+}
+
+class AddFavorite extends StatefulWidget {
+  const AddFavorite({super.key, required this.serviceData});
+  final Services serviceData;
+
+  @override
+  State<StatefulWidget> createState() => _AddFavorite();
+}
+
+class _AddFavorite extends State<AddFavorite> {
+  @override
+  Widget build(BuildContext context) {
+    Services serviceData = widget.serviceData;
+
+    return GestureDetector(
+      onTap: () => setState(() {
+        serviceData.favorite = !serviceData.favorite;
+      }),
+      child: serviceData.favorite
+          ? SvgPicture.asset('img/icons8_star 2.svg')
+          : SvgPicture.asset('img/icons8_star_white.svg'),
     );
   }
 }
