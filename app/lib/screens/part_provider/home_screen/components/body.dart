@@ -8,6 +8,8 @@ import 'package:app/screens/part_customer/home_screens/components/notification_b
 import 'package:app/screens/part_customer/home_screens/components/row_see_more.dart';
 import 'package:app/screens/part_customer/home_screens/components/search_box.dart';
 import 'package:app/screens/part_provider/add_service/description_service/description_screen.dart';
+import 'package:app/screens/part_provider/subscription_park/subscription_screen/subscription_screen.dart';
+import 'package:app/screens/presentation_screens/components/animated_contenair.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,9 +25,13 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   bool shimmer = false;
+  int currentIndex = 0;
+  int index = 0;
+
   HublotProviderApiApi apiPrestataire = HublotProviderApiApi();
   List<Map<String, String>> itemServices = [];
   List<Map<String, String>> itemCategoris = [];
+  List<Map<String, String>> itemPromo = [];
   Future<void> _refresh() {
     setState(() {
       shimmer = true;
@@ -45,6 +51,7 @@ class _BodyState extends State<Body> {
     super.initState();
     itemServices = apiPrestataire.getAllServices();
     itemCategoris = apiPrestataire.getAllCategories();
+    itemPromo = apiPrestataire.getAllDataPromo();
   }
 
   @override
@@ -71,6 +78,41 @@ class _BodyState extends State<Body> {
               ),
               const EspaceMenuWidget(),
               const SearchBox(),
+              const EspaceMenuWidget(),
+              SizedBox(
+                height: 161,
+                child: Expanded(
+                  flex: itemPromo.length,
+                  child: PageView.builder(
+                    onPageChanged: (value) {
+                      setState(() {
+                        currentIndex = value;
+                      });
+                    },
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const SubscriptionScreen(),
+                            ));
+                      },
+                      child: ClipRRect(
+                          child: Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Image.asset(itemPromo[index]['img']!),
+                      )),
+                    ),
+                    itemCount: itemPromo.length,
+                  ),
+                ),
+              ),
+              AnimatedContenu(
+                  currentIndex: currentIndex,
+                  index: index,
+                  nbre: itemPromo.length),
               const EspaceMenuWidget(),
               BoxCategoryService(name: "Catégories", press: () {}),
               const EspaceMenuWidget(),
@@ -188,7 +230,7 @@ class _BodyState extends State<Body> {
                   name: "Recommandés",
                   msg: "Liste basé sur votre position",
                   press: () {}),
-              EspaceMenuWidget(),
+              const EspaceMenuWidget(),
               SizedBox(
                 height: 400,
                 child: ListView.builder(

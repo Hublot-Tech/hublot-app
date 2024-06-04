@@ -1,5 +1,6 @@
 /// classe widget utilisée pour l"écran principal du prestataire
 ///
+import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,29 +45,53 @@ class _HomeScreenState extends State<HomeScreen> {
               activeIcon: SvgPicture.asset("img/home-3 1.svg"),
             ),
             BottomNavigationBarItem(
-              icon: SvgPicture.asset("img/Vector (3).svg"),
+              icon: SvgPicture.asset(
+                "img/favori-icon.svg",
+              ),
               label: "Favoris",
-              activeIcon: SvgPicture.asset("img/favorite-heart 1.svg"),
+              activeIcon: SvgPicture.asset("img/favori-icon.svg"),
             ),
             BottomNavigationBarItem(
-              icon: SvgPicture.asset("img/add-circle 1.svg"),
-              label: "Ajouter",
+              icon: Stack(
+                children: [
+                  Container(
+                    width: 52.13,
+                    height: 52.01,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(51),
+                        color: kyellowColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade500,
+                            blurRadius: 2,
+                            offset: const Offset(1.0, 4.0),
+                            spreadRadius: 1.0,
+                          ),
+                          const BoxShadow(
+                            color: Colors.white,
+                            blurRadius: 15,
+                            offset: Offset(-4.0, -4.0),
+                            spreadRadius: 1.0,
+                          )
+                        ]),
+                  ),
+                  Positioned(
+                      top: 12,
+                      left: 12,
+                      child:
+                          Center(child: SvgPicture.asset("img/msg-icon.svg"))),
+                ],
+              ),
+              label: "",
             ),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset("img/chat.svg"),
                 label: "Discussion",
                 activeIcon:
                     SvgPicture.asset("img/chat-bubble-text-oval 1.svg")),
-            const BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person_2_outlined,
-                color: Colors.black,
-              ),
-              label: "Compte",
-              activeIcon: Icon(
-                Icons.person_2,
-                color: Colors.black,
-              ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('img/hamburger-icon.svg'),
+              label: "Menu",
             ),
           ]),
     );
