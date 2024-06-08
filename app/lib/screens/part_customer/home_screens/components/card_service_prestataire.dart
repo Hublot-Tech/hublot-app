@@ -1,4 +1,7 @@
+import 'package:app/controller/interfaces/services.dart';
+import 'package:app/modules/shipping_services/page/shipping_service_screen.dart';
 import 'package:app/size_configuration.dart';
+import 'package:app/utilitis/navigations/Nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -9,76 +12,92 @@ import 'box_star.dart';
 class CardServicePrestataire extends StatelessWidget {
   const CardServicePrestataire({
     super.key,
-    required this.note,
-    required this.name,
-    required this.profession,
-    required this.localization,
-    required this.distance,
-    required this.img,
+    required this.serviceData,
   });
-  final String note, name, profession, localization, distance, img;
+
+  final Services serviceData;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: SizedBox(
-        width: size.width,
-        child: Stack(
-          children: [
-            Container(
-              width: getProportionateScreenWidth(330),
-              height: getProportionateScreenHeight(300),
-              decoration: BoxDecoration(
-                  color: ksecondaryColor,
-                  borderRadius: BorderRadius.circular(23)),
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Image.network(
-                img,
-                width: getProportionateScreenWidth(387),
-                height: getProportionateScreenHeight(356),
-                fit: BoxFit.cover,
-              ),
-            ),
-            Row(
+    return Container(
+      width: getProportionateScreenWidth(330),
+      margin: const EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          color: ksecondaryColor, borderRadius: BorderRadius.circular(23)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: size.width * 0.8,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 18, top: 20),
-                  padding: const EdgeInsets.all(8),
-                  width: getProportionateScreenWidth(40),
-                  height: getProportionateScreenHeight(40),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: const Color.fromRGBO(255, 192, 0, 1),
-                  ),
-                  child: SvgPicture.asset("img/icons8_thumbs_up_1 1.svg"),
-                ),
-                const Spacer(),
+                LikeComponent(serviceData: serviceData),
+                BoxStar(
+                  size: size,
+                  serviceData: serviceData,
+                )
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: size.width * 0.64, top: 10, right: size.width * 0.01),
-              child: BoxStar(
-                size: size,
-                icon: 'img/icons8_star 2.svg',
-                nbrOfStar: note,
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => Nav.toReplacement(
+                  context, ShippingServices(data: serviceData)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  BoxInformation(
+                    size: size,
+                    name: serviceData.name,
+                    profession: serviceData.profession,
+                    lieu: serviceData.lieu,
+                    distance: serviceData.distance,
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: size.height * 0.3, left: 22),
-              child: BoxInformation(
-                size: size,
-                name: name,
-                profession: profession,
-                lieu: localization,
-                distance: distance,
-              ),
-            ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LikeComponent extends StatefulWidget {
+  const LikeComponent({super.key, required this.serviceData});
+  final Services serviceData;
+
+  @override
+  State<StatefulWidget> createState() => _LikeComponentState();
+}
+
+class _LikeComponentState extends State<LikeComponent> {
+  bool like = false;
+
+  @override
+  Widget build(BuildContext context) {
+    Services serviceData = widget.serviceData;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          serviceData.like = !serviceData.like;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        width: getProportionateScreenWidth(40),
+        height: getProportionateScreenHeight(40),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+          color: const Color.fromRGBO(255, 192, 0, 1),
         ),
+        child: serviceData.like
+            ? SvgPicture.asset("img/icons8_thumbs_up_1 1.svg")
+            : SvgPicture.asset("img/icons8_thumbs_up_lite.svg"),
       ),
     );
   }

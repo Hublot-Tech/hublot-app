@@ -1,5 +1,6 @@
 import 'package:app/configuration.dart';
 import 'package:app/size_configuration.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ButtomCustom extends StatefulWidget {
@@ -7,7 +8,8 @@ class ButtomCustom extends StatefulWidget {
     super.key,
     required this.press,
     required this.msg,
-    this.color = kbottonColor, required this.isValided,
+    this.color = kbottonColor,
+    required this.isValided,
   });
   final GestureCancelCallback press;
   final String msg;

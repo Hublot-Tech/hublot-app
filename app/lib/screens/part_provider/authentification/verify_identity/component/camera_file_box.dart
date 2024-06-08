@@ -1,13 +1,15 @@
-
 import 'package:app/configuration.dart';
 import 'package:app/size_configuration.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class CameraOrFiileBox extends StatelessWidget {
   const CameraOrFiileBox({
-    super.key, required this.press1, required this.press2,
+    super.key,
+    required this.press1,
+    required this.press2,
   });
-   final GestureCancelCallback press1,press2;
+  final GestureCancelCallback press1, press2;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -37,7 +39,7 @@ class CameraOrFiileBox extends StatelessWidget {
               ),
             ),
             SizedBox(width: getProportionateScreenWidth(40)),
-        Expanded(
+            Expanded(
               child: InkWell(
                 onTap: press2,
                 child: Column(

@@ -6,6 +6,7 @@ import 'package:app/screens/part_provider/description_service/components/custom_
 import 'package:app/screens/part_provider/description_service/components/offre_base_box.dart';
 import 'package:app/screens/part_provider/description_service/components/row_recommended_provider.dart';
 import 'package:app/size_configuration.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'box_change.dart';

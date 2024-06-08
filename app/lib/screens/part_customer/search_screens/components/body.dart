@@ -15,7 +15,7 @@ class _BodyState extends State<Body> {
   List<Map<String, String>> initialList = [
     {
       "img": "img/image 1.png",
-      "name": "Gishlain Kamga ",
+      "name": "Gishlain Kamga@ ",
       "profession": "Photographe",
       "note": "4.6",
       "lieu": "Douala,akwa",

@@ -1,3 +1,4 @@
+import 'package:app/modules/shipping_services/page/shipping_service_screen.dart';
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
@@ -44,6 +45,8 @@ final Map<String, WidgetBuilder> route = {
   BlotPreviewScrenn.routeName: (context) => const BlotPreviewScrenn(),
   PhoneNumberScreen.routeName: (context) => const PhoneNumberScreen(),
   CodePhoneScreem.routeName: (context) => const CodePhoneScreem(),
-  EtapeAuthentificationScreen.routeName:(context) =>const EtapeAuthentificationScreen(),
-  VerifyIdentityScreen.routeName:(context) => const VerifyIdentityScreen()
+  EtapeAuthentificationScreen.routeName: (context) =>
+      const EtapeAuthentificationScreen(),
+  VerifyIdentityScreen.routeName: (context) => const VerifyIdentityScreen(),
+  ShippingServices.routeName: (context) => const ShippingServices(),
 };

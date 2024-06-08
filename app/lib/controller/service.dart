@@ -1,3 +1,6 @@
+import 'package:app/controller/interfaces/prestataire.dart';
+import 'package:app/controller/interfaces/services.dart';
+
 class HublotProviderApiApi {
   List<Map<String, String>> getAllCategories() {
     List<Map<String, String>> dataItem = [
@@ -87,133 +90,49 @@ class HublotProviderApiApi {
     return listOffer;
   }
 
-  List<Map<String, String>> getAllServices() {
-    List<Map<String, String>> dataProvider = [
+  List<Map<Services, Services>> getAllServices() {
+    List<Map<Services, Services>> dataProvider = [
       {
-        "img":
-            "https://www.cidj.com/sites/default/files/2019-08/photographe.jpg",
-        "name": "Gishlain Kamga",
-        "profession": "Photographe",
-        "note": "4.6",
-        "lieu": "Douala,akwa",
-        "Distance": "3Km",
+        Services(
+          img: "img/portrait-stylish-professional-photographer.jpg",
+          name: "Gishlain Kamga",
+          profession: "Photographe",
+          note: "4.6",
+          lieu: "Douala,akwa",
+          distance: "3Km",
+          like: true,
+          favorite: true,
+          prestataire: Prestataire(name: 'Steves', firstname: 'Wonder'),
+        ): Services(
+          img: "img/portrait-stylish-professional-photographer.jpg",
+          name: "Gishlain Kamga",
+          profession: "Photographe",
+          note: "4.6",
+          lieu: "Douala,akwa",
+          like: false,
+          favorite: false,
+          distance: "3Km",
+          prestataire: Prestataire(name: 'Steves', firstname: 'Wonder'),
+        )
       },
-      {
-        "img":
-            "https://www.travailler-a-domicile.fr/wp-content/uploads/2016/06/photographe-mode-inde.jpg",
-        "name": "Grec Koum",
-        "profession": "Photographe",
-        "note": "4.6",
-        "lieu": "Douala,akwa",
-        "Distance": "8Km",
-      },
-      {
-        "img":
-            "https://static.iquesta.com/images/iquesta/article/software-developer-6521720_1280.png",
-        "name": "Pessidjo Germann",
-        "profession": "Dev Fullstack",
-        "note": "4.6",
-        "lieu": "Douala,pk21",
-        "Distance": "8Km",
-      },
+      // Ajoutez d'autres éléments si nécessaire
     ];
+
+    // Convertir List<Map<String, dynamic>> en List<Map<String, String>>
+    // List<Map<String, String>> services = dataProvider.map((service) {
+    //   return {
+    //     "img": service["img"] as String? ?? '',
+    //     "name": service["name"] as String? ?? '',
+    //     "profession": service["profession"] as String? ?? '',
+    //     "note": service["note"] as String? ?? '',
+    //     "lieu": service["lieu"] as String? ?? '',
+    //     "Distance": service["Distance"] as String? ?? '',
+    //     "rates": service["rates"] as String? ?? '',
+    //     "prestataire":
+    //         (service["prestataire"] as Map<String, String>)["name"] ?? '',
+    //   };
+    // }).toList();
 
     return dataProvider;
-  }
-
-  List<Map<String, String>> getAllDataPromo() {
-    List<Map<String, String>> dataPromo = [
-      {
-        "img": "img/promo1.png",
-      },
-      {
-        "img": "img/promo3.png",
-      },
-      {
-        "img": "img/promo2.png",
-      }
-    ];
-
-    return dataPromo;
-  }
-
-   List<Map<String, String>> getFreeSubscription() {
-    List<Map<String, String>> dataFreeSubscription = [
-      {
-        "icon":"img/service-icon.svg",
-        "offer":"3 services"
-      },
-      {
-        "icon":"img/offre-icon.svg",
-        "offer":"3 offres"
-      },
-      {
-        "icon":"img/offre-icon.svg",
-        "offer":"15% commissions"
-      },
-      {
-        "icon":"img/transaction-icon.svg",
-        "offer":"3 transactions"
-      },
-      
-    ];
-    
-    List<Map<String, String>> dataExtraSubscription = [
-      {
-        "icon":"img/service-icon.svg",
-        "offer":"10 services"
-      },
-      {
-        "icon":"img/offre-icon.svg",
-        "offer":"10 offres"
-      },
-      {
-        "icon":"img/offre-icon.svg",
-        "offer":"10% commissions"
-      },
-      {
-        "icon":"img/transaction-icon.svg",
-        "offer":"25 transactions"
-      },
-      {
-        "icon":"img/promotion-icon.svg",
-        "offer":"02 promotions"
-      },
-      {
-        "icon":"img/assistance-icon.svg",
-        "offer":"Assistance 24h/24"
-      },
-      
-    ];
-
-    List<Map<String, String>> dataPremiumSubscription = [
-      {
-        "icon":"img/service-icon.svg",
-        "offer":"Services illimités"
-      },
-      {
-        "icon":"img/offre-icon.svg",
-        "offer":"Offres illimités"
-      },
-      {
-        "icon":"img/offre-icon.svg",
-        "offer":"5% commissions"
-      },
-      {
-        "icon":"img/transaction-icon.svg",
-        "offer":"Transactions illimités"
-      },
-      {
-        "icon":"img/promotion-icon.svg",
-        "offer":"Promotions illimités"
-      },
-      {
-        "icon":"img/assistance-icon.svg",
-        "offer":"Assistance 24h/24"
-      },
-      
-    ];
-
-    return dataFreeSubscription;
   }
 }

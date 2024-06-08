@@ -1,3 +1,4 @@
+import 'package:app/controller/interfaces/services.dart';
 import 'package:app/controller/service.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   bool shimmer = false;
   HublotProviderApiApi apiPrestataire = HublotProviderApiApi();
-  List<Map<String, String>> itemServices = [];
+  List<Map<Services, Services>> itemServices = [];
   List<Map<String, String>> itemCategoris = [];
   Future<void> _refresh() {
     setState(() {
@@ -111,8 +112,8 @@ class _BodyState extends State<Body> {
                               const CardHistoric(),
                               const EspaceMenuWidget(),
                               RowSeeMore(
-                                  name: "Recommandés",
-                                  msg: "Liste basé sur votre position",
+                                  name: "Recommandés@@",
+                                  msg: "Liste basé sur votre position@@",
                                   press: () {}),
                               const EspaceMenuWidget(),
                               SizedBox(
@@ -121,17 +122,11 @@ class _BodyState extends State<Body> {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: itemServices.length,
                                   itemBuilder: (context, index) {
+                                    final MapEntry<Services, Services> entry =
+                                        itemServices[index].entries.first;
+                                    final Services serviceData = entry.value;
                                     return CardServicePrestataire(
-                                      img: itemServices[index]['img']!,
-                                      distance: itemServices[index]
-                                          ['Distance']!,
-                                      profession: itemServices[index]
-                                          ['profession']!,
-                                      localization: itemServices[index]
-                                          ['lieu']!,
-                                      name: itemServices[index]['name']!,
-                                      note: itemServices[index]['note']!,
-                                    );
+                                        serviceData: serviceData);
                                   },
                                 ),
                               ),
@@ -145,44 +140,52 @@ class _BodyState extends State<Body> {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                        color: ksecondaryColor,
-                                        borderRadius:
-                                            BorderRadius.circular(23)),
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(23),
-                                    child: Image.asset(
-                                      "img/portrait-stylish-professional-photographer.jpg",
-                                      width: getProportionateScreenWidth(387),
-                                      height: getProportionateScreenHeight(356),
-                                      fit: BoxFit.cover,
+                                      color: ksecondaryColor,
+                                      borderRadius: BorderRadius.circular(23),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Spacer(),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            right: size.width * 0.02, top: 10),
-                                        child: BoxStar(
-                                          size: size,
-                                          icon: 'img/icons8_star 2.svg',
-                                          nbrOfStar: '4.6',
+                                    child: Column(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(23),
+                                          child: Image.asset(
+                                            "img/portrait-stylish-professional-photographer.jpg",
+                                            width: getProportionateScreenWidth(
+                                                387),
+                                            height:
+                                                getProportionateScreenHeight(
+                                                    356),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(top: size.height * 0.3),
-                                    child: Center(
-                                      child: BoxInformation(
-                                        size: size,
-                                        name: "Grec Koum,",
-                                        profession: "Photographe",
-                                        lieu: "Douala,akwa",
-                                        distance: "3km",
-                                      ),
+                                        Row(
+                                          children: [
+                                            const Spacer(),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: size.width * 0.02,
+                                                  top: 10),
+                                              // child: BoxStar(
+                                              //   size: size,
+                                              //   nbrOfStar: '4.6',
+                                              // ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: size.height * 0.3),
+                                          child: Center(
+                                            child: BoxInformation(
+                                              size: size,
+                                              name: "Grec Koum,",
+                                              profession: "Photographe",
+                                              lieu: "Douala,akwa",
+                                              distance: "3km",
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -213,7 +216,7 @@ class _BodyState extends State<Body> {
                             const EspaceMenuWidget(),
                             RowSeeMore(
                                 name: "Recommandés",
-                                msg: "Liste basé sur votre position",
+                                msg: "Liste basé sur votre position#",
                                 press: () {}),
                             const EspaceMenuWidget(),
                             SizedBox(
@@ -222,22 +225,18 @@ class _BodyState extends State<Body> {
                                 scrollDirection: Axis.horizontal,
                                 itemCount: itemServices.length,
                                 itemBuilder: (context, index) {
+                                  final MapEntry<Services, Services> entry =
+                                      itemServices[index].entries.first;
+                                  final Services serviceData = entry.value;
                                   return CardServicePrestataire(
-                                    img: itemServices[index]['img']!,
-                                    distance: itemServices[index]['Distance']!,
-                                    profession: itemServices[index]
-                                        ['profession']!,
-                                    localization: itemServices[index]['lieu']!,
-                                    name: itemServices[index]['name']!,
-                                    note: itemServices[index]['note']!,
-                                  );
+                                      serviceData: serviceData);
                                 },
                               ),
                             ),
                             const EspaceMenuWidget(),
                             RowSeeMore(
                                 name: "Annonceurs proches",
-                                msg: "Liste basé sur votre position",
+                                msg: "Liste basé sur votre position@",
                                 press: () {}),
                             const EspaceMenuWidget(),
                           ],
@@ -282,11 +281,9 @@ class MistakeWidget extends StatelessWidget {
             const Spacer(),
             Padding(
               padding: EdgeInsets.only(right: size.width * 0.02, top: 10),
-              child: BoxStar(
-                size: size,
-                icon: 'img/icons8_star 2.svg',
-                nbrOfStar: '4.6',
-              ),
+              // child: BoxStar(
+              //   size: size,
+              //  ),
             ),
           ],
         ),
