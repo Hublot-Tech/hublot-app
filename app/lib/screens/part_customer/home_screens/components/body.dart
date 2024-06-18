@@ -8,7 +8,6 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../authentification/provider_screen/prestataire_screen.dart';
 import 'box_information.dart';
-import 'box_star.dart';
 import 'card_service_prestataire.dart';
 import 'box_category_service.dart';
 import 'row_see_more.dart';
