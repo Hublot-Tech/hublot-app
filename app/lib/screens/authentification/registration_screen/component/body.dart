@@ -1,4 +1,3 @@
-import 'package:app/screens/part_provider/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -172,7 +171,7 @@ class _FormInscriptionState extends State<FormInscription> {
         const SizedBox(height: 24),
         ButtomCustom(
           press: () {
-            Navigator.pushNamed(context, HomeScreen.routeName);
+           // Navigator.pushNamed(context, HomeScreen.routeName);
           },
           msg: "S'inscrire", isValided: true,
         ),

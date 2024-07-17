@@ -1,6 +1,5 @@
 import 'package:app/configuration.dart';
 import 'package:app/size_configuration.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ButtomCustom extends StatefulWidget {

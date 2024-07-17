@@ -5,6 +5,8 @@ import 'package:app/configuration.dart';
 
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 
+import 'animated_contenair.dart';
+
 class Body extends StatefulWidget {
   const Body({super.key});
   @override
@@ -13,6 +15,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentIndex = 0;
+  int index = 0;
   HublotProviderApiApi hublotProviderApi = HublotProviderApiApi();
   List<Map<String, String>> splahDatas = [];
 
@@ -50,11 +53,10 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                  splahDatas.length, (index) => buildot(index: index)),
-            ),
+            AnimatedContenu(
+                currentIndex: currentIndex,
+                index: index,
+                nbre: splahDatas.length),
             Padding(
               padding: const EdgeInsets.only(right: 25, left: 25),
               child: Column(
