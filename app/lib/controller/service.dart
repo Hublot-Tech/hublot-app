@@ -94,7 +94,7 @@ class HublotProviderApiApi {
     List<Map<Services, Services>> dataProvider = [
       {
         Services(
-          img: "img/portrait-stylish-professional-photographer.jpg",
+          img: "img/photograph.png",
           name: "Gishlain Kamga",
           profession: "Photographe",
           note: "4.6",
@@ -104,7 +104,7 @@ class HublotProviderApiApi {
           favorite: true,
           prestataire: Prestataire(name: 'Steves', firstname: 'Wonder'),
         ): Services(
-          img: "img/portrait-stylish-professional-photographer.jpg",
+          img: "img/photograph.png",
           name: "Gishlain Kamga",
           profession: "Photographe",
           note: "4.6",

@@ -48,5 +48,4 @@ final Map<String, WidgetBuilder> route = {
   EtapeAuthentificationScreen.routeName: (context) =>
       const EtapeAuthentificationScreen(),
   VerifyIdentityScreen.routeName: (context) => const VerifyIdentityScreen(),
-  ShippingServices.routeName: (context) => const ShippingServices(),
 };
