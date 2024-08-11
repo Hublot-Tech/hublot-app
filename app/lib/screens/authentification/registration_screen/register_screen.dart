@@ -1,5 +1,7 @@
+import 'package:app/blocs/auth/auth_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/authentification/registration_screen/component/body.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
@@ -7,8 +9,11 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Body(),
+    return  Scaffold(
+      body: BlocProvider(
+        create: (context) => AuthBloc(),
+        child:const Body(),
+      ),
     );
   }
 }

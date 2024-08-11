@@ -41,6 +41,12 @@ dependencies:
   http: ^1.1.0
   google_fonts: ^6.2.0
   image_picker: ^1.0.7
+  bloc: ^8.1.4
+  flutter_secure_storage: ^9.2.2
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.6
+  fluttertoast: ^8.2.5
+  otp_input_editor: ^0.0.9
   
 
 dev_dependencies:
@@ -52,7 +58,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

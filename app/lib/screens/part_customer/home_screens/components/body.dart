@@ -1,10 +1,21 @@
+import 'package:app/blocs/auth/auth_form_bloc.dart';
+import 'package:app/blocs/auth/auth_form_event.dart';
+import 'package:app/blocs/auth/auth_form_state.dart';
+import 'package:app/blocs/service/bloc/service_bloc.dart';
+import 'package:app/controller/interfaces/prestataire.dart';
 import 'package:app/controller/interfaces/services.dart';
 import 'package:app/controller/service.dart';
+import 'package:app/model/service.model.dart';
+import 'package:app/model/user.model.dart';
+import 'package:app/screens/authentification/code_phone_screen/code_phone_screen.dart';
+import 'package:app/screens/part_customer/description_service/description_service_screen.dart';
+import 'package:app/services/toastServices.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/home_screens/components/become_prestataire.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:app/screens/components/shimmer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../authentification/provider_screen/prestataire_screen.dart';
 import 'box_information.dart';
@@ -53,146 +64,74 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    List<Service> list = [];
+   // context.read<AuthBloc>().add(AuthGetCurrentUserEvent());
+    User user = User.empty();
+  bool isLoading = true;
     return RefreshIndicator(
       onRefresh: _refresh,
       color: Colors.white,
       backgroundColor: kyellowColor,
-      child: SafeArea(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const EspaceMenuWidget(),
-                  const HublotTextWigdet(),
-                  const EspaceMenuWidget(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BecomeRowBox(
-                        text: "Devenir prestataire",
-                        press: () {
-                          Navigator.pushNamed(
-                              context, ProviderScreen.routeName);
-                        },
-                      ),
-                      const NotificationBox(),
-                    ],
-                  ),
-                  const EspaceMenuWidget(),
-                  const SearchBox(),
-                  const EspaceMenuWidget(),
-                  shimmer
-                      ? Shimmer.fromColors(
-                          baseColor: Colors.white,
-                          highlightColor: Colors.transparent,
-                          child: Column(
-                            children: [
-                              BoxCategoryService(
-                                  name: "Catégories", press: () {}),
-                              const SizedBox(height: 10),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: List.generate(
-                                      itemCategoris.length,
-                                      (index) => ItemCategories(
-                                          name: itemCategoris[index]['text']!,
-                                          icon: itemCategoris[index]['icon']!)),
-                                ),
-                              ),
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthUserProfile) {
+            isLoading = false;
+            user = state.user;
 
-                              const EspaceMenuWidget(), //column deleted
-                              const CardHistoric(),
-                              const EspaceMenuWidget(),
-                              RowSeeMore(
-                                  name: "Recommandés@@",
-                                  msg: "Liste basé sur votre position@@",
-                                  press: () {}),
-                              const EspaceMenuWidget(),
-                              SizedBox(
-                                height: getProportionateScreenHeight(400),
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: itemServices.length,
-                                  itemBuilder: (context, index) {
-                                    final MapEntry<Services, Services> entry =
-                                        itemServices[index].entries.first;
-                                    final Services serviceData = entry.value;
-                                    return CardServicePrestataire(
-                                        serviceData: serviceData);
-                                  },
-                                ),
-                              ),
-                              const EspaceMenuWidget(),
-                              RowSeeMore(
-                                  name: "Annonceurs proches",
-                                  msg: "Liste basé sur votre position",
-                                  press: () {}),
-                              const EspaceMenuWidget(),
-                              Stack(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: ksecondaryColor,
-                                      borderRadius: BorderRadius.circular(23),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(23),
-                                          child: Image.asset(
-                                            "img/portrait-stylish-professional-photographer.jpg",
-                                            width: getProportionateScreenWidth(
-                                                387),
-                                            height:
-                                                getProportionateScreenHeight(
-                                                    356),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Spacer(),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: size.width * 0.02,
-                                                  top: 10),
-                                              // child: BoxStar(
-                                              //   size: size,
-                                              //   nbrOfStar: '4.6',
-                                              // ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              top: size.height * 0.3),
-                                          child: Center(
-                                            child: BoxInformation(
-                                              size: size,
-                                              name: "Grec Koum,",
-                                              profession: "Photographe",
-                                              lieu: "Douala,akwa",
-                                              distance: "3km",
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                      : Column(
+            if (!user.isOTPVerified!) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) {
+                        return const CodePhoneScreem();
+                      },
+                      settings: RouteSettings(arguments: user.phoneNumber)));
+            }
+          }
+        },
+        child: BlocConsumer<ServiceBloc, ServiceState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is ServiceFetchingAllLoading) {
+              isLoading = true;
+            }
+            if (state is ServiceFectchedAllState) {
+              isLoading = false;
+              list = state.services;
+            }
+            if (state is ErrorServiceFetchingAllState) {
+              isLoading = false;
+              ToastService.errorMessage(state.error.message);
+            }
+            return Shimmer(
+              linearGradient: shimmerGradient,
+              child: SafeArea(
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        const EspaceMenuWidget(),
+                        const HublotTextWigdet(),
+                        const EspaceMenuWidget(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            BecomeRowBox(
+                              text: "Devenir prestataire",
+                              press: () {
+                                Navigator.pushNamed(
+                                    context, ProviderScreen.routeName);
+                              },
+                            ),
+                            const NotificationBox(),
+                          ],
+                        ),
+                        const EspaceMenuWidget(),
+                        const SearchBox(),
+                        const EspaceMenuWidget(),
+                        Column(
                           children: [
                             BoxCategoryService(
                                 name: "Catégories", press: () {}),
@@ -215,35 +154,118 @@ class _BodyState extends State<Body> {
                             const EspaceMenuWidget(),
                             RowSeeMore(
                                 name: "Recommandés",
-                                msg: "Liste basé sur votre position#",
+                                msg: "Liste basé sur votre position",
                                 press: () {}),
                             const EspaceMenuWidget(),
                             SizedBox(
-                              height: 400,
+                              height: getProportionateScreenHeight(400),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: itemServices.length,
+                                itemCount: (list.length + 1),
                                 itemBuilder: (context, index) {
-                                  final MapEntry<Services, Services> entry =
-                                      itemServices[index].entries.first;
-                                  final Services serviceData = entry.value;
-                                  return CardServicePrestataire(
-                                      serviceData: serviceData);
+                                  if (list.isNotEmpty && index < list.length) {
+                                  //  final MapEntry<Services, Services> entry =
+                                   //     itemServices[0].entries.first;
+                                  //  final Services serviceData = entry.value;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                                  return const DescriptionService();
+                                                },
+                                                settings: RouteSettings(
+                                                    arguments:
+                                                        list[index].id)));
+                                      },
+                                      child: CardServicePrestataire(
+                                          serviceData: Services(
+                                              name: user.fullname,
+                                              profession: list[index].name,
+                                              img: list[index].mainImageRef,
+                                              note: "2.4",
+                                              distance: '4',
+                                              lieu: 'Douala',
+                                              like: true,
+                                              favorite: false,
+                                              prestataire: Prestataire(
+                                                name: user.fullname,
+                                                firstname: '',
+                                              ))),
+                                    );
+                                  }
+                                  return null;
                                 },
                               ),
                             ),
                             const EspaceMenuWidget(),
                             RowSeeMore(
                                 name: "Annonceurs proches",
-                                msg: "Liste basé sur votre position@",
+                                msg: "Liste basé sur votre position",
                                 press: () {}),
                             const EspaceMenuWidget(),
+                            Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: ksecondaryColor,
+                                    borderRadius: BorderRadius.circular(23),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(23),
+                                        child: Image.asset(
+                                          "img/portrait-stylish-professional-photographer.jpg",
+                                          width:
+                                              getProportionateScreenWidth(387),
+                                          height:
+                                              getProportionateScreenHeight(356),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Spacer(),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                right: size.width * 0.02,
+                                                top: 10),
+                                            // child: BoxStar(
+                                            //   size: size,
+                                            //   nbrOfStar: '4.6',
+                                            // ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: size.height * 0.3),
+                                        child: Center(
+                                          child: BoxInformation(
+                                            size: size,
+                                            name: "Grec Koum,",
+                                            profession: "Photographe",
+                                            lieu: "Douala,akwa",
+                                            distance: "3km",
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                ],
+                      ]),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

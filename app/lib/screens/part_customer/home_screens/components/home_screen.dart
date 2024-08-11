@@ -1,6 +1,10 @@
+import 'package:app/blocs/auth/auth_form_bloc.dart';
+import 'package:app/blocs/auth/auth_form_event.dart';
+import 'package:app/blocs/service/bloc/service_bloc.dart';
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'body.dart';
@@ -26,7 +30,19 @@ class _HomeScrennsState extends State<HomeScrenns> {
     SizeConfig().init(context);
     return Scaffold(
       body: [
-        const Body(),
+         MultiBlocProvider(
+          providers: [
+            //          context.read<ServiceBloc>().add(FetchServicesEvent());
+            // context.read<AuthBloc>().add(const AuthGetCurrentUserEvent());
+            BlocProvider(
+              create: (context) => ServiceBloc()..add(FetchServicesEvent()),
+            ),
+            BlocProvider(
+              create: (context) => AuthBloc()..add(AuthGetCurrentUserEvent()),
+            ),
+          ],
+          child: const Body(),
+        ),
         Container(),
         Container(),
         Container(),

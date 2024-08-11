@@ -1,7 +1,15 @@
+import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:app/blocs/auth/auth_form_bloc.dart';
+import 'package:app/blocs/auth/auth_form_event.dart';
+import 'package:app/blocs/auth/auth_form_state.dart';
 import 'package:app/configuration.dart';
-import 'package:app/screens/authentification/customer_screens/customer_screen.dart';
+import 'package:app/model/user.model.dart';
+import 'package:app/screens/authentification/code_phone_screen/code_phone_screen.dart';
+import 'package:app/screens/authentification/login_screen/login.dart';
+import 'package:app/services/toastServices.dart';
 
 import 'button_custom.dart';
 import 'field_form.dart';
@@ -43,7 +51,7 @@ class Body extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, CustomerScrenn.routeName);
+                                  context, HomeScrenns.routeName);
                             },
                             child: SizedBox(
                               width: 20,
@@ -66,7 +74,7 @@ class Body extends StatelessWidget {
                         //HublotTextWigdet(),
 
                         textPresentation(
-                            msg: "LOT",
+                            msg: "LOTS",
                             fontWeight: FontWeight.w500,
                             color: const Color.fromARGB(255, 255, 177, 59),
                             size: 23),
@@ -75,6 +83,7 @@ class Body extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     textPresentation(
+                      overflow: TextOverflow.visible,
                       msg:
                           "Veuillez vous assurer de la crédibilité de ces informations, car elles seront rigoureusement vérifiées",
                       fontWeight: FontWeight.w100,
@@ -82,10 +91,35 @@ class Body extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     FormInscription(
-                      name_controller: nameController,
-                      email_controller: emailController,
-                      mdp_controller: mdpController,
-                      number_controler: numberController,
+                      nameController: nameController,
+                      emailController: emailController,
+                      mdpController: mdpController,
+                      numberControler: numberController,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        textPresentation(
+                            msg: 'Déjà un compte?',
+                            fontWeight: FontWeight.w100,
+                            size: 14),
+                        InkWell(
+                          onTap: () {
+                            //navigate route for loginScreen
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                          },
+                          child: textPresentation(
+                              msg: 'Cliquez ici',
+                              fontWeight: FontWeight.bold,
+                              size: 14,
+                              color: kyellowColor),
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -101,16 +135,16 @@ class Body extends StatelessWidget {
 class FormInscription extends StatefulWidget {
   const FormInscription({
     super.key,
-    required this.name_controller,
-    required this.email_controller,
-    required this.number_controler,
-    required this.mdp_controller,
+    required this.nameController,
+    required this.emailController,
+    required this.numberControler,
+    required this.mdpController,
   });
 
-  final TextEditingController name_controller;
-  final TextEditingController email_controller;
-  final TextEditingController number_controler;
-  final TextEditingController mdp_controller;
+  final TextEditingController nameController;
+  final TextEditingController emailController;
+  final TextEditingController numberControler;
+  final TextEditingController mdpController;
 
   @override
   State<FormInscription> createState() => _FormInscriptionState();
@@ -118,65 +152,123 @@ class FormInscription extends StatefulWidget {
 
 class _FormInscriptionState extends State<FormInscription> {
   bool isHide = true;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Form(
+        key: _formKey,
         child: Column(
-      children: [
-        FieldForm(
-          controller: widget.name_controller,
-          label: "Nom et prenom",
-          hint: "Nom et prenom",
-        ),
-        const SizedBox(height: 17),
-        FieldForm(
-            controller: widget.email_controller, label: "Email", hint: "Email"),
-        const SizedBox(height: 17),
-        TextField(
-            controller: widget.number_controler,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(
-                  top: 0,
-                  left: 15,
-                ),
-                labelText: "+237|6xx xxx xxx",
-                hintText: "Numero de telephone",
-                suffixIcon: Image.asset("img/icons_whatsapp.png"),
-                border: const OutlineInputBorder())),
-        const SizedBox(height: 17),
-        TextField(
-            obscureText: isHide == false ? false : true,
-            controller: widget.mdp_controller,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(
-                  top: 0,
-                  left: 15,
-                ),
-                labelText: "Mot de passe",
-                hintText: "Mot de passe",
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isHide = !isHide;
-                    });
+          children: [
+            FieldForm(
+              controller: widget.nameController,
+              label: "Nom et prenom",
+              hint: "Nom et prenom",
+            ),
+            const SizedBox(height: 17),
+            FieldForm(
+                controller: widget.emailController,
+                label: "Email",
+                hint: "Email"),
+            const SizedBox(height: 17),
+            TextFormField(
+                controller: widget.numberControler,
+                onChanged: (value) {
+                  setState(() => value.length == 9 ? isHide = false : true);
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer un numero de telephone valide';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(
+                      top: 0,
+                      left: 15,
+                    ),
+                    labelText: "+237|6xx xxx xxx",
+                    hintText: "Numero de telephone",
+                    suffixIcon: Image.asset("img/icons_whatsapp.png"),
+                    border: const OutlineInputBorder())),
+            const SizedBox(height: 17),
+            TextFormField(
+                obscureText: isHide == false ? false : true,
+                controller: widget.mdpController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer un mot de passe valide';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(
+                      top: 0,
+                      left: 15,
+                    ),
+                    labelText: "Mot de passe",
+                    hintText: "Mot de passe",
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isHide = !isHide;
+                        });
+                      },
+                      child: Container(
+                        padding:
+                            const EdgeInsets.only(top: 15, left: 10, right: 10),
+                        child: textPresentation(
+                            msg: "Voir", fontWeight: FontWeight.bold, size: 17),
+                      ),
+                    ),
+                    border: const OutlineInputBorder())),
+            const SizedBox(height: 24),
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthError) {
+                  print(state.errorAuth.message);
+                  ToastService.errorMessage(state.errorAuth.message);
+                }
+                if (state is AuthUserCreated) {
+                  ToastService.successMessage(
+                      "Inscription reussie avec succes", kyellowColor);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) {
+                            return const CodePhoneScreem();
+                          },
+                          settings: RouteSettings(
+                              arguments: widget.numberControler.text)));
+                }
+              },
+              builder: (context, state) {
+                if (state is AuthLoading) {
+                  return const Center(
+                      child: CircularProgressIndicator(color: kyellowColor));
+                }
+
+                return ButtomCustom(
+                  press: () {
+                    // Navigator.pushNamed(context, HomeScreen.routeName);
+                    if (_formKey.currentState!.validate()) {
+                      User user = User(
+                          fullname: widget.nameController.text,
+                          phoneNumber: widget.numberControler.text,
+                          locale: "fr",
+                          address: widget.emailController.text,
+                          password: widget.mdpController.text,
+                          email: widget.emailController.text);
+                      context.read<AuthBloc>().add(AuthCreateUserEvent(user));
+                      // Navigator.pushNamed(context, HomeScreen.routeName);
+                    }
                   },
-                  child: Container(
-                    padding:
-                        const EdgeInsets.only(top: 15, left: 10, right: 10),
-                    child: textPresentation(
-                        msg: "Voir", fontWeight: FontWeight.bold, size: 17),
-                  ),
-                ),
-                border: const OutlineInputBorder())),
-        const SizedBox(height: 24),
-        ButtomCustom(
-          press: () {
-           // Navigator.pushNamed(context, HomeScreen.routeName);
-          },
-          msg: "S'inscrire", isValided: true,
-        ),
-      ],
-    ));
+                  msg: "S'inscrire",
+                  isValided: true,
+                );
+              },
+            ),
+          ],
+        ));
   }
 }
 

@@ -1,9 +1,21 @@
+import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:app/screens/presentation_screens/components/presention_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:app/route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app/blocs/auth/auth_form_bloc.dart';
+import 'package:app/blocs/auth/auth_form_event.dart';
+import 'package:app/blocs/auth/auth_form_state.dart';
+import 'package:app/screens/authentification/login_screen/login.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'route.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(BlocProvider(
+    create: (context) => AuthBloc()..add(AuthCheckTokenEvent()),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +24,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.amber, fontFamily: 'Mark_Simonson'),
-      routes: route,
       debugShowCheckedModeBanner: false,
-      initialRoute: PresentationScreen.routeName,
+      routes: route,
+      home: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          // Logique de redirection gérée par l'état
+          if (state is AuthAuthenticated) {
+            return const HomeScrenns();
+          } else if (state is AuthUnauthenticated) {
+            return const LoginScreen();
+          } else if (state is NoAuth) {
+            return const PresentationScreen();
+          } else {
+            return const Scaffold(
+                body: Center(child: CircularProgressIndicator()));
+          }
+        },
+      ),
     );
   }
 }

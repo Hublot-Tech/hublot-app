@@ -35,35 +35,40 @@ class BecomeRowBoxContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      height: getProportionateScreenHeight(50),
-      width: getProportionateScreenWidth(190),
+      height: 40,
+      width: size.width * 0.52,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white, width: 3),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade500,
-            blurRadius: 2,
-            offset: const Offset(4.0, 4.0),
-            spreadRadius: 1.0,
+            color: Colors.black
+                .withOpacity(0.05), // rgba(0, 0, 0, 0.05) en Flutter
+            spreadRadius: 0, // Pas d'étalement
+            blurRadius: 4, // Rayon de flou de 4 pixels
+            offset: const Offset(0, 4), // Décalage de 4 pixels vers le bas
           ),
-          const BoxShadow(
-            color: Colors.white,
-            blurRadius: 15,
-            offset: Offset(-4.0, -4.0),
-            spreadRadius: 1.0,
-          )
+          // BoxShadow(
+          //   color: Colors.grey.shade500,
+          //   blurRadius: 4,
+          //   offset: const Offset(4.0, 4.0),
+          //   spreadRadius: 1.0,
+          // ),
+          // const BoxShadow(
+          //   color: Colors.white,
+          //   blurRadius: 15,
+          //   offset: Offset(-4.0, -4.0),
+          //   spreadRadius: 0,
+          // )
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10), // Marge à gauche
-            child: SvgPicture.asset("img/profil.svg"),
-          ),
+          SvgPicture.asset("img/profil.svg"),
           Text(
             text,
             style: TextStyle(

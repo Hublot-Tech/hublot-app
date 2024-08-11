@@ -1,9 +1,8 @@
 import 'package:app/controller/service.dart';
+import 'package:app/screens/authentification/registration_screen/register_screen.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
-
-import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 
 import 'animated_contenair.dart';
 
@@ -78,7 +77,10 @@ class _BodyState extends State<Body> {
             GestureDetector(
               onTap: currentIndex == 2
                   ? () {
-                      Navigator.pushNamed(context, HomeScrenns.routeName);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (contexte) {
+                        return const RegistrationScreen();
+                      }));
                     }
                   : () {},
               child: Container(
