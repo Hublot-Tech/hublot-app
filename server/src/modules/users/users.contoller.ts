@@ -47,6 +47,7 @@ export class UsersController {
     description: "list of successfully loaded users",
   })
   findAll(@Query() query: QueryUserDto) {
+    console.log('lk');
     const user = this.userService.findAll(query);
     return user;
   }
