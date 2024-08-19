@@ -1,5 +1,4 @@
 import 'package:app/blocs/auth/auth_form_bloc.dart';
-import 'package:app/blocs/auth/auth_form_event.dart';
 import 'package:app/blocs/auth/auth_form_state.dart';
 import 'package:app/blocs/service/bloc/service_bloc.dart';
 import 'package:app/controller/interfaces/prestataire.dart';
@@ -7,6 +6,7 @@ import 'package:app/controller/interfaces/services.dart';
 import 'package:app/controller/service.dart';
 import 'package:app/model/service.model.dart';
 import 'package:app/model/user.model.dart';
+import 'package:app/model/user_storage.dart';
 import 'package:app/screens/authentification/code_phone_screen/code_phone_screen.dart';
 import 'package:app/screens/part_customer/description_service/description_service_screen.dart';
 import 'package:app/services/toastServices.dart';
@@ -67,7 +67,8 @@ class _BodyState extends State<Body> {
     List<Service> list = [];
    // context.read<AuthBloc>().add(AuthGetCurrentUserEvent());
     User user = User.empty();
-  bool isLoading = true;
+     UserStorage userStorage = UserStorage();
+ bool isLoading = true;
     return RefreshIndicator(
       onRefresh: _refresh,
       color: Colors.white,
@@ -77,7 +78,8 @@ class _BodyState extends State<Body> {
           if (state is AuthUserProfile) {
             isLoading = false;
             user = state.user;
-
+            userStorage.storeUserData(
+                user.id!, user.verificationStatus!, user.email!, user.fullname);
             if (!user.isOTPVerified!) {
               Navigator.push(
                   context,

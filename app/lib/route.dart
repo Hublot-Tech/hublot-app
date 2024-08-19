@@ -1,4 +1,3 @@
-import 'package:app/modules/shipping_services/page/shipping_service_screen.dart';
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
@@ -26,5 +25,5 @@ final Map<String, WidgetBuilder> route = {
   LanguageScreen.routeName: (context) => const LanguageScreen(),
   CityScreen.routeName: (context) => const CityScreen(),
 
-  ShippingServices.routeName: (context) => const ShippingServices(),
+  //ShippingServices.routeName: (context) => const ShippingServices(),
 };

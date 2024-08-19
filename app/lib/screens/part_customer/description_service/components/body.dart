@@ -1,6 +1,8 @@
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/components/shimmer.dart';
+import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/description_service/components/custom_widget.dart';
+import 'package:app/screens/part_customer/description_service/components/offer_botton.dart';
 import 'package:app/screens/part_customer/description_service/components/offre_base_box.dart';
 import 'package:app/screens/part_customer/description_service/components/row_recommended_provider.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
@@ -67,11 +69,10 @@ class _BodyState extends State<Body> {
           }
           if (state is ServiceFetchedByIdState) {
             isLoading = !isLoading;
-            print(id);
+
             service = state.service;
           }
           if (state is ServiceOffersByIdState) {
-            debugPrint(state.service.length.toString());
             // isLoading = !isLoading;
             offer = state.service;
           }
@@ -244,9 +245,13 @@ class _BodyState extends State<Body> {
                         itemCount: (offer.length),
                         itemBuilder: (context, index) {
                           if (index < offer.length) {
-                            return OffreBaseBox(
-                                name: offer[index].name,
-                                nbre: offer[index].price.toString());
+                            if (offer[index].name == "Offre de base") {
+                              return OffreBaseBox(
+                                  name: offer[index].name,
+                                  nbre: offer[index].price.toString());
+                            } else {
+                              return null;
+                            }
                           }
                           return null;
                         }),
@@ -279,12 +284,13 @@ class _BodyState extends State<Body> {
                         ),
                         AddOfferButton(
                             heigt: 190,
+                            toCommande: true,
                             press: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) {
-                                        return const HomeScrenns();
+                                        return const CommandeScreen();
                                       },
                                       settings: RouteSettings(
                                         arguments: id,
@@ -317,10 +323,13 @@ class _BodyState extends State<Body> {
                         itemCount: (offer.length),
                         itemBuilder: (context, index) {
                           if (index < offer.length) {
-                            return OffreBaseBox(
-                                name: offer[index].name,
-                                nbre:
-                                    offer[index].estimatedDuration.toString());
+                            if (offer[index].name == "Offre Standard") {
+                              return OffreBaseBox(
+                                  name: offer[index].name,
+                                  nbre: offer[index].price.toString());
+                            } else {
+                              return null;
+                            }
                           }
                           return null;
                         }),
@@ -333,9 +342,10 @@ class _BodyState extends State<Body> {
                           left: getProportionateScreenWidth(05),
                           right: getProportionateScreenWidth(20)),
                       child: AddOfferButton(
-                          heigt: MediaQuery.of(context).size.height * 0.3,
+                          heigt: MediaQuery.of(context).size.height,
                           press: () {},
-                          width: 50,
+                          toCommande: false,
+                          width: MediaQuery.of(context).size.width,
                           msg: "Ajouter des options"),
                     ),
                   ),
@@ -347,50 +357,6 @@ class _BodyState extends State<Body> {
       ),
     );
     //page de service profil + status
-  }
-}
-
-class AddOfferButton extends StatelessWidget {
-  const AddOfferButton({
-    super.key,
-    required this.heigt,
-    required this.width,
-    required this.press,
-    required this.msg,
-  });
-  final double heigt, width;
-  final GestureCancelCallback press;
-  final String msg;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: press,
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.only(left: getProportionateScreenWidth(15)),
-            decoration: const BoxDecoration(
-              color: kyellowColor,
-            ),
-            child: Center(
-              child: textPresentation(
-                  msg: msg, fontWeight: FontWeight.bold, size: 14),
-            ),
-          ),
-          Container(
-              padding: EdgeInsets.all(10),
-              color: kprimaryColor,
-              child: textPresentation(
-                msg: "Commander",
-                fontWeight: FontWeight.bold,
-                size: 14,
-                color: Colors.white,
-              )),
-        ],
-      ),
-    );
   }
 }
 

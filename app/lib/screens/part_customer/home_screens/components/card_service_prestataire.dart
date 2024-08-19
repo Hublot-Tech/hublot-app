@@ -1,7 +1,7 @@
 import 'package:app/controller/interfaces/services.dart';
-import 'package:app/modules/shipping_services/page/shipping_service_screen.dart';
+//import 'package:app/modules/shipping_services/page/shipping_service_screen.dart';
 import 'package:app/size_configuration.dart';
-import 'package:app/utilitis/navigations/Nav.dart';
+//import 'package:app/utilitis/navigations/Nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
@@ -43,21 +43,17 @@ class CardServicePrestataire extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: GestureDetector(
-              onTap: () => Nav.toReplacement(
-                  context, ShippingServices(data: serviceData)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  BoxInformation(
-                    size: size,
-                    name: serviceData.name,
-                    profession: serviceData.profession,
-                    lieu: serviceData.lieu,
-                    distance: serviceData.distance,
-                  ),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                BoxInformation(
+                  size: size,
+                  name: serviceData.name,
+                  profession: serviceData.profession,
+                  lieu: serviceData.lieu,
+                  distance: serviceData.distance,
+                ),
+              ],
             ),
           ),
         ],

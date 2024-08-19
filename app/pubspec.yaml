@@ -47,6 +47,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   fluttertoast: ^8.2.5
   otp_input_editor: ^0.0.9
+  carousel_slider: ^5.0.0
   
 
 dev_dependencies:

@@ -74,8 +74,8 @@ class AuthService {
       if (response.statusCode == 201) {
         // Rafraîchissement réussi : mets à jour l'access token
         final responseData = jsonDecode(response.body);
-        final newAccessToken = responseData['accessToken'];
-        final newRefreshToken = responseData['refreshToken'];
+        final newAccessToken = responseData['data']['accessToken'];
+        final newRefreshToken = responseData['data']['refreshToken'];
         await storage.write(key: 'accessToken', value: newAccessToken);
         await storage.write(key: 'refreshToken', value: newRefreshToken);
         await saveTokenAndExpiry(newAccessToken, newRefreshToken, 24);
