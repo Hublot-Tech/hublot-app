@@ -1,5 +1,8 @@
+import 'package:app/blocs/message/bloc/chat_bloc.dart';
+import 'package:app/model/message_detail.dart';
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/components/shimmer.dart';
+import 'package:app/screens/part_customer/chat_screen/chat_screen.dart';
 import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/description_service/components/custom_widget.dart';
 import 'package:app/screens/part_customer/description_service/components/offer_botton.dart';
@@ -7,6 +10,7 @@ import 'package:app/screens/part_customer/description_service/components/offre_b
 import 'package:app/screens/part_customer/description_service/components/row_recommended_provider.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:app/screens/part_customer/home_screens/components/hublo_text_widget.dart';
+import 'package:app/services/toastServices.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/blocs/service/bloc/service_bloc.dart';
@@ -45,6 +49,9 @@ class _BodyState extends State<Body> {
     BlocProvider.of<ServiceBloc>(context)
         .add((FetchServiceOffersByIdEvent(id)));
     bool isLoading = true;
+    String price = '';
+    String jour = '';
+    bool isSend = false;
     List<OfferDetails> offer = [];
     const shimmerGradient = LinearGradient(
       colors: [
@@ -65,15 +72,17 @@ class _BodyState extends State<Body> {
       child: BlocBuilder<ServiceBloc, ServiceState>(
         builder: (context, state) {
           if (state is ServiceFetchingByIdLoading) {
-            isLoading = !isLoading;
+            isLoading = true;
+
+            return Center(child: CircularProgressIndicator());
           }
           if (state is ServiceFetchedByIdState) {
-            isLoading = !isLoading;
+            isLoading = false;
 
             service = state.service;
           }
           if (state is ServiceOffersByIdState) {
-            // isLoading = !isLoading;
+            isLoading = false;
             offer = state.service;
           }
 
@@ -244,10 +253,19 @@ class _BodyState extends State<Body> {
                         shrinkWrap: true,
                         itemCount: (offer.length),
                         itemBuilder: (context, index) {
+                          String offers = "Offre de base";
                           if (index < offer.length) {
-                            if (offer[index].name == "Offre de base") {
+                            if (offer[index].name.contains(offers)) {
+                              int indexo = offer[index].name.indexOf(offers);
+                              price = offer[index].price.toString();
+                              jour = offer[index].estimatedDuration.toString();
+
+                              String trueName = offer[indexo]
+                                  .name
+                                  .substring(index + offers.length)
+                                  .trim();
                               return OffreBaseBox(
-                                  name: offer[index].name,
+                                  name: trueName,
                                   nbre: offer[index].price.toString());
                             } else {
                               return null;
@@ -275,29 +293,57 @@ class _BodyState extends State<Body> {
                                 const Icon(Icons.keyboard_arrow_down_sharp),
                               ]),
                               textPresentation(
-                                  msg: "1j de réalisation",
+                                  msg: "$jour j de réalisation",
                                   fontWeight: FontWeight.normal,
                                   size: 11.64,
                                   color: kprimaryColor.withOpacity(0.9)),
                             ],
                           ),
                         ),
-                        AddOfferButton(
-                            heigt: 190,
-                            toCommande: true,
-                            press: () {
+                        BlocListener<ChatBloc, ChatState>(
+                          listener: (context, state) {
+                            if (state is ChatLoading) {
+                              isSend = true;
+                              print(isSend);
+                            }
+                            if (state is ChatSendState) {
+                              isSend = false;
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) {
-                                        return const CommandeScreen();
+                                        return ChatScreen(
+                                          interlocutor: service.provider.id!,
+                                          name: service.provider.fullname,
+                                        );
                                       },
                                       settings: RouteSettings(
                                         arguments: id,
                                       )));
-                            },
-                            width: 34,
-                            msg: "10 000 FCFA"),
+                            }
+                            if (state is ChatError) {
+                              ToastService.errorMessage(state.error.message);
+                            }
+                          },
+                          child: isSend == false
+                              ? AddOfferButton(
+                                  heigt: 190,
+                                  toCommande: true,
+                                  press: () {
+                                    ///create a message to send to provider
+                                    CreateMessage orderMessager = CreateMessage(
+                                        contentType: 'order',
+                                        resource: id,
+                                        content: 'order',
+                                        receiver: service.provider.id);
+                                    context.read<ChatBloc>().add(
+                                        ChatSendMessageEvent(
+                                            message: orderMessager));
+                                  },
+                                  width: 34,
+                                  msg: price)
+                              : CircularProgressIndicator(color: kyellowColor),
+                        ),
                       ],
                     ),
                   ),
@@ -322,10 +368,16 @@ class _BodyState extends State<Body> {
                         shrinkWrap: true,
                         itemCount: (offer.length),
                         itemBuilder: (context, index) {
+                          String offers = "Offre Standard";
                           if (index < offer.length) {
-                            if (offer[index].name == "Offre Standard") {
+                            if (offer[index].name.contains(offers)) {
+                              int indexo = offer[index].name.indexOf(offers);
+                              String trueName = offer[indexo]
+                                  .name
+                                  .substring(index + offers.length)
+                                  .trim();
                               return OffreBaseBox(
-                                  name: offer[index].name,
+                                  name: trueName,
                                   nbre: offer[index].price.toString());
                             } else {
                               return null;

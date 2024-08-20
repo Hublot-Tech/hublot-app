@@ -12,7 +12,7 @@ class RowRecommandedProvider extends StatelessWidget {
   final String imgPath, text;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+   // final size = MediaQuery.of(context).size;
     return Row(
       children: [
         Container(

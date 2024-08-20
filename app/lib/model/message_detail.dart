@@ -68,17 +68,24 @@ class MessageDetails {
 class CreateMessage {
   final String contentType;
   final String? content;
-  final File? fileRef;
+  final String? blotId;
+  final String? resource;
+  final File? file;
   final String? receiver;
   CreateMessage(
-      {this.content, this.receiver, this.fileRef, required this.contentType});
+      {this.content,
+      this.blotId,
+      this.receiver,
+      this.resource,
+      this.file,
+      required this.contentType});
 
   factory CreateMessage.fromJson(Map<String, dynamic> json) {
     return CreateMessage(
         contentType: json['contentType'],
         content: json['content'],
         receiver: json['receiver'],
-        fileRef: json['file']);
+        resource: json['resource']);
   }
 
   Map<String, dynamic> toJson() {
@@ -86,13 +93,13 @@ class CreateMessage {
       "content": content,
       'receiver': receiver,
       "contentType": contentType,
-      "file": fileRef
+      "resource": resource
     };
   }
 
   factory CreateMessage.isEmpty() {
     return CreateMessage(
-        contentType: '', receiver: '', content: '', fileRef: null);
+        contentType: '', receiver: '', content: '', resource: null);
   }
 }
 
@@ -139,7 +146,7 @@ class ResponseMessageSend {
   final String contentType;
   final String? content;
   final String? file;
-  final String fileRef;
+  final String resource;
   final DateTime sendAt;
   final DateTime deliveredAt, createdAt, updatedAt;
   final DateTime readAt;
@@ -154,7 +161,7 @@ class ResponseMessageSend {
       required this.contentType,
       required this.createdAt,
       required this.deliveredAt,
-      required this.fileRef,
+      required this.resource,
       required this.id,
       required this.sendAt,
       required this.updatedAt,
@@ -168,7 +175,7 @@ class ResponseMessageSend {
       deliveredAt: json['deliveredAt'] == null
           ? DateTime.now()
           : DateTime.parse(json['deliveredAt']),
-      fileRef: json['fileRef'] == null ? '' : json['fileRef'] as String,
+      resource: json['resource'] == null ? '' : json['resource'] as String,
       receiver: json['receiver'],
       sendAt: json['sendAt'] == null
           ? DateTime.now()
@@ -227,5 +234,50 @@ class MessageResponseFecth {
       data: List<ResponseMessageSend>.from(
           json['data'].map((x) => ResponseMessageSend.fromJson(x))),
     );
+  }
+}
+
+class ChatMessage {
+  final String interlocutor;
+  final String name;
+  final String lastMessage;
+  final DateTime updatedAt;
+
+  const ChatMessage(
+      {required this.interlocutor,
+      required this.lastMessage,
+      required this.name,
+      required this.updatedAt});
+
+  factory ChatMessage.fromJson(Map<String, dynamic> json) {
+    return ChatMessage(
+        interlocutor: json['interlocutor'],
+        lastMessage: json['lastMessage'],
+        name: json['name'],
+        updatedAt: DateTime.parse(json['updatedAt']));
+  }
+}
+
+class ChatResponseFecth {
+  final String message;
+  final int status;
+  final int page;
+  final int perpage;
+  final List<ChatMessage> data;
+  const ChatResponseFecth(
+      {required this.data,
+      required this.message,
+      required this.page,
+      required this.perpage,
+      required this.status});
+
+  factory ChatResponseFecth.fromJson(Map<String, dynamic> json) {
+    return ChatResponseFecth(
+        message: json['message'],
+        status: json['status'],
+        page: json['page'],
+        perpage: json['perpage'],
+        data: List<ChatMessage>.from(
+            json['data'].map((x) => ChatMessage.fromJson(x))));
   }
 }

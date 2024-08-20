@@ -10,12 +10,12 @@ class CommandeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //receive id arguments from previous screen
-    final args = ModalRoute.of(context)!.settings.arguments as String;
-    
+    final args = ModalRoute.of(context)!.settings.arguments as List<String>;
+
     return Scaffold(
       backgroundColor: kColorWhite,
       body: BlocProvider(
-        create: (context) => ServiceBloc()..add(FetchServiceByIdEvent(args)),
+        create: (context) => ServiceBloc()..add(FetchServiceByIdEvent(args[0])),
         child: const Body(),
       ),
     );

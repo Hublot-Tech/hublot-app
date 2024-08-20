@@ -1,3 +1,4 @@
+import 'package:app/blocs/message/bloc/chat_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/blocs/service/bloc/service_bloc.dart';
 import 'package:app/size_configuration.dart';
@@ -14,12 +15,19 @@ class DescriptionService extends StatelessWidget {
     SizeConfig().init(context);
     final id = ModalRoute.of(context)!.settings.arguments as String;
     // BlocProvider.of<ServiceBloc>(context).add((FetchServiceByIdEvent(id)));
-   
+
     return Scaffold(
       // backgroundColor: ktransparentColor,
 
-      body: BlocProvider(
-        create: (context) => ServiceBloc()..add(FetchServiceByIdEvent(id)),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ServiceBloc()..add(FetchServiceByIdEvent(id)),
+          ),
+          BlocProvider(
+            create: (context) => ChatBloc(),
+          ),
+        ],
         child: const Body(),
       ),
     );
