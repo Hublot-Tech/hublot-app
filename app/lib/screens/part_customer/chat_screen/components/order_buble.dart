@@ -60,7 +60,8 @@ class OrderBuble extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(18),
                         topRight: Radius.circular(18)),
-                    child: Image.asset('img/backona.png', fit: BoxFit.cover)),
+                    child: Image.network(serviceDetails.mainImageRef!,
+                        fit: BoxFit.cover)),
               ),
               Container(
                 padding:
