@@ -1,6 +1,5 @@
 import 'package:app/screens/part_customer/blot_screen/blot_screen.dart';
 import 'package:app/screens/part_customer/chat_screen/components/pop_row_item.dart';
-import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -57,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
       providers: [
         //6670c021826def765079b1fb
         BlocProvider(
-          create: (context) => ChatBloc(),
+          create: (context) => ChatBloc()..add(ChatFetchMessageEvent(interculators: widget.interlocutor)),
         ),
       ],
       child: Scaffold(
@@ -145,12 +144,12 @@ class _ChatScreenState extends State<ChatScreen> {
                       if (value == BlotItem.signalerProfil) {
                         //
                       } else if (value == BlotItem.blotEncours) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                settings: RouteSettings(
-                                    arguments: [widget.interlocutor, id]),
-                                builder: (context) => const CommandeScreen()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         settings: RouteSettings(
+                        //             arguments: [widget.interlocutor, id]),
+                        //         builder: (context) => const CommandeScreen()));
                       }
                     },
                     icon: isClick

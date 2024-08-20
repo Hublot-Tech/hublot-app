@@ -61,6 +61,7 @@ class ServiceError extends ServiceState {
 
   ServiceError(this.message);
 }
+
 ///////////////////////////////////////
 //////////////////////////////////////
 // --  FETCHING SERVICE  {ID}      --//
@@ -69,6 +70,12 @@ class ServiceOffersByIdLoading extends ServiceState {}
 class ServiceOffersByIdState extends ServiceState {
   final List<OfferDetails> service;
   ServiceOffersByIdState(this.service);
+}
+
+class ServiceAndOfferFetchById extends ServiceState {
+  final List<OfferDetails> offer;
+  final ServiceDetails services;
+  ServiceAndOfferFetchById(this.offer, this.services);
 }
 
 class ErrorServiceOffersByIdState extends ServiceState {

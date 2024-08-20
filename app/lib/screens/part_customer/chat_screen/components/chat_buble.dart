@@ -1,16 +1,19 @@
+import 'package:app/blocs/service/bloc/service_bloc.dart';
 import 'package:app/screens/part_customer/chat_screen/components/blot_buble.dart';
 import 'package:app/screens/part_customer/chat_screen/components/order_buble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:app/configuration.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatBuble extends StatelessWidget {
   const ChatBuble(
       {super.key,
+      required this.resource,
       required this.message,
       required this.isMe,
       required this.contentTypee,
       required this.press});
-  final String message, contentTypee;
+  final String message, resource, contentTypee;
   final bool isMe;
   final GestureTapCancelCallback press;
   @override
@@ -40,7 +43,10 @@ class ChatBuble extends StatelessWidget {
           child: contentTypee == 'blot'
               ? BlotBuble(message: message, isMe: isMe)
               : contentTypee == 'order'
-                  ? OrderBuble(isMe: isMe)
+                  ? BlocProvider(
+                      create: (context) => ServiceBloc(),
+                      child: OrderBuble(isMe: isMe, id: resource),
+                    )
                   : textPresentation(
                       msg: message,
                       fontWeight: FontWeight.w400,

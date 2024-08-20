@@ -13,6 +13,7 @@ class BlotBuble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return SizedBox(
         width: 152,
         height: 72,

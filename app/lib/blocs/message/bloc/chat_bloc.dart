@@ -28,7 +28,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (response is MessageResponse) {
         emit(ChatSendState(message: response));
         //add(ChatFetchMessageEvent());
-       // add( ChatFetchMessageEvent(interculators: event.message));
+        // add( ChatFetchMessageEvent(interculators: event.message));
       } else if (response is MessageError) {
         emit(ChatError(error: response));
       }
@@ -72,7 +72,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   void startPeriodicFetching(ChatFetchMessageEvent event) {
-    _timer = Timer.periodic(const Duration(seconds: 13), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 60), (timer) {
       add(event); // Déclenche l'événement de récupération des messages
     });
   }

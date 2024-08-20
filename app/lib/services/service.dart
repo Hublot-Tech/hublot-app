@@ -67,7 +67,7 @@ class ApiService {
       return ErrorServiceFetching(message: e.toString(), status: 500);
     }
   }
-
+  
   Future<Object> getOffersById(String serviceId) async {
     try {
       const storage = FlutterSecureStorage();

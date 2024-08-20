@@ -3,7 +3,6 @@ import 'package:app/model/message_detail.dart';
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/components/shimmer.dart';
 import 'package:app/screens/part_customer/chat_screen/chat_screen.dart';
-import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/description_service/components/custom_widget.dart';
 import 'package:app/screens/part_customer/description_service/components/offer_botton.dart';
 import 'package:app/screens/part_customer/description_service/components/offre_base_box.dart';

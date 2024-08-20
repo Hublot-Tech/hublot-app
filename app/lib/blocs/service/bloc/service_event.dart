@@ -20,8 +20,12 @@ class CreateServiceEvent extends ServiceEvent {
   const CreateServiceEvent(this.service, this.file);
 }
 
-
 class FetchServiceOffersByIdEvent extends ServiceEvent {
   final String serviceId;
   const FetchServiceOffersByIdEvent(this.serviceId);
+}
+
+class FetchServiceAndOffer extends ServiceEvent {
+  final String serviceId;
+  const FetchServiceAndOffer(this.serviceId);
 }

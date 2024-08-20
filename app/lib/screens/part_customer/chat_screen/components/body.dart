@@ -130,6 +130,7 @@ class _BodyState extends State<Body> {
                 child: ListView.builder(
                     itemCount: listChat.length,
                     itemBuilder: (context, index) => ChatBuble(
+                          resource: listChat[index].resource,
                           contentTypee: listChat[index].contentType,
                           isMe: listChat[index].sender == idUser ? true : false,
                           message: listChat[index].content!,
