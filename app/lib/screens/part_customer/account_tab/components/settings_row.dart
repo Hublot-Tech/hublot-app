@@ -8,22 +8,25 @@ class SettingsRow extends StatelessWidget {
     super.key,
     required this.press,
     required this.ville,
-    required this.icon,
+    this.icon,
+    this.hasFlesh,
     required this.info,
     this.hasInfo = false,
   });
   final GestureCancelCallback press;
-  final String ville, icon, info;
+  final String ville, info;
+  final String? icon;
   final bool hasInfo;
+  final bool? hasFlesh;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: press,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 30, left: 8),
+        padding: EdgeInsets.only(bottom: hasFlesh == false ? 0 : 30, left: 8),
         child: Row(
           children: [
-            SvgPicture.asset(icon),
+            SvgPicture.asset(icon!),
             const SizedBox(width: 20),
             textPresentation(
                 msg: ville, fontWeight: FontWeight.normal, size: 19),
@@ -33,7 +36,9 @@ class SettingsRow extends StatelessWidget {
                     msg: info, fontWeight: FontWeight.w300, size: 19)
                 : const Text(""),
             const SizedBox(width: 5),
-            const Icon(Icons.arrow_forward_ios_rounded),
+            hasFlesh == false
+                ? const Text('')
+                : const Icon(Icons.arrow_forward_ios_rounded),
           ],
         ),
       ),

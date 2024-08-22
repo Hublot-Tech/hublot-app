@@ -3,6 +3,7 @@ import 'package:app/blocs/auth/auth_form_event.dart';
 import 'package:app/blocs/service/bloc/service_bloc.dart';
 import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
+import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/historique_chat/recent_chat.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
             child: const Body(),
           ),
           Container(),
-          Container(),
+          CommandeScreen(),
           RecentChats(),
           const AccountTab()
         ][_currentIndex],

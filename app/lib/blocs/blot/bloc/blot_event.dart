@@ -15,25 +15,24 @@ class BlotCreatedEvent extends BlotEvent {
 
 // Evenement pour fetch des blots avec scrolling infini
 class BlotFetchEvent extends BlotEvent {
-  final String consumer, provider, status;
+  final String? provider, status;
   final int page, perPage;
   const BlotFetchEvent({
     this.page = 1,
     this.perPage = 10,
-    required this.consumer,
-    required this.provider,
-    required this.status,
+    
+     this.provider,
+     this.status,
   });
 
   BlotFetchEvent copyWith({
-    String? consumer,
     String? provider,
     String? status,
     int? page,
     int? perPage,
   }) {
     return BlotFetchEvent(
-      consumer: consumer ?? this.consumer,
+     
       provider: provider ?? this.provider,
       status: status ?? this.status,
       page: page ?? this.page,
@@ -42,5 +41,5 @@ class BlotFetchEvent extends BlotEvent {
   }
 
   @override
-  List<Object> get props => [consumer, provider, status, page, perPage];
+  List<Object> get props => [provider!, status!, page, perPage];
 }
