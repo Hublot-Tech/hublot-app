@@ -22,7 +22,7 @@ class DescriptionService extends StatelessWidget {
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ServiceBloc()..add(FetchServiceByIdEvent(id)),
+            create: (context) => ServiceBloc()..add(FetchServiceAndOffer(id)),
           ),
           BlocProvider(
             create: (context) => ChatBloc(),

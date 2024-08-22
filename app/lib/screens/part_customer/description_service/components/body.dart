@@ -45,10 +45,9 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     id = ModalRoute.of(context)!.settings.arguments as String;
     //  BlocProvider.of<ServiceBloc>(context).add((FetchServiceByIdEvent(id)));
-    BlocProvider.of<ServiceBloc>(context)
-        .add((FetchServiceOffersByIdEvent(id)));
+
     bool isLoading = true;
-    String price = '';
+    int price = 0;
     String jour = '';
     bool isSend = false;
     List<OfferDetails> offer = [];
@@ -72,17 +71,11 @@ class _BodyState extends State<Body> {
         builder: (context, state) {
           if (state is ServiceFetchingByIdLoading) {
             isLoading = true;
-
-            return Center(child: CircularProgressIndicator());
           }
-          if (state is ServiceFetchedByIdState) {
+          if (state is ServiceAndOfferFetchById) {
             isLoading = false;
-
-            service = state.service;
-          }
-          if (state is ServiceOffersByIdState) {
-            isLoading = false;
-            offer = state.service;
+            offer = state.offer;
+            service = state.services;
           }
 
           return Shimmer(
@@ -256,9 +249,10 @@ class _BodyState extends State<Body> {
                           if (index < offer.length) {
                             if (offer[index].name.contains(offers)) {
                               int indexo = offer[index].name.indexOf(offers);
-                              price = offer[index].price.toString();
+                              price = index;
+                              //price = offer[index].price.toString();
                               jour = offer[index].estimatedDuration.toString();
-
+                              print(price);
                               String trueName = offer[indexo]
                                   .name
                                   .substring(index + offers.length)
@@ -303,10 +297,9 @@ class _BodyState extends State<Body> {
                           listener: (context, state) {
                             if (state is ChatLoading) {
                               isSend = true;
-                              print(isSend);
                             }
                             if (state is ChatSendState) {
-                              isSend = false;
+                              isSend = true;
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -324,24 +317,23 @@ class _BodyState extends State<Body> {
                               ToastService.errorMessage(state.error.message);
                             }
                           },
-                          child: isSend == false
-                              ? AddOfferButton(
-                                  heigt: 190,
-                                  toCommande: true,
-                                  press: () {
-                                    ///create a message to send to provider
-                                    CreateMessage orderMessager = CreateMessage(
-                                        contentType: 'order',
-                                        resource: id,
-                                        content: 'order',
-                                        receiver: service.provider.id);
-                                    context.read<ChatBloc>().add(
-                                        ChatSendMessageEvent(
-                                            message: orderMessager));
-                                  },
-                                  width: 34,
-                                  msg: price)
-                              : CircularProgressIndicator(color: kyellowColor),
+                          child: AddOfferButton(
+                              heigt: 190,
+                              toCommande: true,
+                              isSubmit: isSend,
+                              press: () {
+                                ///create a message to send to provider
+                                CreateMessage orderMessager = CreateMessage(
+                                    contentType: 'order',
+                                    resource: id,
+                                    content: 'order',
+                                    receiver: service.provider.id);
+                                context.read<ChatBloc>().add(
+                                    ChatSendMessageEvent(
+                                        message: orderMessager));
+                              },
+                              width: 34,
+                              msg: offer[price].price.toString()),
                         ),
                       ],
                     ),

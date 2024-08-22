@@ -1,17 +1,16 @@
-import 'package:app/screens/part_customer/blot_screen/blot_screen.dart';
+import 'package:app/screens/part_customer/chat_screen/components/box_buble.dart';
+import 'package:app/screens/part_customer/chat_screen/components/box_user_chat.dart';
 import 'package:app/screens/part_customer/chat_screen/components/pop_row_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:app/blocs/auth/auth_form_bloc.dart';
 import 'package:app/blocs/message/bloc/chat_bloc.dart';
 import 'package:app/configuration.dart';
-import 'package:app/model/info_client.dart';
 import 'package:app/model/user.model.dart';
 
 import 'components/body.dart';
 
-enum BlotItem { creerBlot, blotEncours, litige, signalerProfil }
+enum BlotItem { appelAudio, appelVideo, litige, signalerProfil }
 
 class ChatScreen extends StatefulWidget {
   final String interlocutor;
@@ -44,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  final List<String> _menuItems = ['Selon une offre', 'Selon un besoin'];
+ // final List<String> _menuItems = ['Selon une offre', 'Selon un besoin'];
   BlotItem? selectedBlotItem;
 
   @override
@@ -56,7 +55,8 @@ class _ChatScreenState extends State<ChatScreen> {
       providers: [
         //6670c021826def765079b1fb
         BlocProvider(
-          create: (context) => ChatBloc()..add(ChatFetchMessageEvent(interculators: widget.interlocutor)),
+          create: (context) => ChatBloc()
+            ..add(ChatFetchMessageEvent(interculators: widget.interlocutor)),
         ),
       ],
       child: Scaffold(
@@ -88,44 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   //
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textPresentation(
-                          msg: widget.name,
-                          fontWeight: FontWeight.bold,
-                          size: 24,
-                          color: Colors.white),
-                      Row(children: [
-                        Container(
-                          width: 4,
-                          height: 4,
-                          margin: EdgeInsets.only(right: size.width * 0.015),
-                          decoration: const BoxDecoration(
-                              color: Colors.green, shape: BoxShape.circle),
-                        ),
-                        textPresentation(
-                            msg: 'En ligne',
-                            fontWeight: FontWeight.w300,
-                            size: 13.4,
-                            color: Colors.white),
-                      ]),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: size.width * 0.015),
-                            child: SvgPicture.asset('img/icons8_star 2.svg',
-                                width: 12, height: 12),
-                          ),
-                          textPresentation(
-                              msg: '4.6',
-                              fontWeight: FontWeight.w400,
-                              size: 10,
-                              color: Colors.white),
-                        ],
-                      ),
-                    ],
-                  ),
+                  BoxxUserChat(widget: widget, size: size),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(
@@ -143,7 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       // onClick();
                       if (value == BlotItem.signalerProfil) {
                         //
-                      } else if (value == BlotItem.blotEncours) {
+                      } else if (value == BlotItem.appelAudio) {
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(
@@ -153,15 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       }
                     },
                     icon: isClick
-                        ? Container(
-                            width: size.width * 0.075,
-                            height: size.height * 0.075,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: kColorWhite,
-                            ),
-                            child: const Icon(Icons.more_vert_sharp,
-                                color: kprimaryColor))
+                        ? BoxBublePopup(size: size)
                         : const Icon(Icons.more_vert_sharp, color: kColorWhite),
                     iconColor: kColorWhite,
                     shape: RoundedRectangleBorder(
@@ -169,58 +124,21 @@ class _ChatScreenState extends State<ChatScreen> {
                         borderRadius: BorderRadius.circular(10)),
                     itemBuilder: (context) => [
                       PopupMenuItem<BlotItem>(
-                          value: BlotItem.creerBlot,
-                          child: DropdownButton(
-                              dropdownColor: Colors.white,
-                              hint:  PopRowItem(
-                                icons: 'img/icons8_auto_deskew 1.svg',
-                                mesg: 'Créer un blot',
-                              ),
-                              items: _menuItems.map((String item) {
-                                return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: PopRowItem(
-                                      icons: 'img/icons8_auto_deskew 1.svg',
-                                      mesg: item,
-                                    ));
-                              }).toList(),
-                              onChanged: (value) {
-                                if (value == 'Selon une offre') {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          settings: RouteSettings(
-                                            arguments: InfoClient(
-                                                name: widget.name,
-                                                id: widget.interlocutor),
-                                          ),
-                                          builder: (context) =>
-                                              const BlotScreen(
-                                                  hasOption: true)));
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          settings: RouteSettings(
-                                            arguments: InfoClient(
-                                                name: widget.name,
-                                                id: widget.interlocutor),
-                                          ),
-                                          builder: (context) =>
-                                              const BlotScreen(
-                                                  hasOption: false)));
-                                }
-                              })),
-                       PopupMenuItem(
-                        value: BlotItem.blotEncours,
+                          value: BlotItem.appelAudio,
+                          child: PopRowItem(
+                            icons: 'img/appel_audio.svg',
+                            mesg: 'Appel audio',
+                          )),
+                  
+                      PopupMenuItem(
+                        value: BlotItem.appelVideo,
                         child: PopRowItem(
-                            icons: 'img/icons8_copy_to_clipboard 1.svg',
-                            mesg: 'Blot encours...'),
+                            icons: 'img/appel_video.svg', mesg: 'Appel video'),
                       ),
-                       PopupMenuItem(
+                      PopupMenuItem(
                           value: BlotItem.litige,
                           child: PopRowItem(
-                            icons: 'img/icons8_auto_deskew_1 1.svg',
+                            icons: 'img/letige.svg',
                             mesg: 'Déclarer un litige',
                           )),
                       const PopupMenuItem(
@@ -239,3 +157,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
+
+

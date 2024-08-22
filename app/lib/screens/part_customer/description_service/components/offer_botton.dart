@@ -11,11 +11,12 @@ class AddOfferButton extends StatelessWidget {
     required this.press,
     required this.msg,
     this.toCommande = false,
+    this.isSubmit = false,
   });
   final double heigt, width;
   final GestureCancelCallback press;
   final String msg;
-  final bool toCommande;
+  final bool toCommande, isSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +39,15 @@ class AddOfferButton extends StatelessWidget {
               ? Container(
                   padding: EdgeInsets.all(10),
                   color: kprimaryColor,
-                  child: textPresentation(
-                    msg: "Commander",
-                    fontWeight: FontWeight.bold,
-                    size: 14,
-                    color: Colors.white,
-                  ))
+                  child: isSubmit == true
+                      ? CircularProgressIndicator()
+                      : textPresentation(
+                          msg: "Commander",
+                          fontWeight: FontWeight.bold,
+                          size: 14,
+                          color: Colors.white,
+                        ),
+                )
               : const SizedBox.shrink(),
         ],
       ),
