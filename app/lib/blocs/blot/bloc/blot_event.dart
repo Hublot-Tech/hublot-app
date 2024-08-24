@@ -20,9 +20,8 @@ class BlotFetchEvent extends BlotEvent {
   const BlotFetchEvent({
     this.page = 1,
     this.perPage = 10,
-    
-     this.provider,
-     this.status,
+    this.provider,
+    this.status,
   });
 
   BlotFetchEvent copyWith({
@@ -32,7 +31,6 @@ class BlotFetchEvent extends BlotEvent {
     int? perPage,
   }) {
     return BlotFetchEvent(
-     
       provider: provider ?? this.provider,
       status: status ?? this.status,
       page: page ?? this.page,
@@ -42,4 +40,13 @@ class BlotFetchEvent extends BlotEvent {
 
   @override
   List<Object> get props => [provider!, status!, page, perPage];
+}
+
+class BlotUpdateEvent extends BlotEvent {
+  final String status,idBlot;
+  const BlotUpdateEvent(this.status,this.idBlot);
+}
+class BlotAcceptOffer extends BlotEvent{
+  final String idBlot,description,phone;
+  const BlotAcceptOffer(this.idBlot,this.description,this.phone);
 }

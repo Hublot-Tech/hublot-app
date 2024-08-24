@@ -12,8 +12,8 @@ const kredColor = Color.fromRGBO(229, 57, 53, 1);
 const kcolorBoxService = Color.fromRGBO(10, 17, 40, 0.1);
 const kFiedBgColor = Color.fromRGBO(100, 100, 100, 0.15);
 const kFiedBgColor2 = Color.fromRGBO(100, 100, 100, 0.2);
-
 const kColorWhite = Colors.white;
+
 const kColorBlack = Colors.black;
 String baseUrl = 'https://api.hublots.co/api';
 String baseUrl2 = 'https://hublots-api-8c97109dc203.herokuapp.com/api';

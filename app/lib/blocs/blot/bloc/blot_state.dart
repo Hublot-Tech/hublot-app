@@ -45,3 +45,7 @@ class BlotFetched extends BlotState {
 }
 
 final class BlotFetching extends BlotState {}
+final class BlotUpdated extends BlotState {
+  final BlotResponse blotResponse;
+  const BlotUpdated(this.blotResponse);
+}

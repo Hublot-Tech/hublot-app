@@ -1,9 +1,10 @@
 
 import 'package:app/configuration.dart';
+import 'package:app/screens/part_customer/blot_detail_screen/blot_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class BlotStatus extends StatelessWidget {
-  const BlotStatus({
+  const  BlotStatus({
     super.key,
     required this.size,
     required this.nomClient,
@@ -16,7 +17,7 @@ class BlotStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/blot-details'),
+      onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context)=>BlotDetailsScreen())),
       child: Row(
         children: [
           Container(

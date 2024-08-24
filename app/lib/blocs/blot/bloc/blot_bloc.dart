@@ -15,22 +15,21 @@ class BlotBloc extends Bloc<BlotEvent, BlotState> {
     on<BlotFetchEvent>(getBlot);
   }
 
-
-final Blotservice blotservice = Blotservice();
-FutureOr<void> createBlot(
-    BlotCreatedEvent event, Emitter<BlotState> emit) async {
-  emit(BlotCreating());
-  try {
-    final response = await blotservice.createBloc(event);
-    if (response is BlotResponse) {
-      emit(BlotCreated(response));
-    } else if (response is BlotError) {
-      emit(BlotErrorState(response));
+  final Blotservice blotservice = Blotservice();
+  FutureOr<void> createBlot(
+      BlotCreatedEvent event, Emitter<BlotState> emit) async {
+    emit(BlotCreating());
+    try {
+      final response = await blotservice.createBloc(event);
+      if (response is BlotResponse) {
+        emit(BlotCreated(response));
+      } else if (response is BlotError) {
+        emit(BlotErrorState(response));
+      }
+    } catch (e) {
+      emit(BlotErrorState(BlotError(message: e.toString(), status: 505)));
     }
-  } catch (e) {
-    emit(BlotErrorState(BlotError(message: e.toString(), status: 505)));
   }
-}
 
 // FutureOr<void> getBlot(BlotFetchEvent event, Emitter<BlotState> emit) async {
 //   emit(BlotFetching());
@@ -45,9 +44,18 @@ FutureOr<void> createBlot(
 //     emit(BlotErrorState(BlotError(message: e.toString(), status: 505)));
 //   }
 // }
+  FutureOr<void> updateStatus(
+      BlotUpdateEvent event, Emitter<BlotState> emit) async {
+    emit(BlotInitial());
+    final response = await blotservice.updateStatusBlot(event);
+    if (response is BlotResponse) {
+      emit(BlotUpdated(response));
+    }else if (response is BlotError) {
+      emit(BlotErrorState(response));
+  }
+  }
 
- FutureOr<void> getBlot(
-      BlotFetchEvent event, Emitter<BlotState> emit) async {
+  FutureOr<void> getBlot(BlotFetchEvent event, Emitter<BlotState> emit) async {
     final currentState = state;
     if (currentState is BlotFetching) return;
 
