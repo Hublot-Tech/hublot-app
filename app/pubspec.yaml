@@ -50,6 +50,7 @@ dependencies:
   carousel_slider: ^5.0.0
   dotted_line: ^3.2.2
   easy_stepper: ^0.8.5+1
+
   
 
 dev_dependencies:

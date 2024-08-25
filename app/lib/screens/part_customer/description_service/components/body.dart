@@ -314,7 +314,7 @@ class _BodyState extends State<Body> {
                                       )));
                             }
                             if (state is ChatError) {
-                              ToastService.errorMessage(state.error.message);
+                              ToastService.errorMessage(state.error.message,context);
                             }
                           },
                           child: AddOfferButton(

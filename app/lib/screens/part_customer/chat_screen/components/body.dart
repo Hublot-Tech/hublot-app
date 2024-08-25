@@ -110,7 +110,7 @@ class _BodyState extends State<Body> {
           listener: (context, state) {
             if (state is ChatLoaded) {
             } else if (state is ChatError) {
-              ToastService.errorMessage(state.error.message);
+              ToastService.errorMessage(state.error.message,context);
             }
           },
           builder: (context, state) {
@@ -148,9 +148,9 @@ class _BodyState extends State<Body> {
               listener: (context, state) {
                 if (state is ChatSendState) {
                   ToastService.successMessage(
-                      "Message envoyé avec succès", kprimaryColor);
+                      "Message envoyé avec succès", kprimaryColor, context);
                 } else if (state is ChatError) {
-                  ToastService.errorMessage(state.error.message);
+                  ToastService.errorMessage(state.error.message,context);
                 }
               },
               child: Row(

@@ -1,4 +1,5 @@
 import 'package:app/model/offer_item_model.dart';
+import 'package:app/model/user.model.dart';
 
 class BlotEntity {
   final String? id, payement, provider;
@@ -86,13 +87,15 @@ class BlotOptionEntity {
         'item': item,
       };
 }
+
 class Blot {
   final int price;
   final DateTime startDate;
   final int duration;
   final String status;
   final String offer;
-  final List<dynamic> options; // Adapte le type en fonction du contenu de "options"
+  final List<dynamic>
+      options; // Adapte le type en fonction du contenu de "options"
   final String consumer;
   final String provider;
   final DateTime updatedAt;
@@ -142,6 +145,92 @@ class Blot {
       'updatedAt': updatedAt.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
       'id': id,
+    };
+  }
+}
+
+class BlotDetatails {
+  final int price;
+  final DateTime startDate;
+  final int duration;
+  final String status;
+  final String offer,payment,payoutRef;
+  final List<BlotOptionEntity>
+      options; // Adapte le type en fonction du contenu de "options"
+
+  final User provider, consumer;
+  final DateTime updatedAt;
+  final DateTime createdAt;
+  final String id;
+  BlotDetatails(
+      {required this.consumer,
+      required this.createdAt,
+      required this.duration,
+      required this.id,
+      required this.offer,
+      required this.options,
+      required this.price,
+      required this.provider,
+      required this.startDate,
+      required this.payment,
+      required this.payoutRef,
+      required this.status,
+      required this.updatedAt});
+
+  //factory BlotDetatails from json
+  factory BlotDetatails.fromJson(Map<String, dynamic> json) {
+    return BlotDetatails(
+      consumer: User.fromJson(json['consumer']),
+      createdAt: DateTime.parse(json['createdAt']),
+      payment: json['payment'],
+      payoutRef: json['payoutRef'],
+      duration: json['duration'],
+      id: json['id'],
+      offer: json['offer'],
+      options: json['option'] != null
+          ? List<BlotOptionEntity>.from(
+              json['options'].map((x) => BlotOptionEntity.fromJson(x)))
+          : [],
+      price: json['price'],
+      provider: User.fromJson(json['provider']),
+      startDate: DateTime.parse(json['startDate']),
+      status: json['status'],
+      updatedAt: DateTime.parse(json['updatedAt']),
+    );
+  }
+
+  //factory blot is empty
+  factory BlotDetatails.empty() => BlotDetatails(
+         payment: '',
+         payoutRef: '',
+        consumer: User.empty(),
+        createdAt: DateTime.now(),
+        duration: 0,
+        id: '',
+        offer: '',
+        options: [],
+        price: 0,
+        provider: User.empty(),
+        startDate: DateTime.now(),
+        status: '',
+        updatedAt: DateTime.now(),
+      );
+
+  //factory blot to json
+  Map<String, dynamic> toJson() {
+    return {
+      'consumer': consumer.toJson(),
+      'createdAt': createdAt.toIso8601String(),
+      'duration': duration,
+      'id': id,
+      'offer': offer,
+      'options': options,
+      'price': price,
+      'provider': provider.toJson(),
+      'startDate': startDate.toIso8601String(),
+      'status': status,
+      'updatedAt': updatedAt.toIso8601String(),
+      
     };
   }
 }

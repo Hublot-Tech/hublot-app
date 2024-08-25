@@ -284,7 +284,7 @@ class Body extends StatelessWidget {
                             name: args.name, interlocutor: args.id);
                       }));
                     } else if (state is ChatError) {
-                      ToastService.errorMessage(state.error.message);
+                      ToastService.errorMessage(state.error.message,context);
                       print(state.error.message);
                     }
                   },
@@ -292,13 +292,13 @@ class Body extends StatelessWidget {
                     listener: (context, state) {
                       if (state is BlotErrorState) {
                         isLoading = !isLoading;
-                        ToastService.errorMessage(state.message.message);
+                        ToastService.errorMessage(state.message.message,context);
                       } else if (state is BlotCreating) {
                         isLoading = !isLoading;
                       } else if (state is BlotCreated) {
                         isLoading = !isLoading;
                         ToastService.successMessage(
-                            'Votre blot a ete envoye!', kyellowColor);
+                            'Votre blot a ete envoye!', kyellowColor,context);
                         //create a message with a blotid and send to client with id interlocutor
                         String receiveir = args.id;
                         String blotId = state.blotResponse.data.id;

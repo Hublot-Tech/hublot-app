@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'components/body.dart';
 
 class BlotDetailsScreen extends StatelessWidget {
-  const BlotDetailsScreen({super.key});
+  final String id;
+  const BlotDetailsScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BlotBloc(),
+      create: (context) => BlotBloc()..add(BlotFetchIdEvent(id)),
       child: const Scaffold(
         backgroundColor: kColorWhite,
         body: Body(),

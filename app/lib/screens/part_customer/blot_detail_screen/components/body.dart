@@ -1,8 +1,12 @@
 import 'package:app/blocs/blot/bloc/blot_bloc.dart';
 import 'package:app/configuration.dart';
 import 'package:app/controller/enumeration/blot.dart';
+import 'package:app/model/blot_response.dart';
+import 'package:app/screens/components/shimer_loading.dart';
+import 'package:app/screens/components/shimmer.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/card_presentation.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/step_colum.dart';
+import 'package:app/services/toastServices.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +22,7 @@ class _BodyState extends State<Body> {
   BlotStep currentStep = BlotStep.validationCommande;
   //controller form textfield
   TextEditingController numberController = TextEditingController();
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,150 +30,179 @@ class _BodyState extends State<Body> {
     // int index = 0;
     // int ode = 0;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(left: 15, right: 15),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.close)),
-                  //icons8_business_documentation 1.png
-                  Container(
-                      width: 46,
-                      height: 46,
-                      decoration: BoxDecoration(
-                        color: kprimaryColor,
-                        borderRadius: BorderRadius.circular(46),
-                      ),
-                      child: Image.asset(
-                          'img/icons8_business_documentation 1.png',
-                          height: 20,
-                          width: 20)),
-                  Container(
-                      // width: 81,
-                      height: 28,
-                      padding: EdgeInsets.only(right: 10, left: 10),
-                      decoration: BoxDecoration(
-                          color: kprimaryColor,
-                          borderRadius: BorderRadius.circular(6)),
-                      child: Row(
-                        children: [
-                          textPresentation(
-                              msg: 'Modifier',
-                              fontWeight: FontWeight.normal,
-                              color: kColorWhite,
-                              size: 15),
-                          Icon(Icons.edit, color: kyellowColor, size: 14),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  textPresentation(
-                      msg: "Suivis du Blot",
-                      fontWeight: FontWeight.bold,
-                      size: 24.12),
-                  textPresentation(
-                      msg: ' #0001', fontWeight: FontWeight.normal, size: 24.12)
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  textPresentation(
-                      msg: 'Détails', fontWeight: FontWeight.w300, size: 15),
-                  textPresentation(
-                      msg: ' 01/06/2024 ',
-                      fontWeight: FontWeight.w600,
-                      size: 15),
-                  textPresentation(
-                      msg: 'à', fontWeight: FontWeight.w300, size: 15),
-                  textPresentation(
-                      msg: ' 10h58', fontWeight: FontWeight.w600, size: 15),
-                ],
-              ),
-              SizedBox(height: 30),
-              CardPresentation(widget: buildColumn()),
-              SizedBox(height: 30),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: kColorWhite,
-                    boxShadow: [
-                      // BoxShadow(
-                      //   color: Colors.black.withOpacity(
-                      //       0.05), // rgba(0, 0, 0, 0.05) en Flutter
-                      //   spreadRadius: 0, // Pas d'étalement
-                      //   blurRadius: 6, // Rayon de flou de 4 pixels
-                      //   offset: const Offset(
-                      //       0, 4), // Décalage de 4 pixels vers le bas
-                      // ),
-                      BoxShadow(
-                        color: Colors.grey.shade500,
-                        blurRadius: 4,
-                        offset: const Offset(4, 0),
-                        spreadRadius: 1.0,
-                      ),
-                      const BoxShadow(
-                        color: Colors.white,
-                        blurRadius: 2,
-                        offset: Offset(-4.0, -4.0),
-                        spreadRadius: 0,
-                      )
-                    ]),
+      child: BlocListener<BlotBloc, BlotState>(
+        listener: (context, state) {
+          // TODO: implement listener
+          // if (state is BlotInitial) {
+          //   isLoading = true;
+          // }
+          if (state is BlotFetchedDetail) {
+            isLoading = false;
+          }
+          if (state is BlotErrorState) {
+            isLoading = false;
+            ToastService.errorMessage(state.message.message,context);
+          }
+        },
+        child: SingleChildScrollView(
+          child: Shimmer(
+            linearGradient: shimmerGradient,
+            child: ShimmerLoading(
+              isLoading: isLoading,
+              child: Padding(
+                padding: EdgeInsets.only(left: 15, right: 15),
                 child: Column(
                   children: [
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: Icon(Icons.close)),
+                        //icons8_business_documentation 1.png
+                        Container(
+                            width: 46,
+                            height: 46,
+                            decoration: BoxDecoration(
+                              color: kprimaryColor,
+                              borderRadius: BorderRadius.circular(46),
+                            ),
+                            child: Image.asset(
+                                'img/icons8_business_documentation 1.png',
+                                height: 20,
+                                width: 20)),
+                        Container(
+                            // width: 81,
+                            height: 28,
+                            padding: EdgeInsets.only(right: 10, left: 10),
+                            decoration: BoxDecoration(
+                                color: kprimaryColor,
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Row(
+                              children: [
+                                textPresentation(
+                                    msg: 'Modifier',
+                                    fontWeight: FontWeight.normal,
+                                    color: kColorWhite,
+                                    size: 15),
+                                Icon(Icons.edit, color: kyellowColor, size: 14),
+                              ],
+                            )),
+                      ],
+                    ),
+                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // StepperItem(isCompleted: true, isLast: true),
-                        // StepperConnector(isCompleted: true),
-                        StepperItem(isCompleted: true),
-                        StepperConnector(isCompleted: false),
-                        StepperItem(isCompleted: false),
-                        StepperConnector(isCompleted: false),
-                        StepperItem(isCompleted: false),
-                        StepperConnector(isCompleted: false),
-                        StepperItem(isCompleted: false),
-                        StepperConnector(isCompleted: false),
-                        StepperItem(isCompleted: false),
+                        textPresentation(
+                            msg: "Suivis du Blot",
+                            fontWeight: FontWeight.bold,
+                            size: 24.12),
+                        textPresentation(
+                            msg: ' #0001',
+                            fontWeight: FontWeight.normal,
+                            size: 24.12)
                       ],
                     ),
-                    SizedBox(height: 5),
-                    // StepColumn(isClick: false, msg: 'Délais de réalisation'),
-                    // SizedBox(height: 5),
-                    StepColumn(
-                        isClick: false, msg: 'Validation de la commande'),
-                    SizedBox(height: 5),
-                    StepColumn(
-                        isClick: false, msg: 'Réalisation de la commande'),
-                    SizedBox(height: 5),
-                    StepColumn(
-                        isClick: false,
-                        msg: 'Présence du prestataire signaler'),
-                    SizedBox(height: 5),
-                    StepColumn(
-                        isClick: false, msg: 'Présence du client signaler'),
-                    SizedBox(height: 10),
-                    BlocListener<BlotBloc, BlotState>(
-                      listener: (context, state) {},
-                      child: buildActionButton(size),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        textPresentation(
+                            msg: 'Détails',
+                            fontWeight: FontWeight.w300,
+                            size: 15),
+                        textPresentation(
+                            msg: ' 01/06/2024 ',
+                            fontWeight: FontWeight.w600,
+                            size: 15),
+                        textPresentation(
+                            msg: 'à', fontWeight: FontWeight.w300, size: 15),
+                        textPresentation(
+                            msg: ' 10h58',
+                            fontWeight: FontWeight.w600,
+                            size: 15),
+                      ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 30),
+                    CardPresentation(widget: buildColumn()),
+                    SizedBox(height: 30),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: kColorWhite,
+                          boxShadow: [
+                            // BoxShadow(
+                            //   color: Colors.black.withOpacity(
+                            //       0.05), // rgba(0, 0, 0, 0.05) en Flutter
+                            //   spreadRadius: 0, // Pas d'étalement
+                            //   blurRadius: 6, // Rayon de flou de 4 pixels
+                            //   offset: const Offset(
+                            //       0, 4), // Décalage de 4 pixels vers le bas
+                            // ),
+                            BoxShadow(
+                              color: Colors.grey.shade500,
+                              blurRadius: 4,
+                              offset: const Offset(4, 0),
+                              spreadRadius: 1.0,
+                            ),
+                            const BoxShadow(
+                              color: Colors.white,
+                              blurRadius: 2,
+                              offset: Offset(-4.0, -4.0),
+                              spreadRadius: 0,
+                            )
+                          ]),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // StepperItem(isCompleted: true, isLast: true),
+                              // StepperConnector(isCompleted: true),
+                              StepperItem(isCompleted: true),
+                              StepperConnector(isCompleted: false),
+                              StepperItem(isCompleted: false),
+                              StepperConnector(isCompleted: false),
+                              StepperItem(isCompleted: false),
+                              StepperConnector(isCompleted: false),
+                              StepperItem(isCompleted: false),
+                              StepperConnector(isCompleted: false),
+                              StepperItem(isCompleted: false),
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          // StepColumn(isClick: false, msg: 'Délais de réalisation'),
+                          // SizedBox(height: 5),
+                          StepColumn(
+                              isClick: false, msg: 'Validation de la commande'),
+                          SizedBox(height: 5),
+                          StepColumn(
+                              isClick: false,
+                              msg: 'Réalisation de la commande'),
+                          SizedBox(height: 5),
+                          StepColumn(
+                              isClick: false,
+                              msg: 'Présence du prestataire signaler'),
+                          SizedBox(height: 5),
+                          StepColumn(
+                              isClick: false,
+                              msg: 'Présence du client signaler'),
+                          SizedBox(height: 10),
+                          BlocListener<BlotBloc, BlotState>(
+                            listener: (context, state) {},
+                            child: buildActionButton(size),
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
+                    EspaceMenuWidget(taille: 100),
                   ],
                 ),
               ),
-              EspaceMenuWidget(taille: 100),
-            ],
+            ),
           ),
         ),
       ),

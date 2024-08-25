@@ -150,7 +150,7 @@ class _BodyState extends State<Body> {
                   // TODO: implement listener
                   if (state is AuthOtpSend) {}
                   if (state is AuthError) {
-                    ToastService.errorMessage(state.errorAuth.message);
+                    ToastService.errorMessage(state.errorAuth.message,context);
                   }
                 },
                 child: TextButton(
@@ -184,7 +184,7 @@ class _BodyState extends State<Body> {
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
               if (state is AuthError) {
-                ToastService.errorMessage(state.errorAuth.message);
+                ToastService.errorMessage(state.errorAuth.message,context);
               }
               if (state is AuthOtpVerified) {
                 //ToastService.successMessage('Code recus', kyellowColor);

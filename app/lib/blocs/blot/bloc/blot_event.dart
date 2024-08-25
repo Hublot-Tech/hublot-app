@@ -50,3 +50,7 @@ class BlotAcceptOffer extends BlotEvent{
   final String idBlot,description,phone;
   const BlotAcceptOffer(this.idBlot,this.description,this.phone);
 }
+class BlotFetchIdEvent extends BlotEvent{
+  final String idBlot;
+  const BlotFetchIdEvent(this.idBlot);
+}

@@ -6,7 +6,6 @@ import 'package:app/configuration.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/model/blot_response.dart';
 
-
 class Blotservice {
   final storage = const FlutterSecureStorage();
 
@@ -75,25 +74,50 @@ class Blotservice {
     }
   }
 
+  Future<Object> getBlot(BlotFetchIdEvent event) async {
+    /// get blotDetails by id
 
-Future<Object> updateStatusBlot(BlotUpdateEvent event) async {
-  final token = await storage.read(key: 'accessToken');
-  try {
-    final response = await http.put(
-      Uri.parse('$baseUrl2/blots/${event.idBlot}/status'),
-      body: jsonEncode({"status": event.status}),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token'
-      },
-    );
-    if(response.statusCode == 200){
-      return BlotResponse.fromJson(jsonDecode(response.body));
-    }else{
-      return BlotError.fromJson(jsonDecode(response.body));
+    final token = await storage.read(key: 'accessToken');
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl2/blots/${event.idBlot}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+      );
+      print(response.body);
+      print(response.reasonPhrase);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        return BlotResponseDetails.fromJson(jsonDecode(response.body));
+      } else {
+        return BlotError.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      print(e);
+      return BlotError(message: e.toString(), status: 505);
     }
-  } catch (e) {
-    return BlotError(message: e.toString(), status: 505);
   }
-}
+
+  Future<Object> updateStatusBlot(BlotUpdateEvent event) async {
+    final token = await storage.read(key: 'accessToken');
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl2/blots/${event.idBlot}/status'),
+        body: jsonEncode({"status": event.status}),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+      );
+      if (response.statusCode == 200) {
+        return BlotResponse.fromJson(jsonDecode(response.body));
+      } else {
+        return BlotError.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      return BlotError(message: e.toString(), status: 505);
+    }
+  }
 }

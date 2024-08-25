@@ -226,11 +226,11 @@ class _FormInscriptionState extends State<FormInscription> {
               listener: (context, state) {
                 if (state is AuthError) {
                   print(state.errorAuth.message);
-                  ToastService.errorMessage(state.errorAuth.message);
+                  ToastService.errorMessage(state.errorAuth.message,context);
                 }
                 if (state is AuthUserCreated) {
                   ToastService.successMessage(
-                      "Inscription reussie avec succes", kyellowColor);
+                      "Inscription reussie avec succes", kyellowColor,context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(

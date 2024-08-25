@@ -17,7 +17,7 @@ class BlotStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context)=>BlotDetailsScreen())),
+      onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context)=>BlotDetailsScreen(id: blotNumber))),
       child: Row(
         children: [
           Container(

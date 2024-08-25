@@ -176,7 +176,7 @@ class _LoginWidgetState extends State<LoginScreen> {
                             listener: (context, state) {
                               if (state is UsersuccessAuth) {
                                 ToastService.successMessage(
-                                    'Connexion reussite', kyellowColor);
+                                    'Connexion reussite', kyellowColor,context);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -199,7 +199,7 @@ class _LoginWidgetState extends State<LoginScreen> {
                                 _loading = !_loading;
                                 debugPrint('is error');
                                 ToastService.errorMessage(
-                                    "Erreur d'authentification vérifier vos informations et réessayer");
+                                    "Erreur d'authentification vérifier vos informations et réessayer",context);
                               }
 
                               return ButtomCustom(

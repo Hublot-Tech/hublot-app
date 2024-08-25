@@ -55,7 +55,6 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-  
     super.initState();
     itemServices = apiPrestataire.getAllServices();
     itemCategoris = apiPrestataire.getAllCategories();
@@ -65,10 +64,10 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     List<Service> list = [];
-   // context.read<AuthBloc>().add(AuthGetCurrentUserEvent());
+    // context.read<AuthBloc>().add(AuthGetCurrentUserEvent());
     User user = User.empty();
-     UserStorage userStorage = UserStorage();
- bool isLoading = true;
+    UserStorage userStorage = UserStorage();
+    bool isLoading = true;
     return RefreshIndicator(
       onRefresh: _refresh,
       color: Colors.white,
@@ -103,7 +102,7 @@ class _BodyState extends State<Body> {
             }
             if (state is ErrorServiceFetchingAllState) {
               isLoading = false;
-              ToastService.errorMessage(state.error.message);
+              ToastService.errorMessage(state.error.message, context);
             }
             return Shimmer(
               linearGradient: shimmerGradient,
@@ -166,9 +165,9 @@ class _BodyState extends State<Body> {
                                 itemCount: (list.length + 1),
                                 itemBuilder: (context, index) {
                                   if (list.isNotEmpty && index < list.length) {
-                                  //  final MapEntry<Services, Services> entry =
-                                   //     itemServices[0].entries.first;
-                                  //  final Services serviceData = entry.value;
+                                    //  final MapEntry<Services, Services> entry =
+                                    //     itemServices[0].entries.first;
+                                    //  final Services serviceData = entry.value;
                                     return GestureDetector(
                                       onTap: () {
                                         Navigator.push(
