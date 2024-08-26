@@ -1,5 +1,6 @@
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const kCategoriecolor = Color.fromRGBO(30, 136, 229, 1);
 const kyellowColor = Color.fromRGBO(255, 192, 0, 1);
@@ -49,7 +50,7 @@ Text textPresentation(
     style: TextStyle(
         fontWeight: fontWeight,
         color: color,
-        fontSize: size,
+        fontSize: size.sp,
         fontFamily: 'ProximaNova'),
   );
 }
@@ -64,6 +65,6 @@ class EspaceMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SizedBox(height: getProportionateScreenHeight(taille));
+    return taille.verticalSpace;
   }
 }

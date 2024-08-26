@@ -16,9 +16,8 @@ class BoxInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //  margin: EdgeInsets.only(top: size.height * 0.53),
+      margin: EdgeInsets.all(13),
       width: (MediaQuery.of(context).size.width),
-
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13.5),
@@ -32,18 +31,19 @@ class BoxInformation extends StatelessWidget {
               Flexible(
                   child: textPresentation(
                 msg: name,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: const Color.fromRGBO(255, 255, 255, 1),
-                size: 21,
+                size: 17,
                 overflow: TextOverflow.ellipsis,
               )),
+              SizedBox(width: 7),
               Flexible(
                   child: textPresentation(
                 msg: profession,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: const Color.fromRGBO(255, 192, 0, 1),
                 overflow: TextOverflow.ellipsis,
-                size: 21,
+                size: 17,
               ))
             ],
           ),

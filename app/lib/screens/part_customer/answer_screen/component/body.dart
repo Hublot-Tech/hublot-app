@@ -1,12 +1,17 @@
+import 'package:app/blocs/service/bloc/service_bloc.dart';
+import 'package:app/controller/interfaces/prestataire.dart';
 import 'package:app/controller/interfaces/services.dart';
+import 'package:app/screens/part_customer/description_service/description_service_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/part_customer/home_screens/components/card_service_prestataire.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:app/screens/part_customer/home_screens/components/hublo_text_widget.dart';
 import 'package:app/screens/part_customer/home_screens/components/notification_box.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../configuration.dart';
 import '../../../../controller/service.dart';
+import '../../../../model/service.model.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key, required this.searchWord});
@@ -18,15 +23,15 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   HublotProviderApiApi apiPrestataire = HublotProviderApiApi();
-  List<Map<Services, Services>> initialList = [];
-  List<Map<Services, Services>> filterList = [];
+  List<Service> initialList = [];
+  List<Service> filterList = [];
   List<String> categorieFilterList = [];
   TextEditingController _controler = TextEditingController();
   void updateList(String value) {
-    setState(() {
-      filterList =
-          initialList.where((element) => element.containsValue(value)).toList();
-    });
+    // setState(() {
+    //   filterList =
+    //       initialList.where((element) => element.containsValue(value)).toList();
+    // });
   }
 
   void clearController() {
@@ -40,11 +45,11 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    initialList = apiPrestataire.getAllServices();
-    filterList = List.from(initialList);
+    // initialList = apiPrestataire.getAllServices();
+    // filterList = List.from(initialList);
     _controler.text = widget.searchWord;
     updateList(widget.searchWord);
-    categorieFilterList = apiPrestataire.getAllFilterSearch();
+    // categorieFilterList = apiPrestataire.getAllFilterSearch();
   }
 
   @override
@@ -120,21 +125,57 @@ class _BodyState extends State<Body> {
               ),
             ),
             const EspaceMenuWidget(),
-            filterList.isNotEmpty
-                ? Expanded(
+            BlocBuilder<ServiceBloc, ServiceState>(
+              builder: (context, state) {
+                if (state is ServiceFetchingAllLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is ServiceFectchedAllState) {
+                  final list = state.services;
+                  if (list.isEmpty) {
+                    return Center(
+                        child: textPresentation(
+                            msg: 'Aucun resultat disponible',
+                            fontWeight: FontWeight.w600,
+                            size: 20));
+                  }
+                  return Expanded(
                     child: ListView.builder(
-                      itemCount: filterList.length,
+                      itemCount: list.length,
                       itemBuilder: (context, index) {
-                        final MapEntry<Services, Services> entry =
-                            filterList[index].entries.first;
-                        final Services serviceData = entry.value;
-                        return CardServicePrestataire(serviceData: serviceData);
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DescriptionService(),
+                                    settings: RouteSettings(
+                                        arguments: list[index].id)));
+                          },
+                          child: CardServicePrestataire(
+                              serviceData: Services(
+                                  img: list[index].mainImageRef,
+                                  name: list[index].name,
+                                  profession: list[index].provider,
+                                  note: list[index].availability,
+                                  lieu: 'Yaounde',
+                                  distance: '400',
+                                  like: true,
+                                  favorite: false,
+                                  prestataire: Prestataire(
+                                      name: list[index].name,
+                                      firstname: list[index].name))),
+                        );
                       },
                     ),
-                  )
-                : const Center(
-                    child: Text("Aucun resultat disponible"),
-                  )
+                  );
+                }
+                if (state is ErrorServiceFetchingAllState) {
+                  return const Center(child: Text('failed to fetch posts'));
+                }
+                return SizedBox.shrink();
+              },
+            ),
           ],
         ),
       ),

@@ -20,6 +20,7 @@ class BoxPresentationInformation extends StatelessWidget {
         Row(
           children: [
             textPresentation(msg: name, fontWeight: FontWeight.bold, size: 21),
+            SizedBox(width: 12),
             textPresentation(
               msg: profession,
               fontWeight: FontWeight.bold,

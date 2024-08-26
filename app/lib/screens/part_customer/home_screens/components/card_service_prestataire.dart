@@ -1,10 +1,10 @@
+import 'package:app/configuration.dart';
 import 'package:app/controller/interfaces/services.dart';
 //import 'package:app/modules/shipping_services/page/shipping_service_screen.dart';
 import 'package:app/size_configuration.dart';
 //import 'package:app/utilitis/navigations/Nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:app/configuration.dart';
 
 import 'box_information.dart';
 import 'box_star.dart';
@@ -21,43 +21,76 @@ class CardServicePrestataire extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      width: getProportionateScreenWidth(330),
-      margin: const EdgeInsets.only(right: 20),
+      //width 353 with size
+      width: size.width * 0.85,
+      height: size.height * 0.53,
+      margin: const EdgeInsets.only(right: 6),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          color: ksecondaryColor, borderRadius: BorderRadius.circular(23)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: size.width * 0.8,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                LikeComponent(serviceData: serviceData),
-                BoxStar(
-                  size: size,
-                  serviceData: serviceData,
-                )
-              ],
-            ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(23)),
+      child: Stack(children: [
+        SizedBox(
+          width: 353,
+          height: 435,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(23),
+            child: Image.network(
+                serviceData.img == null
+                    ? serviceData.img
+                    : "https://img.freepik.com/photos-gratuite/homme-veste-jaune-pose-sommet-roche_1304-5321.jpg?w=360&t=st=1721644565~exp=1721645165~hmac=e5c4b945969cb26f42d3aab1a4e228ea84c387891359566d394bde44be0c151e",
+                fit: BoxFit.cover),
           ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                BoxInformation(
-                  size: size,
-                  name: serviceData.name,
-                  profession: serviceData.profession,
-                  lieu: serviceData.lieu,
-                  distance: serviceData.distance,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: size.width * 0.8,
+              margin: EdgeInsets.only(
+                  top: size.height * 0.025, left: 10, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 13, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: kyellowColor,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: textPresentation(
+                        msg: 'Sponsorisé',
+                        fontWeight: FontWeight.normal,
+                        size: 14,
+                        color: Colors.white),
+                  ),
+                  // Spacer(),
+                  BoxStar(
+                    size: size,
+                    serviceData: serviceData,
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                // onTap: () => Nav.toReplacement(
+                //     context, ShippingServices(data: serviceData)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    BoxInformation(
+                      size: size,
+                      name: serviceData.name,
+                      profession: serviceData.profession,
+                      lieu: serviceData.lieu,
+                      distance: serviceData.distance,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ]),
     );
   }
 }

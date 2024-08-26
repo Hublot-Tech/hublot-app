@@ -12,7 +12,20 @@ class FetchServiceByIdEvent extends ServiceEvent {
   const FetchServiceByIdEvent(this.serviceId);
 }
 
-class FetchServicesEvent extends ServiceEvent {}
+class FetchServicesEvent extends ServiceEvent {
+   final int? perPage;
+  final  int? page;
+  final  double? longitude;
+  final  double? latitude;
+  final  String? placeName;
+  final  int? maxDistance;
+  final  String? createdBy;
+  final  String? provider;
+ final   String? category;
+  final  String? keywords;
+    const FetchServicesEvent({this.perPage=10,this.page=1,this.longitude,this.latitude,this.placeName,
+    this.createdBy,this.provider,this.category,this.keywords,this.maxDistance});
+}
 
 class CreateServiceEvent extends ServiceEvent {
   final Service service;

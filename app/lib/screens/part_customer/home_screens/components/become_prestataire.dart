@@ -1,6 +1,6 @@
-import 'package:app/size_configuration.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 /// la BecomeRowBox sert de box pour envoyer vers
@@ -72,7 +72,7 @@ class BecomeRowBoxContainer extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-                fontSize: getProportionateScreenWidth(14),
+                fontSize: 14.sp,
                 fontFamily: 'ProximaNova'),
           ),
           const Icon(Icons.keyboard_arrow_down_sharp),

@@ -48,7 +48,7 @@ class _BodyState extends State<Body> {
 
     bool isLoading = true;
     int price = 0;
-    String jour = '';
+  
     bool isSend = false;
     List<OfferDetails> offer = [];
     const shimmerGradient = LinearGradient(
@@ -234,11 +234,7 @@ class _BodyState extends State<Body> {
                       },
                     ),
                   ),
-                  // ...List.generate(
-                  //     offerList.length,
-                  //     (index) => OffreBaseBox(
-                  //         name: offerList[index]['name']!,
-                  //         nbre: offerList[index]['nbre']!)),
+
                   ShimmerLoading(
                     isLoading: isLoading,
                     child: ListView.builder(
@@ -246,23 +242,26 @@ class _BodyState extends State<Body> {
                         itemCount: (offer.length),
                         itemBuilder: (context, index) {
                           String offers = "Offre de base";
-                          if (index < offer.length) {
-                            if (offer[index].name.contains(offers)) {
-                              int indexo = offer[index].name.indexOf(offers);
-                              price = index;
-                              //price = offer[index].price.toString();
-                              jour = offer[index].estimatedDuration.toString();
-                              print(price);
-                              String trueName = offer[indexo]
-                                  .name
-                                  .substring(index + offers.length)
-                                  .trim();
-                              return OffreBaseBox(
-                                  name: trueName,
-                                  nbre: offer[index].price.toString());
-                            } else {
-                              return null;
+                          if (offer.isNotEmpty && index < offer.length) {
+                            if (index < offer.length) {
+                              if (offer[index].name.contains(offers)) {
+                                int indexo = offer[index].name.indexOf(offers);
+                                price = index;
+                                //price = offer[index].price.toString();
+                            
+
+                                String trueName = offer[indexo]
+                                    .name
+                                    .substring(index + offers.length)
+                                    .trim();
+                                return OffreBaseBox(
+                                    name: trueName,
+                                    nbre: offer[index].price.toString());
+                              } else {
+                                return null;
+                              }
                             }
+                            return null;
                           }
                           return null;
                         }),
@@ -286,7 +285,8 @@ class _BodyState extends State<Body> {
                                 const Icon(Icons.keyboard_arrow_down_sharp),
                               ]),
                               textPresentation(
-                                  msg: "$jour j de réalisation",
+                                  msg:
+                                      "${isLoading ? '' : offer.isEmpty ? '' : offer[price].estimatedDuration.toString()} j de réalisation",
                                   fontWeight: FontWeight.normal,
                                   size: 11.64,
                                   color: kprimaryColor.withOpacity(0.9)),
@@ -314,7 +314,8 @@ class _BodyState extends State<Body> {
                                       )));
                             }
                             if (state is ChatError) {
-                              ToastService.errorMessage(state.error.message,context);
+                              ToastService.errorMessage(
+                                  state.error.message, context);
                             }
                           },
                           child: AddOfferButton(
@@ -333,7 +334,11 @@ class _BodyState extends State<Body> {
                                         message: orderMessager));
                               },
                               width: 34,
-                              msg: offer[price].price.toString()),
+                              msg: isLoading
+                                  ? ''
+                                  : offer.isEmpty
+                                      ? ''
+                                      : offer[price].price.toString()),
                         ),
                       ],
                     ),

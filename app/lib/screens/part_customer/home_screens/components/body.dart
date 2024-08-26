@@ -8,6 +8,7 @@ import 'package:app/model/service.model.dart';
 import 'package:app/model/user.model.dart';
 import 'package:app/model/user_storage.dart';
 import 'package:app/screens/authentification/code_phone_screen/code_phone_screen.dart';
+import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/part_customer/description_service/description_service_screen.dart';
 import 'package:app/services/toastServices.dart';
 import 'package:app/size_configuration.dart';
@@ -41,16 +42,7 @@ class _BodyState extends State<Body> {
   List<Map<Services, Services>> itemServices = [];
   List<Map<String, String>> itemCategoris = [];
   Future<void> _refresh() {
-    setState(() {
-      shimmer = true;
-    });
-    return Future.delayed(const Duration(seconds: 3)).then((value) {
-      setState(() {
-        shimmer = false;
-        itemServices = apiPrestataire.getAllServices();
-        itemCategoris = apiPrestataire.getAllCategories();
-      });
-    });
+    return Future.delayed(const Duration(seconds: 3)).then((value) {});
   }
 
   @override
@@ -68,45 +60,50 @@ class _BodyState extends State<Body> {
     User user = User.empty();
     UserStorage userStorage = UserStorage();
     bool isLoading = true;
-    return RefreshIndicator(
-      onRefresh: _refresh,
-      color: Colors.white,
-      backgroundColor: kyellowColor,
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state is AuthUserProfile) {
-            isLoading = false;
-            user = state.user;
-            userStorage.storeUserData(
-                user.id!, user.verificationStatus!, user.email!, user.fullname);
-            if (!user.isOTPVerified!) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) {
-                        return const CodePhoneScreem();
-                      },
-                      settings: RouteSettings(arguments: user.phoneNumber)));
-            }
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthUserProfile) {
+          ToastService.sucessConnection('', Colors.red, context);
+          isLoading = false;
+          user = state.user;
+          userStorage.storeUserData(
+              user.id!, user.verificationStatus!, user.email!, user.fullname);
+          if (!user.isOTPVerified!) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) {
+                      return const CodePhoneScreem();
+                    },
+                    settings: RouteSettings(arguments: user.phoneNumber)));
           }
-        },
-        child: BlocConsumer<ServiceBloc, ServiceState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state is ServiceFetchingAllLoading) {
-              isLoading = true;
-            }
-            if (state is ServiceFectchedAllState) {
-              isLoading = false;
-              list = state.services;
-            }
-            if (state is ErrorServiceFetchingAllState) {
-              isLoading = false;
-              ToastService.errorMessage(state.error.message, context);
-            }
-            return Shimmer(
-              linearGradient: shimmerGradient,
-              child: SafeArea(
+        } else if (state is AuthError) {
+          ToastService.errorConnection('msg', Colors.red, context);
+        }
+      },
+      child: BlocBuilder<ServiceBloc, ServiceState>(
+        builder: (context, state) {
+          if (state is ServiceFetchingAllLoading) {
+            isLoading = true;
+          }
+          if (state is ServiceFectchedAllState) {
+            isLoading = false;
+
+            list = state.services;
+
+            // print(list.length);
+          }
+          if (state is ErrorServiceFetchingAllState) {
+            isLoading = false;
+            //  ToastService.errorMessage(state.error.message, context);
+            print(state.error.message);
+          }
+
+          return Shimmer(
+            linearGradient: shimmerGradient,
+            child: SafeArea(
+              child: ShimmerLoading(
+                isLoading: isLoading,
                 child: Container(
                   color: Colors.white,
                   child: Padding(
@@ -162,7 +159,7 @@ class _BodyState extends State<Body> {
                               height: getProportionateScreenHeight(400),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: (list.length + 1),
+                                itemCount: (list.length),
                                 itemBuilder: (context, index) {
                                   if (list.isNotEmpty && index < list.length) {
                                     //  final MapEntry<Services, Services> entry =
@@ -170,6 +167,7 @@ class _BodyState extends State<Body> {
                                     //  final Services serviceData = entry.value;
                                     return GestureDetector(
                                       onTap: () {
+                                        print(index);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -182,16 +180,16 @@ class _BodyState extends State<Body> {
                                       },
                                       child: CardServicePrestataire(
                                           serviceData: Services(
-                                              name: user.fullname,
+                                              name: list[index].provider,
                                               profession: list[index].name,
                                               img: list[index].mainImageRef,
                                               note: "2.4",
-                                              distance: '4',
-                                              lieu: 'Douala',
+                                              distance: user.address,
+                                              lieu: user.address,
                                               like: true,
                                               favorite: false,
                                               prestataire: Prestataire(
-                                                name: user.fullname,
+                                                name: list[index].provider,
                                                 firstname: '',
                                               ))),
                                     );
@@ -265,9 +263,9 @@ class _BodyState extends State<Body> {
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

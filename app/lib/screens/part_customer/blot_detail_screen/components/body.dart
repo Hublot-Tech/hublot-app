@@ -32,10 +32,7 @@ class _BodyState extends State<Body> {
     return SafeArea(
       child: BlocListener<BlotBloc, BlotState>(
         listener: (context, state) {
-          // TODO: implement listener
-          // if (state is BlotInitial) {
-          //   isLoading = true;
-          // }
+          
           if (state is BlotFetchedDetail) {
             isLoading = false;
           }

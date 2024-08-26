@@ -117,33 +117,41 @@ class ToastService {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 9),
         decoration: BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
+        child: Row(
           children: [
-            Row(
+            Image.asset("img/Group 139.png"),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Row(
+                  children: [
+                    textPresentation(
+                        msg: 'Bravo pour votre ',
+                        fontWeight: FontWeight.w600,
+                        size: 16,
+                        color: Colors.white),
+                    textPresentation(
+                        msg: 'connexion !!!',
+                        fontWeight: FontWeight.w600,
+                        size: 16,
+                        color: kyellowColor),
+                  ],
+                ),
                 textPresentation(
-                    msg: 'Bravo pour votre ',
-                    fontWeight: FontWeight.w600,
-                    size: 14,
-                    color: Colors.white),
-                textPresentation(
-                    msg: 'connexion !!!',
-                    fontWeight: FontWeight.w600,
-                    size: 14,
+                    textAlign: TextAlign.start,
+                    msg:
+                        "L’adventure commence...\n Decrouvez comment vivre de votre passion sur hublots...",
+                    fontWeight: FontWeight.normal,
+                    size: 11,
                     color: Colors.white),
               ],
             ),
-            textPresentation(
-                msg:
-                    "L’adventure commence... Decrouvez comment vivre de votre passion sur hublots...",
-                fontWeight: FontWeight.normal,
-                size: 11,
-                color: Colors.white),
           ],
         ));
     fToast.showToast(

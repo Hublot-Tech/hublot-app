@@ -50,8 +50,7 @@ class Body extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, HomeScrenns.routeName);
+                              Navigator.pop(context);
                             },
                             child: SizedBox(
                               width: 20,

@@ -7,7 +7,6 @@ import 'package:app/model/service_response.dart';
 import 'package:app/configuration.dart';
 
 class ApiService {
-
   // final String token =
   //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imdlcm1jdkBnbWFpbC5jb20iLCJzdWIiOiI2NmFiNjAxZjcwMzcxMjJiMjgyNWYwMTkiLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNzIyNTA3Mjk1LCJleHAiOjE3MjI1OTM2OTV9.fIeSkQ25jFM9RoPnxDg1nGz9c3uWlAKngqL2ZvaP8qA";
 
@@ -67,7 +66,7 @@ class ApiService {
       return ErrorServiceFetching(message: e.toString(), status: 500);
     }
   }
-  
+
   Future<Object> getOffersById(String serviceId) async {
     try {
       const storage = FlutterSecureStorage();
@@ -91,21 +90,38 @@ class ApiService {
     }
   }
 
-  Future<Object> getAllServices() async {
+  Future<Object> getAllServices({
+   FetchServicesEvent? event
+  }) async {
     try {
       const storage = FlutterSecureStorage();
       final token = await storage.read(key: 'accessToken');
-      final response = await http.get(Uri.parse('$baseUrl/services'), headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      });
-
+      final response = await http.get(
+          Uri.parse('$baseUrl/services').replace(
+            queryParameters: {
+              'perpage': event!.perPage.toString(),
+              'page': event.page.toString(),
+              if (event.longitude != null) 'longitude': event.longitude.toString(),
+              if (event.latitude != null) 'latitude': event.latitude.toString(),
+              if (event.placeName != null) 'placeName': event.placeName,
+              if (event.maxDistance != null) 'maxDistance': event.maxDistance,
+              if (event.createdBy != null) 'createdBy': event.createdBy,
+              if (event.provider != null) 'provider': event.provider,
+              if (event.category != null) 'category': event.category,
+              if (event.keywords != null) 'keywords': event.keywords,
+            },
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          });
+      print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         //  print(response.body);
         final data = SuccessServiceFetching.fromJson(jsonDecode(response.body));
         return data;
       } else {
-       
+        print(response.body);
         return ErrorServiceFetching.fromJson(jsonDecode(response.body));
       }
     } catch (e) {
