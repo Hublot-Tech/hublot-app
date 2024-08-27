@@ -22,9 +22,9 @@ class HublotTextWigdet extends StatelessWidget {
           style: TextStyle(
               fontSize: getProportionateScreenWidth(25),
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 255, 177, 59)),
+              color: const Color.fromARGB(255, 255, 177, 59)),
         ),
-        Spacer(),
+        const Spacer(),
       ],
     );
   }

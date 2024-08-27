@@ -296,7 +296,7 @@ class _BodyState extends State<Body> {
                   top: BorderSide(),
                   bottom: BorderSide(),
                 )),
-                child:Text(''),
+                child:const Text(''),
                 //  AddServiceBox(
                 //   msg: "Ajouter des options ",
                 //   press: () {},

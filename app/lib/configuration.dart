@@ -40,7 +40,7 @@ Text textPresentation(
     Color color = kprimaryColor,
     TextAlign textAlign = TextAlign.center,
     TextOverflow overflow = TextOverflow.ellipsis,
-    maxLine = null,
+    maxLine,
     required FontWeight fontWeight}) {
   return Text(
     msg,

@@ -51,7 +51,7 @@ class CardServicePrestataire extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 13, vertical: 2),
+                    padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 2),
                     decoration: BoxDecoration(
                       color: kyellowColor,
                       borderRadius: BorderRadius.circular(6),

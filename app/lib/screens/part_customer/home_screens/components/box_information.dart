@@ -16,7 +16,7 @@ class BoxInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(13),
+      margin: const EdgeInsets.all(13),
       width: (MediaQuery.of(context).size.width),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class BoxInformation extends StatelessWidget {
                 size: 17,
                 overflow: TextOverflow.ellipsis,
               )),
-              SizedBox(width: 7),
+              const SizedBox(width: 7),
               Flexible(
                   child: textPresentation(
                 msg: profession,

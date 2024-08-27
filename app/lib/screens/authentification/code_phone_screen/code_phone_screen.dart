@@ -16,7 +16,7 @@ class CodePhoneScreem extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: BlocProvider(
         create: (context) => AuthBloc(),
-        child: Body(),
+        child: const Body(),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserStorage {
-  final FlutterSecureStorage storage = FlutterSecureStorage();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
   Future<void> storeUserData(String userId, String verificationStatus,
       String email, String name) async {
     await storage.write(key: 'userId', value: userId);

@@ -4,6 +4,7 @@ import 'package:app/model/offer_model.dart';
 import 'package:app/model/service.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderBuble extends StatelessWidget {
   const OrderBuble({
@@ -51,13 +52,13 @@ class OrderBuble extends StatelessWidget {
               Container(
                 width: size.width * 0.9,
                 height: 140,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(18),
                       topRight: Radius.circular(18)),
                 ),
                 child: ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(18),
                         topRight: Radius.circular(18)),
                     child: Image.network(serviceDetails.mainImageRef!,
@@ -65,19 +66,19 @@ class OrderBuble extends StatelessWidget {
               ),
               Container(
                 padding:
-                    EdgeInsets.only(left: 16, top: 13, bottom: 15, right: 10),
+                    const EdgeInsets.only(left: 16, top: 13, bottom: 15, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 1),
+                    const SizedBox(height: 1),
                     Row(
                       children: [
                         textPresentation(
                             msg: 'Bonjour',
                             color: isMe ? kColorWhite : kColorBlack,
                             fontWeight: FontWeight.w400,
-                            size: 16),
-                        SizedBox(width: 5),
+                            size: 16.r),
+                        4.horizontalSpace,
                         textPresentation(
                           msg: serviceDetails.provider.fullname,
                           fontWeight: FontWeight.bold,
@@ -92,8 +93,8 @@ class OrderBuble extends StatelessWidget {
                         size: 16,
                         color: isMe ? kColorWhite : kColorBlack),
                     Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                      margin: EdgeInsets.only(bottom: 10.r),
+                      padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10).r,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: kyellowColor),
@@ -107,10 +108,10 @@ class OrderBuble extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Container(
-                        padding: EdgeInsets.only(
-                            left: 10, top: 10, bottom: 8, right: 6),
+                        padding: const EdgeInsets.only(
+                            left: 0, top: 0, bottom: 8, right: 6),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: kyellowColor),
@@ -147,7 +148,7 @@ class OfferNamePrice extends StatelessWidget {
         SizedBox(
           width: 170,
           child: textPresentation(
-            msg: "$photographe",
+            msg: photographe,
             fontWeight: FontWeight.w400,
             overflow: TextOverflow.clip,
             textAlign: TextAlign.start,

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:app/configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ButtomCustom extends StatefulWidget {
   const ButtomCustom({
@@ -30,31 +31,31 @@ class _ButtomCustomState extends State<ButtomCustom> {
     return GestureDetector(
       onTap: widget.isValided ? widget.press : null,
       child: Container(
-        width: 390,
+        width: size.width * 0.8,
         height: widget.heigth,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10).r,
           color: widget.isValided ? kprimaryColor : widget.color,
         ),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(),
-              SizedBox(),
+              const SizedBox(),
+              const SizedBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     widget.msg,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: 20.sp,
                       color: Colors.white,
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 3, top: 10),
+                    margin: const EdgeInsets.only(left: 3, top: 10).r,
                     width: 6,
                     height: 6,
                     decoration: const BoxDecoration(

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as _httpClient;
+import 'package:http/http.dart' as httpClient;
 import 'package:app/blocs/auth/auth_form_event.dart';
 import 'package:app/model/auth_response.dart';
 import 'package:app/model/register_response.dart';
@@ -14,7 +14,7 @@ class AuthService {
       Uri.parse('https://hublots-api-8c97109dc203.herokuapp.com/api');
 
   Future<Object> register(AuthCreateUserEvent data) async {
-    final response = await _httpClient.post(Uri.parse('$host/auth/register'),
+    final response = await httpClient.post(Uri.parse('$host/auth/register'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -36,7 +36,7 @@ class AuthService {
   }
 
   Future<Object> login(AuthSignEmailAndPasswordEvent data) async {
-    final response = await _httpClient.post(
+    final response = await httpClient.post(
       Uri.parse('$host/auth/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -55,7 +55,7 @@ class AuthService {
   }
 
   Future<bool> tryRefreshToken() async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final refreshToken = await storage.read(key: 'refreshToken');
 
     if (refreshToken == null) {
@@ -64,7 +64,7 @@ class AuthService {
     }
 
     try {
-      final response = await _httpClient.post(
+      final response = await httpClient.post(
         Uri.parse('$host/auth/refresh-token'), // Remplace par ton endpoint
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'refreshToken': refreshToken}),
@@ -96,7 +96,7 @@ class AuthService {
 
   Future<void> saveTokenAndExpiry(
       String accessToken, String refreshToken, int expiresIn) async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final expiryDate = DateTime.now().add(Duration(hours: expiresIn));
 
     await storage.write(key: 'accessToken', value: accessToken);
@@ -106,10 +106,10 @@ class AuthService {
   }
 
   Future<Object> getCurrentUsers() async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'accessToken');
     try {
-      final request = await _httpClient.get(
+      final request = await httpClient.get(
         Uri.parse('$host/users/profile'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -132,10 +132,10 @@ class AuthService {
 
   //endpoint otp/send pour demander le code otp
   Future<Object> reSendOtp(AuthSendOTPEvent event) async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'accessToken');
     try {
-      final request = await _httpClient.post(Uri.parse('$host/otp/send'),
+      final request = await httpClient.post(Uri.parse('$host/otp/send'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer $token'
@@ -155,10 +155,10 @@ class AuthService {
 
   //endpoint opt/verify pour verifier le code otp
   Future<Object> verifyOtp(AuthVerifyOTPEvent event) async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'accessToken');
     try {
-      final request = await _httpClient.post(Uri.parse('$host/otp/verify'),
+      final request = await httpClient.post(Uri.parse('$host/otp/verify'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer $token'

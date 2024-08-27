@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class OffreBaseBox extends StatelessWidget {
   const OffreBaseBox({
-    Key? key,
+    super.key,
     required this.name,
     required this.nbre,
-  }) : super(key: key);
+  });
   final String? name, nbre;
   @override
   Widget build(BuildContext context) {

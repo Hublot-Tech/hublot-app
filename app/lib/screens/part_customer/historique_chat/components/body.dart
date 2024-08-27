@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
         } else if (state is ChatError) {
           return Center(child: Text(state.error.message));
         }
-        return Center(child: Text('Aucun message'));
+        return const Center(child: Text('Aucun message'));
       },
     )));
   }

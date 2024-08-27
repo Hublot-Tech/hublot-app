@@ -1,10 +1,10 @@
-
 import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/blot_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BlotStatus extends StatelessWidget {
-  const  BlotStatus({
+  const BlotStatus({
     super.key,
     required this.size,
     required this.nomClient,
@@ -17,7 +17,10 @@ class BlotStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context)=>BlotDetailsScreen(id: blotNumber))),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BlotDetailsScreen(id: blotNumber))),
       child: Row(
         children: [
           Container(
@@ -30,7 +33,7 @@ class BlotStatus extends StatelessWidget {
                 image: const DecorationImage(
                     image: AssetImage('img/backona.png'), fit: BoxFit.cover)),
           ),
-          const SizedBox(width: 10),
+          9.horizontalSpace,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,7 +43,7 @@ class BlotStatus extends StatelessWidget {
                 children: [
                   textPresentation(
                       msg: blotNumber, fontWeight: FontWeight.w300, size: 13),
-                  const SizedBox(width: 10),
+                  9.horizontalSpace,
                   textPresentation(
                       msg: statusBlot,
                       fontWeight: FontWeight.w300,

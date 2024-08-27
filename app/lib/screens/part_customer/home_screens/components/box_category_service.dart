@@ -1,4 +1,3 @@
-import 'package:app/size_configuration.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +26,7 @@ class BoxCategoryService extends StatelessWidget {
             child: textPresentation(
                 msg: "Voir Tout",
                 fontWeight: FontWeight.bold,
-                size: getProportionateScreenWidth(13),
+                size: 12.36,
                 color: kCategoriecolor),
           )
         ],

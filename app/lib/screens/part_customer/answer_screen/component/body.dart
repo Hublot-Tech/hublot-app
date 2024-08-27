@@ -8,6 +8,7 @@ import 'package:app/screens/part_customer/home_screens/components/home_screen.da
 import 'package:app/screens/part_customer/home_screens/components/hublo_text_widget.dart';
 import 'package:app/screens/part_customer/home_screens/components/notification_box.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../configuration.dart';
 import '../../../../controller/service.dart';
@@ -56,7 +57,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20).r,
         child: Column(
           children: [
             const EspaceMenuWidget(),
@@ -75,7 +76,7 @@ class _BodyState extends State<Body> {
             ),
             const EspaceMenuWidget(),
             SizedBox(
-              height: 50,
+              height: 50.r,
               child: TextField(
                 controller: _controler,
                 onSubmitted: (value) => updateList(value),
@@ -148,7 +149,7 @@ class _BodyState extends State<Body> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DescriptionService(),
+                                    builder: (context) => const DescriptionService(),
                                     settings: RouteSettings(
                                         arguments: list[index].id)));
                           },
@@ -157,8 +158,8 @@ class _BodyState extends State<Body> {
                                   img: list[index].mainImageRef,
                                   name: list[index].name,
                                   profession: list[index].provider,
-                                  note: list[index].availability,
-                                  lieu: 'Yaounde',
+                                  note: '4.3',
+                                  lieu: 'Yaounde ',
                                   distance: '400',
                                   like: true,
                                   favorite: false,
@@ -173,7 +174,7 @@ class _BodyState extends State<Body> {
                 if (state is ErrorServiceFetchingAllState) {
                   return const Center(child: Text('failed to fetch posts'));
                 }
-                return SizedBox.shrink();
+                return const SizedBox.shrink();
               },
             ),
           ],

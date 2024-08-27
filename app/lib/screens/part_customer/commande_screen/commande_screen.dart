@@ -12,11 +12,11 @@ class CommandeScreen extends StatelessWidget {
  
     return BlocProvider(
       create: (context) => BlotBloc()
-        ..add(BlotFetchEvent(
+        ..add(const BlotFetchEvent(
            status: 'created')),
       child: Scaffold(
         appBar: AppBar(),
-        body:  Body(),
+        body:  const Body(),
         backgroundColor: kColorWhite,
       ),
     );

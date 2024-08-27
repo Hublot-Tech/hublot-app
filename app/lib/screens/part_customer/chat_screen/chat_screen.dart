@@ -122,19 +122,19 @@ class _ChatScreenState extends State<ChatScreen> {
                         side: const BorderSide(color: kColorWhite, width: 1),
                         borderRadius: BorderRadius.circular(10)),
                     itemBuilder: (context) => [
-                      PopupMenuItem<BlotItem>(
+                      const PopupMenuItem<BlotItem>(
                           value: BlotItem.appelAudio,
                           child: PopRowItem(
                             icons: 'img/appel_audio.svg',
                             mesg: 'Appel audio',
                           )),
                   
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: BlotItem.appelVideo,
                         child: PopRowItem(
                             icons: 'img/appel_video.svg', mesg: 'Appel video'),
                       ),
-                      PopupMenuItem(
+                      const PopupMenuItem(
                           value: BlotItem.litige,
                           child: PopRowItem(
                             icons: 'img/letige.svg',

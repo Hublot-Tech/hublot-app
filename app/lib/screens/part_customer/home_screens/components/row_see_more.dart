@@ -1,7 +1,7 @@
-import 'package:app/size_configuration.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configuration.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'box_category_service.dart';
 
@@ -19,13 +19,13 @@ class RowSeeMore extends StatelessWidget {
     return Column(
       children: [
         BoxCategoryService(name: name, press: press),
-        SizedBox(height: getProportionateScreenHeight(5)),
+        2.verticalSpace,
         Row(
           children: [
             textPresentation(
               msg: msg,
               fontWeight: FontWeight.w400,
-              size: getProportionateScreenWidth(14),
+              size: 14,
               color: const Color.fromRGBO(117, 120, 132, 1),
             ),
           ],

@@ -41,7 +41,7 @@ class BecomeRowBoxContainer extends StatelessWidget {
       width: size.width * 0.52,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20).r,
         border: Border.all(color: Colors.white, width: 3),
         boxShadow: [
           BoxShadow(
@@ -71,9 +71,7 @@ class BecomeRowBoxContainer extends StatelessWidget {
           SvgPicture.asset("img/profil.svg"),
           Text(
             text,
-            style: TextStyle(
-                fontSize: 14.sp,
-                fontFamily: 'ProximaNova'),
+            style: TextStyle(fontSize: 14.sp, fontFamily: 'ProximaNova'),
           ),
           const Icon(Icons.keyboard_arrow_down_sharp),
         ],

@@ -7,6 +7,7 @@ import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/registration_screen/register_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/services/toastServices.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../blocs/auth/auth_form_state.dart';
 
@@ -56,6 +57,7 @@ class _LoginWidgetState extends State<LoginScreen> {
             child: SingleChildScrollView(
                 child: Column(
               children: [
+                Image.asset('img/hublo.png'),
                 SizedBox(
                   height: 200,
                   child: Container(
@@ -68,14 +70,15 @@ class _LoginWidgetState extends State<LoginScreen> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      Image.asset('img/Group 141.png'),
                       textPresentation(
-                          msg: 'Connexion à Hublot',
+                          msg: 'Connexion à Hublots',
                           size: 24,
                           fontWeight: FontWeight.w300),
                       const SizedBox(height: 8),
                       textPresentation(
                           msg:
-                              'Ouvre ta session Hublot et crée de nouveau service!, fait toi de l\'argent',
+                              'Connectez vous pour decouvrir des services adapter a vos besoins',
                           size: 14,
                           fontWeight: FontWeight.w200,
                           maxLine: 2,
@@ -175,33 +178,33 @@ class _LoginWidgetState extends State<LoginScreen> {
                           BlocConsumer<AuthBloc, AuthState>(
                             listener: (context, state) {
                               if (state is UsersuccessAuth) {
-                                ToastService.successMessage(
-                                    'Connexion reussite', kyellowColor,context);
+                                ToastService.sucessConnection(
+                                    'Connexion reussite',
+                                    kyellowColor,
+                                    context);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const HomeScrenns()));
                               }
-                            },
-                            builder: (context, state) {
                               if (state is AuthLoading) {
                                 _loading = !_loading;
-                                debugPrint('is loading');
                               }
 
                               if (state is UsersuccessAuth) {
                                 _loading = !_loading;
-                                debugPrint('is Succeful');
                               }
 
                               if (state is AuthError) {
                                 _loading = !_loading;
-                                debugPrint('is error');
-                                ToastService.errorMessage(
-                                    "Erreur d'authentification vérifier vos informations et réessayer",context);
-                              }
 
+                                ToastService.errorMessage(
+                                    "Erreur d'authentification vérifier vos informations et réessayer",
+                                    context);
+                              }
+                            },
+                            builder: (context, state) {
                               return ButtomCustom(
                                   heigth: 48,
                                   press: () => {
@@ -218,7 +221,7 @@ class _LoginWidgetState extends State<LoginScreen> {
                                   loading: _loading);
                             },
                           ),
-                          const SizedBox(height: 10),
+                          10.verticalSpace,
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,

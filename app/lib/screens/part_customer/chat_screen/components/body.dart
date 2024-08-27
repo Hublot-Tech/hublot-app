@@ -61,10 +61,10 @@ class _BodyState extends State<Body> {
                   ListView.builder(
                       itemCount: menuItems.length,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Container(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
                           child: ListTile(
                             leading: Container(
                               decoration: BoxDecoration(

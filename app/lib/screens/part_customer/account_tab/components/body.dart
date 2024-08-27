@@ -5,6 +5,7 @@ import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'settings_row.dart';
@@ -215,7 +216,7 @@ class RowUserProfile extends StatelessWidget {
             height: 20,
           ),
         ),
-        const SizedBox(width: 10),
+        10.horizontalSpace,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

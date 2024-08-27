@@ -25,7 +25,7 @@ class AddOfferButton extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             margin: EdgeInsets.only(left: getProportionateScreenWidth(15)),
             decoration: const BoxDecoration(
               color: kyellowColor,
@@ -37,10 +37,10 @@ class AddOfferButton extends StatelessWidget {
           ),
           toCommande == true
               ? Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   color: kprimaryColor,
                   child: isSubmit == true
-                      ? CircularProgressIndicator()
+                      ? const CircularProgressIndicator()
                       : textPresentation(
                           msg: "Commander",
                           fontWeight: FontWeight.bold,

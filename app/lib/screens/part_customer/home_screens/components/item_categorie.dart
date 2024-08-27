@@ -1,5 +1,5 @@
-import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
 
@@ -14,10 +14,10 @@ class ItemCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16).r,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(60),
+        borderRadius: BorderRadius.circular(60).r,
         color: const Color.fromRGBO(100, 100, 100, 0.15),
       ),
       child: IntrinsicWidth(
@@ -26,7 +26,7 @@ class ItemCategories extends StatelessWidget {
           children: [
             const Spacer(),
             SvgPicture.asset(icon),
-            SizedBox(width: getProportionateScreenWidth(6)),
+            6.verticalSpace,
             textPresentation(msg: name, fontWeight: FontWeight.bold, size: 14),
             const Spacer(),
           ],

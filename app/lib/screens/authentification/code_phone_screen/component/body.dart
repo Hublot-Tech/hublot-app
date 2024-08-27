@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:otp_input_editor/otp_input_editor.dart';
 
 class Body extends StatefulWidget {
-  Body({
+  const Body({
     super.key,
   });
 
@@ -91,7 +91,7 @@ class _BodyState extends State<Body> {
                 left: getProportionateScreenWidth(21),
                 right: getProportionateScreenWidth(21)),
             child: textPresentation(
-              msg: 'Code envoyé au ${userPhone}',
+              msg: 'Code envoyé au $userPhone',
               fontWeight: FontWeight.normal,
               size: 11,
             ),

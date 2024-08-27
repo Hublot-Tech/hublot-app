@@ -29,7 +29,7 @@ class BoxStar extends StatelessWidget {
           serviceData.favorite
               ? SvgPicture.asset('img/icons8_star 2.svg', height: 3)
               : SvgPicture.asset('img/icons8_star_white.svg'),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           textPresentation(
               msg: serviceData.note,
               fontWeight: FontWeight.normal,

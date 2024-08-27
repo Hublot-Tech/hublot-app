@@ -98,7 +98,7 @@ FutureOr<void> checkTokenValidity(
     AuthCheckTokenEvent event, Emitter<AuthState> emit) async {
   emit(AuthLoading());
   try {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final accessToken = await storage.read(key: 'accessToken') ?? ''; //
     final tokenExpiryString = await storage.read(key: 'tokenExpiry');
     final tokenExpiry =

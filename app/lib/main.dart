@@ -28,25 +28,21 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) => MaterialApp(
-         
-          debugShowCheckedModeBanner: false,
-          routes: route,
-          home: child
-        ),
+            debugShowCheckedModeBanner: false, routes: route, home: child),
         child: BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              // Logique de redirection gérée par l'état
-              if (state is AuthAuthenticated) {
-                return const HomeScrenns();
-              } else if (state is AuthUnauthenticated) {
-                return const LoginScreen();
-              } else if (state is NoAuth) {
-                return const PresentationScreen();
-              } else {
-                return const Scaffold(
-                    body: Center(child: CircularProgressIndicator()));
-              }
-            },
-          ),
+          builder: (context, state) {
+            // Logique de redirection gérée par l'état
+            if (state is AuthAuthenticated) {
+              return const HomeScrenns();
+            } else if (state is AuthUnauthenticated) {
+              return const LoginScreen();
+            } else if (state is NoAuth) {
+              return const PresentationScreen();
+            } else {
+              return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()));
+            }
+          },
+        ),
       );
 }

@@ -1,7 +1,6 @@
 import 'package:app/blocs/blot/bloc/blot_bloc.dart';
 import 'package:app/configuration.dart';
 import 'package:app/controller/enumeration/blot.dart';
-import 'package:app/model/blot_response.dart';
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/components/shimmer.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/card_presentation.dart';
@@ -10,6 +9,7 @@ import 'package:app/services/toastServices.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -32,13 +32,16 @@ class _BodyState extends State<Body> {
     return SafeArea(
       child: BlocListener<BlotBloc, BlotState>(
         listener: (context, state) {
-          
           if (state is BlotFetchedDetail) {
-            isLoading = false;
+            setState(() {
+              isLoading = false;
+            });
           }
           if (state is BlotErrorState) {
-            isLoading = false;
-            ToastService.errorMessage(state.message.message,context);
+            setState(() {
+              isLoading = false;
+            });
+            ToastService.errorMessage(state.message.message, context);
           }
         },
         child: SingleChildScrollView(
@@ -47,23 +50,23 @@ class _BodyState extends State<Body> {
             child: ShimmerLoading(
               isLoading: isLoading,
               child: Padding(
-                padding: EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Column(
                   children: [
-                    SizedBox(height: 20),
+                    20.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
                             onPressed: () => Navigator.pop(context),
-                            icon: Icon(Icons.close)),
+                            icon: const Icon(Icons.close)),
                         //icons8_business_documentation 1.png
                         Container(
                             width: 46,
                             height: 46,
                             decoration: BoxDecoration(
                               color: kprimaryColor,
-                              borderRadius: BorderRadius.circular(46),
+                              borderRadius: BorderRadius.circular(46).r,
                             ),
                             child: Image.asset(
                                 'img/icons8_business_documentation 1.png',
@@ -72,7 +75,7 @@ class _BodyState extends State<Body> {
                         Container(
                             // width: 81,
                             height: 28,
-                            padding: EdgeInsets.only(right: 10, left: 10),
+                            padding: const EdgeInsets.only(right: 10, left: 10),
                             decoration: BoxDecoration(
                                 color: kprimaryColor,
                                 borderRadius: BorderRadius.circular(6)),
@@ -83,12 +86,12 @@ class _BodyState extends State<Body> {
                                     fontWeight: FontWeight.normal,
                                     color: kColorWhite,
                                     size: 15),
-                                Icon(Icons.edit, color: kyellowColor, size: 14),
+                                const Icon(Icons.edit, color: kyellowColor, size: 14),
                               ],
                             )),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    20.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -121,40 +124,42 @@ class _BodyState extends State<Body> {
                             size: 15),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    30.verticalSpace,
                     CardPresentation(widget: buildColumn()),
-                    SizedBox(height: 30),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: kColorWhite,
-                          boxShadow: [
-                            // BoxShadow(
-                            //   color: Colors.black.withOpacity(
-                            //       0.05), // rgba(0, 0, 0, 0.05) en Flutter
-                            //   spreadRadius: 0, // Pas d'étalement
-                            //   blurRadius: 6, // Rayon de flou de 4 pixels
-                            //   offset: const Offset(
-                            //       0, 4), // Décalage de 4 pixels vers le bas
-                            // ),
-                            BoxShadow(
-                              color: Colors.grey.shade500,
-                              blurRadius: 4,
-                              offset: const Offset(4, 0),
-                              spreadRadius: 1.0,
-                            ),
-                            const BoxShadow(
-                              color: Colors.white,
-                              blurRadius: 2,
-                              offset: Offset(-4.0, -4.0),
-                              spreadRadius: 0,
-                            )
-                          ]),
-                      child: Column(
+                    30.verticalSpace,
+                    // Container(
+                    //   width: double.infinity,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //       color: kColorWhite,
+                    //       boxShadow: [
+                    //         // BoxShadow(
+                    //         //   color: Colors.black.withOpacity(
+                    //         //       0.05), // rgba(0, 0, 0, 0.05) en Flutter
+                    //         //   spreadRadius: 0, // Pas d'étalement
+                    //         //   blurRadius: 6, // Rayon de flou de 4 pixels
+                    //         //   offset: const Offset(
+                    //         //       0, 4), // Décalage de 4 pixels vers le bas
+                    //         // ),
+                    //         BoxShadow(
+                    //           color: Colors.grey.shade500,
+                    //           blurRadius: 4,
+                    //           offset: const Offset(4, 0),
+                    //           spreadRadius: 1.0,
+                    //         ),
+                    //         const BoxShadow(
+                    //           color: Colors.white,
+                    //           blurRadius: 2,
+                    //           offset: Offset(-4.0, -4.0),
+                    //           spreadRadius: 0,
+                    //         )
+                    //       ]),
+                    //   child:
+                    CardPresentation(
+                      widget: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               // StepperItem(isCompleted: true, isLast: true),
                               // StepperConnector(isCompleted: true),
@@ -169,33 +174,33 @@ class _BodyState extends State<Body> {
                               StepperItem(isCompleted: false),
                             ],
                           ),
-                          SizedBox(height: 5),
+                          5.verticalSpace,
                           // StepColumn(isClick: false, msg: 'Délais de réalisation'),
-                          // SizedBox(height: 5),
-                          StepColumn(
+                          // 5.verticalSpace,
+                          const StepColumn(
                               isClick: false, msg: 'Validation de la commande'),
-                          SizedBox(height: 5),
-                          StepColumn(
-                              isClick: false,
-                              msg: 'Réalisation de la commande'),
-                          SizedBox(height: 5),
-                          StepColumn(
+                          5.verticalSpace,
+                          const StepColumn(
+                              isClick: true, msg: 'Réalisation de la commande'),
+                          5.verticalSpace,
+                          const StepColumn(
                               isClick: false,
                               msg: 'Présence du prestataire signaler'),
-                          SizedBox(height: 5),
-                          StepColumn(
+                          5.verticalSpace,
+                          const StepColumn(
                               isClick: false,
                               msg: 'Présence du client signaler'),
-                          SizedBox(height: 10),
+                          10.verticalSpace,
                           BlocListener<BlotBloc, BlotState>(
                             listener: (context, state) {},
                             child: buildActionButton(size),
                           ),
-                          SizedBox(height: 10),
+                          10.verticalSpace,
                         ],
                       ),
                     ),
-                    EspaceMenuWidget(taille: 100),
+                    //  ),
+                    const EspaceMenuWidget(taille: 100),
                   ],
                 ),
               ),
@@ -214,7 +219,7 @@ class _BodyState extends State<Body> {
             name: 'Valider le delai',
             asset: 'img/clock.png',
             press: () {
-              context.read<BlotBloc>().add(BlotUpdateEvent('', ''));
+              context.read<BlotBloc>().add(const BlotUpdateEvent('', ''));
             });
       case BlotStep.validationCommande:
         return OrderBoton(
@@ -235,13 +240,13 @@ class _BodyState extends State<Body> {
       case BlotStep.realisationCommande:
         return OrderBoton(
             size: size,
-            name: 'J\’ai vue le prestataire',
+            name: 'J’ai vue le prestataire',
             asset: 'img/icons8_look 1.png',
             press: () {});
       case BlotStep.presencePrestataire:
         return OrderBoton(
             size: size,
-            name: 'J\’ai vue le client',
+            name: 'J’ai vue le client',
             asset: 'img/icons8_look 1.png',
             press: () {});
       case BlotStep.debutTravaux:
@@ -302,27 +307,27 @@ class OrderBoton extends StatelessWidget {
         )
       ]),
       child: TextButton(
+          onPressed: press,
+          style: TextButton.styleFrom(
+              backgroundColor: kyellowColor,
+              padding: EdgeInsets.symmetric(
+                  vertical: 15, horizontal: size.width * 0.1),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(asset),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               textPresentation(
                   msg: name, fontWeight: FontWeight.bold, size: fontSize!),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Image.asset('img/Rectangle 12.png'),
               )
             ],
-          ),
-          onPressed: press,
-          style: TextButton.styleFrom(
-              backgroundColor: kyellowColor,
-              padding: EdgeInsets.symmetric(
-                  vertical: 15, horizontal: size.width * 0.16),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)))),
+          )),
     );
   }
 }
@@ -331,16 +336,16 @@ class StepperItem extends StatelessWidget {
   final bool isCompleted;
   final bool isLast;
 
-  StepperItem({required this.isCompleted, this.isLast = false});
+  const StepperItem({super.key, required this.isCompleted, this.isLast = false});
 
   @override
   Widget build(BuildContext context) {
     return isCompleted
-        ? SteppItemValided()
+        ? const SteppItemValided()
         : Container(
             width: 21,
             height: 21,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.grey,
             ),
             child: Image.asset('img/Vector 3726.png'));
@@ -363,12 +368,12 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
     return ClipPath(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         //margin: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(12),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black26,
               blurRadius: 20,
@@ -383,16 +388,16 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             children: [
               Container(
                 child: Column(children: [
-                  Icon(Icons.receipt_long, size: 50, color: Colors.green),
-                  SizedBox(height: 16),
+                  const Icon(Icons.receipt_long, size: 50, color: Colors.green),
+                  const SizedBox(height: 16),
                   textPresentation(
                       msg: 'Confirmation de commande',
                       fontWeight: FontWeight.bold,
                       size: 20),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                 ]),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               GestureDetector(
                 onTap: () {},
                 child: Row(
@@ -402,7 +407,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                         msg: 'Description',
                         fontWeight: FontWeight.normal,
                         size: 13.54),
-                    Icon(Icons.arrow_drop_down, size: 16, color: Colors.grey),
+                    const Icon(Icons.arrow_drop_down, size: 16, color: Colors.grey),
                   ],
                 ),
               ),
@@ -433,7 +438,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       color: kyellowColor),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -459,7 +464,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       color: kyellowColor),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -479,11 +484,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   )
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Image.asset('img/Group 138.png'),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -499,7 +504,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                         }
                         return null;
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "6xx xx xx xx",
                         border: OutlineInputBorder(),
                       ),
@@ -507,7 +512,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ValueListenableBuilder<TextEditingValue>(
                   valueListenable: widget.numberController,
                   builder: (context, value, child) {
@@ -546,7 +551,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                     ? Colors.black.withOpacity(0.4)
                                     : Colors.black,
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               textPresentation(
                                   msg: 'Valider la commande',
                                   fontWeight: FontWeight.bold,
@@ -554,7 +559,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                       ? Colors.black.withOpacity(0.4)
                                       : Colors.black,
                                   size: 15.62),
-                              SizedBox(width: 6),
+                              const SizedBox(width: 6),
                               Padding(
                                 padding: const EdgeInsets.only(top: 7),
                                 child: Image.asset('img/Rectangle 12.png'),

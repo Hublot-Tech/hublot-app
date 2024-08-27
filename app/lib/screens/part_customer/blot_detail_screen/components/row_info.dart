@@ -1,6 +1,6 @@
-
 import 'package:app/configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RowInfo extends StatelessWidget {
   const RowInfo(
@@ -20,18 +20,19 @@ class RowInfo extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            textPresentation(msg: name, fontWeight: FontWeight.w600, size: 24),
             textPresentation(
-                msg: profession, fontWeight: FontWeight.w300, size: 15),
+                msg: name, fontWeight: FontWeight.w600, size: 20.sp),
+            textPresentation(
+                msg: profession, fontWeight: FontWeight.w300, size: 12.r),
           ],
         ),
         value == null
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             : Column(
                 children: [
                   textPresentation(
-                      msg: value!, fontWeight: FontWeight.w600, size: 15),
-                  Container(width: valu, height: 2, color: kyellowColor)
+                      msg: value!, fontWeight: FontWeight.w600, size: 10.sp),
+                  Container(width: valu, height: 2.r, color: kyellowColor)
                 ],
               )
       ],

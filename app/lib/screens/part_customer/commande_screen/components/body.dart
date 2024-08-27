@@ -2,6 +2,7 @@ import 'package:app/screens/part_customer/account_tab/components/body.dart';
 import 'package:app/screens/part_customer/commande_screen/components/blot_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:app/blocs/blot/bloc/blot_bloc.dart';
 import 'package:app/configuration.dart';
@@ -72,12 +73,12 @@ class _BodyState extends State<Body> {
             }
             return Column(
               children: [
-                const SizedBox(height: 20),
+                20.verticalSpace,
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 20.0).r,
                   child: RowUserProfile(userData: userData),
                 ),
-                const SizedBox(height: 20),
+                20.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -89,14 +90,14 @@ class _BodyState extends State<Body> {
                       dashColor: Colors.grey,
                       dashGapLength: 4.0,
                     ),
-                    const SizedBox(width: 10),
+                    9.verticalSpace,
                     SvgPicture.asset("img/commande.svg"),
-                    const SizedBox(width: 3),
+                    5.verticalSpace,
                     textPresentation(
                         msg: "Commandes",
                         fontWeight: FontWeight.w600,
                         size: 24),
-                    const SizedBox(width: 10),
+                    10.verticalSpace,
                     const DottedLine(
                       direction: Axis.horizontal,
                       lineLength: 90.0,
@@ -107,7 +108,7 @@ class _BodyState extends State<Body> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                20.verticalSpace,
                 BlocBuilder<BlotBloc, BlotState>(
                   builder: (context, state) {
                     if (state is BlotFetched) {

@@ -1,6 +1,7 @@
 import 'package:app/configuration.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastService {
@@ -8,7 +9,7 @@ class ToastService {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9).r,
         decoration: BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.circular(10),
@@ -46,7 +47,7 @@ class ToastService {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: Duration(seconds: 3),
+      toastDuration: const Duration(seconds: 3),
     );
   }
 
@@ -54,14 +55,14 @@ class ToastService {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9).r,
         decoration: BoxDecoration(
           color: Colors.red,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10).r,
         ),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Image.asset("img/Group 140.png"),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.6,
             child: textPresentation(
@@ -75,7 +76,7 @@ class ToastService {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: Duration(seconds: 3),
+      toastDuration: const Duration(seconds: 3),
     );
   }
 
@@ -92,14 +93,14 @@ class ToastService {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
         decoration: BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Image.asset("img/Group 139.png"),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           textPresentation(
               msg: msg,
               fontWeight: FontWeight.normal,
@@ -109,7 +110,7 @@ class ToastService {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: Duration(seconds: 3),
+      toastDuration: const Duration(seconds: 3),
     );
   }
 
@@ -117,10 +118,10 @@ class ToastService {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
         decoration: BoxDecoration(
           color: Colors.green,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10).r,
         ),
         child: Row(
           children: [
@@ -134,12 +135,12 @@ class ToastService {
                     textPresentation(
                         msg: 'Bravo pour votre ',
                         fontWeight: FontWeight.w600,
-                        size: 16,
+                        size: 16.sp,
                         color: Colors.white),
                     textPresentation(
                         msg: 'connexion !!!',
                         fontWeight: FontWeight.w600,
-                        size: 16,
+                        size: 16.sp,
                         color: kyellowColor),
                   ],
                 ),
@@ -148,7 +149,7 @@ class ToastService {
                     msg:
                         "L’adventure commence...\n Decrouvez comment vivre de votre passion sur hublots...",
                     fontWeight: FontWeight.normal,
-                    size: 11,
+                    size: 11.sp,
                     color: Colors.white),
               ],
             ),
@@ -157,7 +158,7 @@ class ToastService {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: Duration(seconds: 3),
+      toastDuration: const Duration(seconds: 3),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app/configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class StepColumn extends StatefulWidget {
@@ -18,15 +19,18 @@ class _StepColumnState extends State<StepColumn> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          SizedBox(width: 23),
+          6.horizontalSpace,
           SvgPicture.asset('img/Vector 3730.svg'),
-          SizedBox(width: 15),
+          15.horizontalSpace,
           textPresentation(
-              msg: widget.msg, size: 19, fontWeight: FontWeight.w600),
-          Spacer(),
-          IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios)),
+              msg: widget.msg, size: 15.3, fontWeight: FontWeight.w600),
+          const Spacer(),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
         ]),
         widget.isClick
             ? Padding(
@@ -39,7 +43,7 @@ class _StepColumnState extends State<StepColumn> {
                     fontWeight: FontWeight.normal,
                     size: 12),
               )
-            : SizedBox.shrink()
+            : const SizedBox.shrink()
       ],
     );
   }
@@ -51,16 +55,16 @@ class SteppItemValided extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 192, 0, 0.51),
+          color: const Color.fromRGBO(255, 192, 0, 0.51),
           borderRadius: BorderRadius.circular(31)),
       child: Container(
         decoration: BoxDecoration(
           color: kyellowColor,
           borderRadius: BorderRadius.circular(21),
         ),
-        child: Icon(Icons.check, size: 20),
+        child: const Icon(Icons.check, size: 20),
       ),
     );
   }
@@ -69,12 +73,12 @@ class SteppItemValided extends StatelessWidget {
 class StepperConnector extends StatelessWidget {
   final bool isCompleted;
 
-  StepperConnector({required this.isCompleted});
+  const StepperConnector({super.key, required this.isCompleted});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 60,
+      width: MediaQuery.of(context).size.width * 0.12,
       height: 4,
       color: isCompleted ? kyellowColor : Colors.grey,
     );

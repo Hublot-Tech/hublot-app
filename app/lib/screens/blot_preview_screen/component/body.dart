@@ -127,7 +127,7 @@ class Body extends StatelessWidget {
                     msg: args.name, fontWeight: FontWeight.w600, size: 24.36),
               ),
             ),
-            EspaceMenuWidget(),
+            const EspaceMenuWidget(),
             Row(
               children: [
                 textPresentation(

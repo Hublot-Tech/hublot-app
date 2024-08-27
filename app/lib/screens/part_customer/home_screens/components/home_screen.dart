@@ -38,7 +38,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
               //          context.read<ServiceBloc>().add(FetchServicesEvent());
               // context.read<AuthBloc>().add(const AuthGetCurrentUserEvent());
               BlocProvider(
-                create: (context) => ServiceBloc()..add(FetchServicesEvent()),
+                create: (context) => ServiceBloc()..add(const FetchServicesEvent()),
               ),
               BlocProvider(
                 create: (context) => AuthBloc()..add(AuthGetCurrentUserEvent()),
@@ -47,8 +47,8 @@ class _HomeScrennsState extends State<HomeScrenns> {
             child: const Body(),
           ),
           Container(),
-          CommandeScreen(),
-          RecentChats(),
+          const CommandeScreen(),
+          const RecentChats(),
           const AccountTab()
         ][_currentIndex],
         bottomNavigationBar: BottomNavigationBar(

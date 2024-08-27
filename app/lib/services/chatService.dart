@@ -55,7 +55,6 @@ class Chatservice {
         // Succès !
         
         var responseString = await response.stream.bytesToString();
-        ;
         return MessageResponse.fromJson(jsonDecode(responseString));
       } else {
         // Gère les erreurs (codes d'état autres que 200)

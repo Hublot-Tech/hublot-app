@@ -1,10 +1,12 @@
 import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/row_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardPresentation extends StatelessWidget {
   const CardPresentation({
-    super.key, required this.widget,
+    super.key,
+    required this.widget,
   });
   final Widget widget;
 
@@ -12,9 +14,9 @@ class CardPresentation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 15),
+      padding: EdgeInsets.only(left: 10.r, right: 15, top: 10, bottom: 15).r,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10).r,
           color: kColorWhite,
           boxShadow: [
             // BoxShadow(
@@ -46,30 +48,30 @@ class CardPresentation extends StatelessWidget {
 Column buildColumn() {
   return Column(
     children: [
-      RowInfo(
+      const RowInfo(
           profession: 'Nom du prestataire',
           value: 'Photographe',
           name: 'Gislain Lamga'),
-      SizedBox(height: 15),
-      RowInfo(name: 'Diboum alex', profession: 'Nom du client'),
-      SizedBox(height: 15),
-      RowInfo(
+      13.verticalSpace,
+      const RowInfo(name: 'Diboum alex', profession: 'Nom du client'),
+      13.verticalSpace,
+      const RowInfo(
           name: 'Options choisies',
           value: 'Tenues',
           valu: 50,
           profession: 'Photographe'),
-      SizedBox(height: 15),
-      RowInfo(
+      13.verticalSpace,
+      const RowInfo(
           name: 'Offre de base',
-          value: '10 000 FCFA',
+          value: '100000 000 FCFA',
           profession: 'Photographe'),
-      SizedBox(height: 15),
-      RowInfo(
+      13.verticalSpace,
+      const RowInfo(
           name: 'Coût de la prestation : ',
-          value: '11 000 FCFA',
+          value: '100000 000 FCFA',
           profession: 'Prix des options prise en compte'),
-      SizedBox(height: 15),
-      RowInfo(
+      13.verticalSpace,
+      const RowInfo(
           name: 'Commission',
           value: '110 FCFA',
           valu: 65,
