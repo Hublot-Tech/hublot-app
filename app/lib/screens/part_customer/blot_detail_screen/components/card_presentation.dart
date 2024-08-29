@@ -68,7 +68,7 @@ Column buildColumn() {
       13.verticalSpace,
       const RowInfo(
           name: 'Coût de la prestation : ',
-          value: '100000 000 FCFA',
+          value: '1000000FCFA',
           profession: 'Prix des options prise en compte'),
       13.verticalSpace,
       const RowInfo(

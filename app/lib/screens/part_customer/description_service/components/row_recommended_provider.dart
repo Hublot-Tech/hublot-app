@@ -12,7 +12,7 @@ class RowRecommandedProvider extends StatelessWidget {
   final String imgPath, text;
   @override
   Widget build(BuildContext context) {
-   // final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Row(
       children: [
         Container(
@@ -24,7 +24,13 @@ class RowRecommandedProvider extends StatelessWidget {
                 color: kprimaryColor.withOpacity(0.2)),
             child: SvgPicture.asset(imgPath)),
         SizedBox(width: getProportionateScreenWidth(5)),
-        textPresentation(msg: text, fontWeight: FontWeight.normal, size: 17),
+        SizedBox(
+            width: size.width * 0.4,
+            child: textPresentation(
+                overflow: TextOverflow.ellipsis,
+                msg: text,
+                fontWeight: FontWeight.normal,
+                size: 17)),
       ],
     );
   }

@@ -2,6 +2,7 @@ import 'package:app/configuration.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class BoxPresentationInformation extends StatelessWidget {
@@ -18,14 +19,21 @@ class BoxPresentationInformation extends StatelessWidget {
     return Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            textPresentation(msg: name, fontWeight: FontWeight.bold, size: 21),
-            const SizedBox(width: 12),
-            textPresentation(
-              msg: profession,
-              fontWeight: FontWeight.bold,
-              color: const Color.fromRGBO(255, 192, 0, 1),
-              size: 21,
+            SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+                child: textPresentation(
+                    msg: name, fontWeight: FontWeight.bold, size: 21)),
+            const SizedBox(width: 10),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 3,
+              child: textPresentation(
+                msg: profession,
+                fontWeight: FontWeight.bold,
+                color: const Color.fromRGBO(255, 192, 0, 1),
+                size: 21,
+              ),
             )
           ],
         ),
@@ -33,8 +41,11 @@ class BoxPresentationInformation extends StatelessWidget {
           padding: EdgeInsets.only(top: getProportionateScreenWidth(6)),
           child: Row(
             children: [
-              textPresentation(
-                  msg: lieu, fontWeight: FontWeight.w600, size: 17),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+                child: textPresentation(
+                    msg: lieu, fontWeight: FontWeight.w600, size: 17),
+              ),
               Container(
                 height: 6,
                 width: 6,
@@ -103,30 +114,26 @@ class ImageBox extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                  margin: const EdgeInsets.only(left: 20),
-                  padding: EdgeInsets.only(
-                      top: getProportionateScreenWidth(00),
-                      left: getProportionateScreenWidth(4),
-                      bottom: getProportionateScreenWidth(4)),
-                  width: getProportionateScreenWidth(34),
-                  height: getProportionateScreenHeight(34),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(34),
-                    color: ktransparentColor,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const HomeScrenns();
-                      }));
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScrenns()));
+                },
+                child: Container(
+                    margin: const EdgeInsets.only(left: 10).r,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    //  height: getProportionateScreenHeight(34),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(34),
+                      color: ktransparentColor,
                     ),
-                  )),
-
+                    child: Center(
+                      child: Icon(Icons.arrow_back_ios),
+                    )),
+              ),
               Container(
                 width: getProportionateScreenWidth(102),
                 height: getProportionateScreenHeight(32),

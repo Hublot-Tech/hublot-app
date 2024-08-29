@@ -71,6 +71,23 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
+// FutureOr<void> markAsReadHandler(
+//   ChatMarkAsReadEvent event,
+//   Emitter<ChatState> emit,
+// ) async {
+//   try {
+//      final response = await api.markAsRead(event.id);
+//       if (response is Success) {
+//         // Recharge les messages pour mettre à jour leur état
+//         add(ChatFetchMessageEvent(interculators: widget.interlocutor));
+//       } else if (response is MessageError) {
+//         emit(ChatError(error: response));
+//       }
+//   } catch (e) {
+//     // Gérer l'erreur
+//   }
+// }
+
   void startPeriodicFetching(ChatFetchMessageEvent event) {
     _timer = Timer.periodic(const Duration(seconds: 60), (timer) {
       add(event); // Déclenche l'événement de récupération des messages

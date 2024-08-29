@@ -30,7 +30,8 @@ class _StepColumnState extends State<StepColumn> {
           textPresentation(
               msg: widget.msg, size: 15.3, fontWeight: FontWeight.w600),
           const Spacer(),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
+          IconButton(
+              onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
         ]),
         widget.isClick
             ? Padding(
@@ -78,8 +79,8 @@ class StepperConnector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.12,
-      height: 4,
+      width: MediaQuery.of(context).size.width * 0.14,
+      height: 4.r,
       color: isCompleted ? kyellowColor : Colors.grey,
     );
   }

@@ -20,17 +20,15 @@ class ItemCategories extends StatelessWidget {
         borderRadius: BorderRadius.circular(60).r,
         color: const Color.fromRGBO(100, 100, 100, 0.15),
       ),
-      child: IntrinsicWidth(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const Spacer(),
-            SvgPicture.asset(icon),
-            6.verticalSpace,
-            textPresentation(msg: name, fontWeight: FontWeight.bold, size: 14),
-            const Spacer(),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(width: 10),
+          SvgPicture.asset(icon),
+          6.verticalSpace,
+          textPresentation(msg: name, fontWeight: FontWeight.bold, size: 14),
+          SizedBox(width: 10),
+        ],
       ),
     );
   }

@@ -19,11 +19,10 @@ class Chatservice {
     final token = await storage.read(key: 'accessToken');
     request.headers['Authorization'] = 'Bearer $token';
     request.fields['contentType'] = event.message.contentType;
-    
+
     // Ajoute le contenu du message en fonction du type
     if (event.message.contentType == 'text') {
       request.fields['content'] = event.message.content!;
-     
     } else if (event.message.contentType == 'blot' ||
         event.message.contentType == 'order') {
       request.fields['content'] = event.message.content!;
@@ -53,19 +52,19 @@ class Chatservice {
 
       if (response.statusCode == 201) {
         // Succès !
-        
+
         var responseString = await response.stream.bytesToString();
         return MessageResponse.fromJson(jsonDecode(responseString));
       } else {
         // Gère les erreurs (codes d'état autres que 200)
-        
+
         var responseString = await response.stream.bytesToString();
-        
+
         return MessageError.fromJson(jsonDecode(responseString));
       }
     } catch (e) {
       // Gère les erreurs (ex: pas de connexion internet)
-      
+
       return MessageError(message: e.toString(), status: 550);
     }
   }
@@ -76,14 +75,13 @@ class Chatservice {
     final token = await storage.read(key: 'accessToken');
     final idUser = await storage.read(key: 'userId');
     final List<String> interculators = [idUser!, event.interculators];
-    
+
     final queryParams = {
       'perpage': perPage.toString(),
       'page': page.toString(),
       'interlocutors': interculators // Encode le tableau en JSON
     };
 
-     
     final apiUrl = '$baseUrl/chats/messages';
     final uri = Uri.parse(apiUrl).replace(queryParameters: queryParams);
     try {
@@ -91,8 +89,7 @@ class Chatservice {
         uri,
         headers: <String, String>{'Authorization': 'Bearer $token'},
       );
-      print(response.reasonPhrase);
-      print(response.body);
+
       if (response.statusCode == 200) {
         // Décode la réponse JSON et crée une liste de messages
         return MessageResponseFecth.fromJson(jsonDecode(response.body));
@@ -116,9 +113,8 @@ class Chatservice {
         uri,
         headers: <String, String>{'Authorization': 'Bearer $token'},
       );
-     
+
       if (response.statusCode == 200) {
-        
         return ChatResponseFecth.fromJson(jsonDecode(response.body));
       } else {
         return MessageError.fromJson(jsonDecode(response.body));
@@ -126,5 +122,19 @@ class Chatservice {
     } catch (e) {
       return MessageError.fromJson(jsonDecode(e.toString()));
     }
+  }
+
+    Future<dynamic> markMessageAsRead(String messageId) async {
+    final response = await http.patch(
+      Uri.parse('/api/chats/messages/$messageId/read'),
+    );
+    // Gère la réponse selon ton besoin
+  }
+
+  Future<dynamic> markMessageAsDelivered(String messageId) async {
+    final response = await http.patch(
+      Uri.parse('/api/chats/messages/$messageId/delivered'),
+    );
+    // Gère la réponse selon ton besoin
   }
 }

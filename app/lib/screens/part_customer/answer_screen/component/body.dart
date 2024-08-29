@@ -149,22 +149,23 @@ class _BodyState extends State<Body> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const DescriptionService(),
+                                    builder: (context) =>
+                                        const DescriptionService(),
                                     settings: RouteSettings(
                                         arguments: list[index].id)));
                           },
                           child: CardServicePrestataire(
                               serviceData: Services(
                                   img: list[index].mainImageRef,
-                                  name: list[index].name,
-                                  profession: list[index].provider,
+                                  name: list[index].provider,
+                                  profession: list[index].name,
                                   note: '4.3',
-                                  lieu: 'Yaounde ',
-                                  distance: '400',
+                                  lieu: list[index].provider,
+                                  distance: list[index].name,
                                   like: true,
                                   favorite: false,
                                   prestataire: Prestataire(
-                                      name: list[index].name,
+                                      name: list[index].provider,
                                       firstname: list[index].name))),
                         );
                       },

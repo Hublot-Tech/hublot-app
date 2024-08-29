@@ -30,8 +30,10 @@ class RowInfo extends StatelessWidget {
             ? const SizedBox.shrink()
             : Column(
                 children: [
-                  textPresentation(
-                      msg: value!, fontWeight: FontWeight.w600, size: 10.sp),
+                  FittedBox(
+                    child: textPresentation(
+                        msg: value!, fontWeight: FontWeight.w600, size: 10.sp),
+                  ),
                   Container(width: valu, height: 2.r, color: kyellowColor)
                 ],
               )

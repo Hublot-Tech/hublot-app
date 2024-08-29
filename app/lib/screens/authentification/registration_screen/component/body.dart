@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/blocs/auth/auth_form_bloc.dart';
 import 'package:app/blocs/auth/auth_form_event.dart';
@@ -66,16 +67,16 @@ class Body extends StatelessWidget {
                         const Spacer(),
                         textPresentation(
                           msg: "Inscrivez vous chez HUB",
-                          fontWeight: FontWeight.w500,
-                          size: 23,
+                          fontWeight: FontWeight.w400,
+                          size: 18.sp,
                         ),
                         //HublotTextWigdet(),
 
                         textPresentation(
                             msg: "LOTS",
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400,
                             color: const Color.fromARGB(255, 255, 177, 59),
-                            size: 23),
+                            size: 18.r),
                         const Spacer(),
                       ],
                     ),
@@ -224,11 +225,11 @@ class _FormInscriptionState extends State<FormInscription> {
               listener: (context, state) {
                 if (state is AuthError) {
                   print(state.errorAuth.message);
-                  ToastService.errorMessage(state.errorAuth.message,context);
+                  ToastService.errorMessage(state.errorAuth.message, context);
                 }
                 if (state is AuthUserCreated) {
                   ToastService.successMessage(
-                      "Inscription reussie avec succes", kyellowColor,context);
+                      "Inscription reussie avec succes", kyellowColor, context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(

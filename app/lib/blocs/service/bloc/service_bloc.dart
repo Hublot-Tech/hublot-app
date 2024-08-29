@@ -62,7 +62,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       FetchServicesEvent event, Emitter<ServiceState> emit) async {
     emit(ServiceFetchingAllLoading());
     try {
-      final result = await apiService.getAllServices(event:event);
+      final result = await apiService.getAllServices(event: event);
       if (result is SuccessServiceFetching) {
         emit(ServiceFectchedAllState(result.data));
       } else if (result is ErrorServiceFetching) {

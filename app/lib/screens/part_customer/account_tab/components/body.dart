@@ -236,11 +236,13 @@ class RowUserProfile extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 2),
-            textPresentation(
-              msg: "Vous êtes connectez en tant prestataire",
-              fontWeight: FontWeight.w400,
-              size: 13,
-              color: const Color.fromRGBO(100, 100, 100, 0.5),
+            FittedBox(
+              child: textPresentation(
+                msg: "Vous êtes connectez en tant client",
+                fontWeight: FontWeight.w400,
+                size: 13,
+                color: const Color.fromRGBO(100, 100, 100, 0.5),
+              ),
             ),
           ],
         )

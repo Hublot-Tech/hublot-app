@@ -18,3 +18,7 @@ class ChatFetchMessageEvent extends ChatEvent {
 }
 
 class ChatUpdateEvent extends ChatEvent {}
+class  ChatMarkAsReadEvent extends ChatEvent{
+  final String id;
+  const ChatMarkAsReadEvent({required this.id});
+}

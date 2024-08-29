@@ -20,7 +20,9 @@ class BoxCategoryService extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          textPresentation(msg: name, fontWeight: FontWeight.bold, size: 24),
+          FittedBox(
+              child: textPresentation(
+                  msg: name, fontWeight: FontWeight.bold, size: 20)),
           GestureDetector(
             onTap: press,
             child: textPresentation(

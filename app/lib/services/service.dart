@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/blocs/service/bloc/service_bloc.dart';
@@ -76,7 +77,7 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       });
-      print(response.body);
+      print(response.reasonPhrase);
       if (response.statusCode == 200 || response.statusCode == 201) {
         print(response.body);
         final data = SuccessOfferFeching.fromJson(jsonDecode(response.body));
@@ -90,9 +91,7 @@ class ApiService {
     }
   }
 
-  Future<Object> getAllServices({
-   FetchServicesEvent? event
-  }) async {
+  Future<Object> getAllServices({FetchServicesEvent? event}) async {
     try {
       const storage = FlutterSecureStorage();
       final token = await storage.read(key: 'accessToken');
@@ -101,7 +100,8 @@ class ApiService {
             queryParameters: {
               'perpage': event!.perPage.toString(),
               'page': event.page.toString(),
-              if (event.longitude != null) 'longitude': event.longitude.toString(),
+              if (event.longitude != null)
+                'longitude': event.longitude.toString(),
               if (event.latitude != null) 'latitude': event.latitude.toString(),
               if (event.placeName != null) 'placeName': event.placeName,
               if (event.maxDistance != null) 'maxDistance': event.maxDistance,
@@ -115,18 +115,18 @@ class ApiService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
           });
-      print(response.body);
+      debugPrint(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        //  print(response.body);
+        
         final data = SuccessServiceFetching.fromJson(jsonDecode(response.body));
         return data;
       } else {
-        print(response.body);
+        debugPrint(response.body);
         return ErrorServiceFetching.fromJson(jsonDecode(response.body));
       }
     } catch (e) {
-      print("he tried $e");
-      return ErrorServiceFetching(message: e.toString(), status: 5000);
+     
+      return ErrorServiceFetching(message: e.toString(), status: 0);
     }
   }
 }

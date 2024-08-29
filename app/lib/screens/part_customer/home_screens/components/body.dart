@@ -65,6 +65,7 @@ class _BodyState extends State<Body> {
       listener: (context, state) {
         if (state is AuthUserProfile) {
           user = state.user;
+          print(user.id);
           userStorage.storeUserData(
               user.id!, user.verificationStatus!, user.email!, user.fullname);
           if (!user.isOTPVerified!) {
@@ -131,7 +132,7 @@ class _BodyState extends State<Body> {
                       const CardHistoric(),
                       const EspaceMenuWidget(),
                       RowSeeMore(
-                          name: "Recommandés",
+                          name: "Recommandés ",
                           msg: "Liste basé sur votre position",
                           press: () {}),
                       const EspaceMenuWidget(),
@@ -155,6 +156,7 @@ class _BodyState extends State<Body> {
                             setState(() {
                               isLoading = false;
                             });
+                          
                             ToastService.errorMessage(
                                 state.error.message, context);
                           }
@@ -194,12 +196,12 @@ class _BodyState extends State<Body> {
                                               profession: list[index].name,
                                               img: list[index].mainImageRef,
                                               note: "2.4",
-                                              distance: user.address,
-                                              lieu: user.address,
+                                              distance: list[index].provider,
+                                              lieu: list[index].provider,
                                               like: true,
                                               favorite: false,
                                               prestataire: Prestataire(
-                                                name: list[index].provider,
+                                                name: list[index].name,
                                                 firstname: '',
                                               ))),
                                     );

@@ -1,4 +1,3 @@
-
 import 'package:app/model/service.model.dart';
 
 final class SuccessServiceCreation {
@@ -94,13 +93,19 @@ final class SuccessServiceFetchingById {
 
 final class SuccessServiceFetching {
   final String message;
-  final int? status;
+  final int? status, perpage, page;
   final List<Service> data;
   SuccessServiceFetching(
-      {required this.message, required this.data, required this.status});
+      {required this.message,
+      required this.page,
+      required this.perpage,
+      required this.data,
+      required this.status});
   factory SuccessServiceFetching.empty() {
     return SuccessServiceFetching(
       data: [],
+      perpage: 0,
+      page: 0,
       message: '',
       status: 201,
     );
@@ -110,6 +115,8 @@ final class SuccessServiceFetching {
     return SuccessServiceFetching(
       message: json['message'],
       status: json['status'],
+      perpage: json['perpage'],
+      page: json['page'],
       data: (json['data'] as List<dynamic>?)
               ?.map((item) => Service.fromJson(item as Map<String, dynamic>))
               .toList() ??

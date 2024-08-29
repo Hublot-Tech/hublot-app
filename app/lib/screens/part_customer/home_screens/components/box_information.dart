@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/configuration.dart';
 
@@ -37,7 +38,7 @@ class BoxInformation extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               )),
               const SizedBox(width: 7),
-              Flexible(
+              FittedBox(
                   child: textPresentation(
                 msg: profession,
                 fontWeight: FontWeight.w600,
@@ -47,21 +48,24 @@ class BoxInformation extends StatelessWidget {
               ))
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              textPresentation(
-                  msg: lieu,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                  size: 17),
-              textPresentation(
-                  msg: distance,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                  size: 17,
-                  textAlign: TextAlign.start),
-            ],
+          FittedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                textPresentation(
+                    msg: lieu,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    size: 17),
+                3.horizontalSpace,
+                textPresentation(
+                    msg: distance,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    size: 17,
+                    textAlign: TextAlign.start),
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,

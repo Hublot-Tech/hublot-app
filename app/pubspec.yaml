@@ -52,6 +52,7 @@ dependencies:
   easy_stepper: ^0.8.5+1
   connectivity_plus: ^6.0.5
   flutter_screenutil: ^5.9.3
+  auto_size_text: ^3.0.0
 
   
 

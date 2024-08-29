@@ -48,7 +48,7 @@ class _BodyState extends State<Body> {
 
     bool isLoading = true;
     int price = 0;
-  
+
     bool isSend = false;
     List<OfferDetails> offer = [];
     const shimmerGradient = LinearGradient(
@@ -116,7 +116,7 @@ class _BodyState extends State<Body> {
                                   : "Pas Vérifié"),
                           const RowRecommandedProvider(
                               imgPath: "img/icons8_thumbs_up_1 1 (1).svg",
-                              text: "Non recommandé"),
+                              text: "Non recommandé "),
                         ],
                       ),
                     ),
@@ -128,7 +128,8 @@ class _BodyState extends State<Body> {
                       isLoading: isLoading,
                       child: BoxPresentationInformation(
                         name: service.provider.fullname,
-                        profession: 'Photographe',
+                        profession:
+                            'Photographe',
                         distance: '3km',
                         lieu: 'Douala ,Akwa',
                       ),
@@ -248,7 +249,6 @@ class _BodyState extends State<Body> {
                                 int indexo = offer[index].name.indexOf(offers);
                                 price = index;
                                 //price = offer[index].price.toString();
-                            
 
                                 String trueName = offer[indexo]
                                     .name

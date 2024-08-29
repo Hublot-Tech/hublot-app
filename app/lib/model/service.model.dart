@@ -98,21 +98,26 @@ class Service {
 
 class ServiceDetails {
   final String name;
-  final String description;
-  final DateTime updatedAt;
-  final String category;
+  final String description, availability;
+  final DateTime updatedAt, createdAt, deletedAt;
+  final String category, place;
   final List<String> imageRefs;
-  final String? mainImageRef;
+  final String? mainImageRef, id;
   final List<String> offers;
   final User provider;
 
   ServiceDetails({
     required this.name,
+    required this.place,
     required this.description,
     required this.updatedAt,
     required this.category,
     required this.imageRefs,
     this.mainImageRef,
+    this.id,
+    required this.deletedAt,
+    required this.availability,
+    required this.createdAt,
     required this.offers,
     required this.provider,
   });
@@ -120,8 +125,13 @@ class ServiceDetails {
   factory ServiceDetails.fromJson(Map<String, dynamic> json) {
     return ServiceDetails(
       name: json['name'] as String,
+      place: json['place'] != null ? json['place'] as String : '',
       description: json['description'] as String,
+      id: json['id'] != null ? json['id'] : "",
+      createdAt: json["createdAt"] != null ? DateTime.now() : DateTime.now(),
       updatedAt: json['updatedAt'] != null ? DateTime.now() : DateTime.now(),
+      deletedAt: json['deletedAt'] != null ? DateTime.now() : DateTime.now(),
+      availability: json['availability'] != null ? json['availability'] : '',
       // updatedAt: DateTime.parse(json['updatedAt'] as String),
       category: json['category'] as String,
       imageRefs: List<String>.from(json['imageRefs'] as List<dynamic>),
@@ -143,6 +153,10 @@ class ServiceDetails {
       'category': category,
       'imageRefs': imageRefs,
       'mainImageRef': mainImageRef,
+      'id': id,
+      'deletedAt': deletedAt.toIso8601String(),
+      'availability': availability,
+      'createdAt': createdAt.toIso8601String(),
       'offers': offers,
       'provider': provider.toJson(),
     };
@@ -151,11 +165,15 @@ class ServiceDetails {
   factory ServiceDetails.isEmpy() {
     return ServiceDetails(
       name: '',
+      place: '',
+      availability: '',
       description: '',
       category: '',
       provider: User.empty(),
       mainImageRef: '',
       updatedAt: DateTime.now(),
+      deletedAt: DateTime.now(),
+      createdAt: DateTime.now(),
       imageRefs: [],
       offers: [],
     );

@@ -15,6 +15,7 @@ class User {
     this.refreshToken,
     this.createdAt,
     required this.password,
+    this.profilRef,
   });
 
   final String fullname;
@@ -30,7 +31,7 @@ class User {
   final String phoneNumber;
   final String? email;
   final String? accessToken;
-  final String? refreshToken;
+  final String? refreshToken, profilRef;
   final DateTime? createdAt;
   final String password;
 
@@ -48,7 +49,8 @@ class User {
   factory(Map<String, dynamic> map) {
     return User(
       fullname: map['fullname'] as String,
-      id: map['id'] as String,
+      id: map['id'],
+      profilRef: map['profilRef'],
       locale: map['locale'] as String,
       roles: map['roles'] as List<String>,
       address: map['address'] as String,
@@ -68,22 +70,24 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      fullname: json['fullname'] as String,
-      email: json['email'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      locale: json['locale'] as String,
-      roles: List<String>.from(json['roles'] as List<dynamic>),
-      address: json['address'] as String,
-      verificationStatus: json['verificationStatus'] as String,
-      isOnline: json['isOnline'] as bool,
-      isActive: json['isActive'] as bool,
-      isOTPVerified: json['isOTPVerified'] as bool,
-      accessToken: json['accessToken'] as String?,
-      refreshToken: json['refreshToken'] as String?,
-      id: json['id'] as String,
-      createdAt: DateTime.now(),
-      password: '',
-    );
+        fullname: json['fullname'] as String,
+        email: json['email'] as String,
+        phoneNumber: json['phoneNumber'] as String,
+        locale: json['locale'] as String,
+        roles: List<String>.from(json['roles'] as List<dynamic>),
+        address: json['address'] as String,
+        verificationStatus: json['verificationStatus'] != null
+            ? json['verificationStatus']
+            : '',
+        isOnline: json['isOnline'] as bool,
+        isActive: json['isActive'] as bool,
+        isOTPVerified: json['isOTPVerified'] as bool,
+        accessToken: json['accessToken'] as String?,
+        refreshToken: json['refreshToken'] as String?,
+        id: json['id'],
+        createdAt: DateTime.now(),
+        password: '',
+        profilRef: json['profilRef'] != null ? json['profilRef'] : '');
   }
   Map<String, dynamic> toJson() {
     return {
@@ -100,6 +104,7 @@ class User {
     return User(
       fullname: '',
       email: '',
+      profilRef: '',
       isOnline: false,
       phoneNumber: '',
       createdAt: DateTime.now(),
@@ -128,6 +133,7 @@ class User {
       phoneNumber: user.phoneNumber,
       createdAt: user.createdAt,
       password: user.password,
+      profilRef: user.profilRef,
     );
   }
 

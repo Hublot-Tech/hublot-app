@@ -17,7 +17,7 @@ class CardHistoric extends StatelessWidget {
       child: Stack(children: [
         Container(
           margin: const EdgeInsets.only(right: 20).r,
-          width: size.width,
+          //  width: size.width,
           height: size.width * 0.2,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -42,8 +42,9 @@ class CardHistoric extends StatelessWidget {
         Row(
           children: [
             Container(
-                width: size.width * 0.2,
+                // width: size.width * 0.2,
                 height: size.width * 0.2,
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(6),
@@ -55,14 +56,14 @@ class CardHistoric extends StatelessWidget {
                   child: SvgPicture.asset("img/icons8_time_machine 1.svg"),
                 )),
             Padding(
-              padding: const EdgeInsets.only(left: 10).r,
+              padding: const EdgeInsets.only(left: 04).r,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   textPresentation(
                       msg: "Vos recentes recherches",
                       fontWeight: FontWeight.bold,
-                      size: (16)),
+                      size: (15)),
                   2.verticalSpace,
                   textPresentation(
                       msg: "Consultez l'historique de votre \nnavigation...",
@@ -72,11 +73,10 @@ class CardHistoric extends StatelessWidget {
                 ],
               ),
             ),
-            const Spacer(),
+            60.horizontalSpace,
             IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.arrow_forward_outlined)),
-            const Spacer(),
           ],
         ),
       ]),

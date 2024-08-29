@@ -1,4 +1,5 @@
 import 'package:app/size_configuration.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,7 +35,7 @@ const shimmerGradient = LinearGradient(
   end: Alignment(1.0, 0.3),
   tileMode: TileMode.clamp,
 );
-Text textPresentation(
+Widget textPresentation(
     {required String msg,
     double size = 30,
     Color color = kprimaryColor,
@@ -42,7 +43,7 @@ Text textPresentation(
     TextOverflow overflow = TextOverflow.ellipsis,
     maxLine,
     required FontWeight fontWeight}) {
-  return Text(
+  return AutoSizeText(
     msg,
     textAlign: textAlign,
     overflow: overflow,

@@ -12,7 +12,7 @@ class OffreBaseBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: getProportionateScreenWidth(395),
+      // width: getProportionateScreenWidth(395),
       height: getProportionateScreenWidth(50),
       padding: EdgeInsets.only(
           left: getProportionateScreenWidth(20),

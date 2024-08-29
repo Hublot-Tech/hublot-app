@@ -33,11 +33,7 @@ class CardServicePrestataire extends StatelessWidget {
           height: 435,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(23),
-            child: Image.network(
-                serviceData.img == null
-                    ? serviceData.img
-                    : "https://img.freepik.com/photos-gratuite/homme-veste-jaune-pose-sommet-roche_1304-5321.jpg?w=360&t=st=1721644565~exp=1721645165~hmac=e5c4b945969cb26f42d3aab1a4e228ea84c387891359566d394bde44be0c151e",
-                fit: BoxFit.cover),
+            child: Image.network(serviceData.img, fit: BoxFit.cover),
           ),
         ),
         Column(
@@ -51,7 +47,8 @@ class CardServicePrestataire extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 13, vertical: 2),
                     decoration: BoxDecoration(
                       color: kyellowColor,
                       borderRadius: BorderRadius.circular(6),

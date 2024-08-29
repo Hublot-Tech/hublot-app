@@ -9,7 +9,7 @@ class ToastService {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9).r,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9).r,
         decoration: BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.circular(10),
@@ -55,7 +55,7 @@ class ToastService {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9).r,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9).r,
         decoration: BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.circular(10).r,
