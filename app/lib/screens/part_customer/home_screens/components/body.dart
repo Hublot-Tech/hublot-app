@@ -10,6 +10,7 @@ import 'package:app/model/user_storage.dart';
 import 'package:app/screens/authentification/code_phone_screen/code_phone_screen.dart';
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/part_customer/description_service/description_service_screen.dart';
+import 'package:app/screens/part_customer/item_screen/item_screen.dart';
 import 'package:app/services/toastServices.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    List<Service> list = [];
+    List<ServiceProvider> list = [];
     // context.read<AuthBloc>().add(AuthGetCurrentUserEvent());
     User user = User.empty();
     UserStorage userStorage = UserStorage();
@@ -134,16 +135,21 @@ class _BodyState extends State<Body> {
                       RowSeeMore(
                           name: "Recommandés ",
                           msg: "Liste basé sur votre position",
-                          press: () {}),
+                          press: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AllItemScreen()));
+                          }),
                       const EspaceMenuWidget(),
                       BlocConsumer<ServiceBloc, ServiceState>(
                         listener: (context, state) {
-                          if (state is ServiceFetchingAllLoading) {
+                          if (state is ServiceProviderLoading) {
                             setState(() {
                               isLoading = true;
                             });
                           }
-                          if (state is ServiceFectchedAllState) {
+                          if (state is ServiceProviderState) {
                             setState(() {
                               isLoading = false;
                             });
@@ -156,14 +162,14 @@ class _BodyState extends State<Body> {
                             setState(() {
                               isLoading = false;
                             });
-                          
+
                             ToastService.errorMessage(
                                 state.error.message, context);
                           }
                         },
                         builder: (context, state) {
-                          if (state is ServiceFectchedAllState) {
-                            list = state.services;
+                          if (state is ServiceProviderState) {
+                            list = state.provider;
                           }
                           return ShimmerLoading(
                             isLoading: isLoading,
@@ -188,20 +194,23 @@ class _BodyState extends State<Body> {
                                                 },
                                                 settings: RouteSettings(
                                                     arguments:
-                                                        list[index].id)));
+                                                        list[index].serviceName.id)));
                                       },
                                       child: CardServicePrestataire(
                                           serviceData: Services(
-                                              name: list[index].provider,
-                                              profession: list[index].name,
-                                              img: list[index].mainImageRef,
-                                              note: "2.4",
-                                              distance: list[index].provider,
-                                              lieu: list[index].provider,
+                                              name: list[index].fullname,
+                                              profession:
+                                                  list[index].serviceName.name,
+                                              img: list[index].profileRef,
+                                              note: list[index]
+                                                  .avgRating
+                                                  .toString(),
+                                              distance: list[index].address,
+                                              lieu: list[index].address,
                                               like: true,
                                               favorite: false,
                                               prestataire: Prestataire(
-                                                name: list[index].name,
+                                                name: list[index].fullname,
                                                 firstname: '',
                                               ))),
                                     );

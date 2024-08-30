@@ -16,6 +16,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
     on<FetchServicesEvent>(_fectchService);
     on<FetchServiceOffersByIdEvent>(_fectchServiceOffersById);
     on<FetchServiceAndOffer>(_fectchServiceAndOffer);
+    on<FetchProviderServicesEvent>(_fectchProviders);
   }
 
   final ApiService apiService = ApiService();
@@ -65,6 +66,23 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       final result = await apiService.getAllServices(event: event);
       if (result is SuccessServiceFetching) {
         emit(ServiceFectchedAllState(result.data));
+      } else if (result is ErrorServiceFetching) {
+        emit(ErrorServiceFetchingAllState(ErrorServiceFetching(
+            message: result.message, status: result.status)));
+      }
+    } catch (e) {
+      emit(ErrorServiceFetchingAllState(
+          ErrorServiceFetching(message: e.toString(), status: 500)));
+    }
+  }
+
+  Future<void> _fectchProviders(
+      FetchProviderServicesEvent event, Emitter<ServiceState> emit) async {
+    emit(ServiceProviderLoading());
+    try {
+      final result = await apiService.getAllProvider(event: event);
+      if (result is SuccessProviderFetching) {
+        emit(ServiceProviderState(result.data));
       } else if (result is ErrorServiceFetching) {
         emit(ErrorServiceFetchingAllState(ErrorServiceFetching(
             message: result.message, status: result.status)));

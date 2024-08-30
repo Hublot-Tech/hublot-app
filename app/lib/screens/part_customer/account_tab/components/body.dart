@@ -142,8 +142,10 @@ class Body extends StatelessWidget {
                           const EspaceMenuWidget(taille: 15),
                           SettingsRow(
                             press: () {
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  LanguageScreen.routeName, (route) => false);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LanguageScreen()));
                             },
                             icon: "img/icons8_Earth_Globe 1.svg",
                             ville: "Langue",

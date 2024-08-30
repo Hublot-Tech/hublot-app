@@ -84,3 +84,16 @@ class ErrorServiceOffersByIdState extends ServiceState {
 }
 
 // --  FIN FETCHING SERVICE  {ID}      --//
+// -- FETCHING PROVIDER --//
+class ServiceProviderLoading extends ServiceState {}
+
+class ServiceProviderState extends ServiceState {
+  final List<ServiceProvider> provider;
+  ServiceProviderState(this.provider);
+}
+class ServiceProviderError extends ServiceState {
+  final String message;
+
+  ServiceProviderError(this.message);
+}
+//-- FIN FETCHING PROVIDER  --//

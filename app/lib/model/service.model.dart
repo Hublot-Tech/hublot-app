@@ -179,3 +179,170 @@ class ServiceDetails {
     );
   }
 }
+
+class ServiceProvider {
+  final String fullname;
+  String email;
+  String phoneNumber;
+  String locale;
+  String address;
+
+  String profile;
+  String id;
+  DateTime updatedAt;
+  DateTime createdAt;
+
+  List<String> roles;
+  List<dynamic> kycImages;
+  String verificationStatus;
+  bool isOnline;
+  bool isActive;
+  bool isOTPVerified;
+  String profileRef;
+  int avgRating;
+  ServiceItem serviceName;
+  bool isSponsored;
+
+  ServiceProvider({
+    required this.fullname,
+    required this.email,
+    required this.phoneNumber,
+    required this.locale,
+    required this.kycImages,
+    required this.address,
+    required this.profile,
+    required this.id,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.roles,
+    required this.verificationStatus,
+    required this.isOnline,
+    required this.isActive,
+    required this.isOTPVerified,
+    required this.profileRef,
+    required this.avgRating,
+    required this.serviceName,
+    required this.isSponsored,
+  });
+
+  factory ServiceProvider.fromJson(Map<String, dynamic> json) {
+    return ServiceProvider(
+      fullname: json['fullname'],
+      email: json['email'],
+      phoneNumber: json['phoneNumber'],
+      locale: json['locale'],
+      address: json['address'],
+      profile: json['profile'] != null ? json['profile'] : '',
+      id: json['id'],
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : DateTime.now(),
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : DateTime.now(),
+      roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
+      kycImages: json['kycImages'] != null ? json['kycImages'] : [],
+      verificationStatus: json['verificationStatus'],
+      isOnline: json['isOnline'],
+      isActive: json['isActive'],
+      isOTPVerified: json['isOTPVerified'],
+      profileRef: json['profileRef'] != null ? json['profileRef'] : '',
+      avgRating: json['avgRating'] != null ? json['avgRating'] : 0,
+      serviceName: json['service'] != null
+          ? ServiceItem.fromJson(json['service'])
+          : ServiceItem.empty(),
+      isSponsored: json['isSponsored'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'fullname': fullname,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'locale': locale,
+      'address': address,
+      'profile': profile,
+      'id': id,
+      'updatedAt': updatedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'roles': roles,
+      'verificationStatus': verificationStatus,
+      'isOnline': isOnline,
+      'isActive': isActive,
+      'isOTPVerified': isOTPVerified,
+      'profileRef': profileRef,
+      'avgRating': avgRating,
+      'service': serviceName,
+      'isSponsored': isSponsored,
+    };
+  }
+}
+
+class ServiceItem {
+  bool isSponsored;
+  String name;
+  String description;
+  String category;
+  List<String> imageRefs;
+  String mainImageRef;
+  DateTime updatedAt;
+  DateTime createdAt;
+  String id;
+
+  ServiceItem({
+    required this.isSponsored,
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.imageRefs,
+    required this.mainImageRef,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.id,
+  });
+
+  factory ServiceItem.empty() => ServiceItem(
+      isSponsored: true,
+      name: '',
+      description: '',
+      category: '',
+      imageRefs: [],
+      mainImageRef: '',
+      updatedAt: DateTime.now(),
+      createdAt: DateTime.now(),
+      id: '');
+
+  factory ServiceItem.fromJson(Map<String, dynamic> json) {
+    return ServiceItem(
+      isSponsored: json['isSponsored'],
+      name: json['name'],
+      description: json['description'],
+      category: json['category'],
+      imageRefs:
+          json['imageRefs'] != null ? List<String>.from(json['imageRefs']) : [],
+      mainImageRef: json['mainImageRef'],
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : DateTime.now(),
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : DateTime.now(),
+      id: json['id'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'isSponsored': isSponsored,
+      'name': name,
+      'description': description,
+      'category': category,
+      'imageRefs': imageRefs,
+      'mainImageRef': mainImageRef,
+      'updatedAt': updatedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'id': id,
+    };
+  }
+}

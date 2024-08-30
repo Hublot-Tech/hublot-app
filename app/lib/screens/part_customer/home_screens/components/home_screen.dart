@@ -38,7 +38,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
               //          context.read<ServiceBloc>().add(FetchServicesEvent());
               // context.read<AuthBloc>().add(const AuthGetCurrentUserEvent());
               BlocProvider(
-                create: (context) => ServiceBloc()..add(const FetchServicesEvent()),
+                create: (context) => ServiceBloc()..add(const FetchProviderServicesEvent()),
               ),
               BlocProvider(
                 create: (context) => AuthBloc()..add(AuthGetCurrentUserEvent()),

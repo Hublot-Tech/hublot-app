@@ -146,7 +146,12 @@ class _BodyState extends State<Body> {
                       return Center(child: Text(state.message.message));
                     }
                     return const Center(
-                        child: Text("Commande en cours de chargement"));
+                        child: Row(
+                          children: [
+                            Text("Commande en cours de chargement"),
+                            CircularProgressIndicator(),
+                          ],
+                        ));
                   },
                 ),
               ],

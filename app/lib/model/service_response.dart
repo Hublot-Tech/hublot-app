@@ -124,3 +124,38 @@ final class SuccessServiceFetching {
     );
   }
 }
+
+
+final class SuccessProviderFetching {
+  final String message;
+  final int? status, perpage, page;
+  final List<ServiceProvider> data;
+  SuccessProviderFetching(
+      {required this.message,
+      required this.page,
+      required this.perpage,
+      required this.data,
+      required this.status});
+  factory SuccessProviderFetching.empty() {
+    return SuccessProviderFetching(
+      data: [],
+      perpage: 0,
+      page: 0,
+      message: '',
+      status: 201,
+    );
+  }
+
+  factory SuccessProviderFetching.fromJson(Map<String, dynamic> json) {
+    return SuccessProviderFetching(
+      message: json['message'],
+      status: json['status'],
+      perpage: json['perpage'],
+      page: json['page'],
+      data: (json['data'] as List<dynamic>?)
+              ?.map((item) => ServiceProvider.fromJson(item as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+  }
+}
