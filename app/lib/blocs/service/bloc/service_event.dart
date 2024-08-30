@@ -55,6 +55,6 @@ class FetchProviderServicesEvent extends ServiceEvent {
   final  String? provider;
  final   String? category;
   final  String? keywords;
-    const FetchProviderServicesEvent({this.perPage=10,this.page=1,this.longitude,this.latitude,this.placeName,
+    const FetchProviderServicesEvent({this.perPage=3,this.page=1,this.longitude,this.latitude,this.placeName,
     this.createdBy,this.provider,this.category,this.keywords,this.maxDistance});
 }

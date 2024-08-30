@@ -1,4 +1,5 @@
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
+import 'package:app/screens/part_customer/splash_screen/splash_screen.dart';
 import 'package:app/screens/presentation_screens/components/presention_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,6 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) => MaterialApp(
-         
             debugShowCheckedModeBanner: false, routes: route, home: child),
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
             } else if (state is NoAuth) {
               return const PresentationScreen();
             } else {
-              return const Scaffold(
-                  body: Center(child: CircularProgressIndicator()));
+              return const SplashScreen();
             }
           },
         ),
