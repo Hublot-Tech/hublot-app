@@ -8,11 +8,13 @@ class Services {
   final String lieu;
   final String distance;
   bool like;
+  bool? isSponsorite;
   bool favorite;
   final Prestataire prestataire;
 
   Services({
     required this.img,
+    this.isSponsorite,
     required this.name,
     required this.profession,
     required this.note,

@@ -139,7 +139,8 @@ class _BodyState extends State<Body> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AllItemScreen()));
+                                    builder: (context) => AllItemScreen(),
+                                    settings: RouteSettings(arguments: true)));
                           }),
                       const EspaceMenuWidget(),
                       BlocConsumer<ServiceBloc, ServiceState>(
@@ -193,12 +194,15 @@ class _BodyState extends State<Body> {
                                                   return const DescriptionService();
                                                 },
                                                 settings: RouteSettings(
-                                                    arguments:
-                                                        list[index].serviceName.id)));
+                                                    arguments: list[index]
+                                                        .serviceName
+                                                        .id)));
                                       },
                                       child: CardServicePrestataire(
                                           serviceData: Services(
                                               name: list[index].fullname,
+                                              isSponsorite:
+                                                  list[index].isSponsored,
                                               profession:
                                                   list[index].serviceName.name,
                                               img: list[index].profileRef,
@@ -226,56 +230,96 @@ class _BodyState extends State<Body> {
                       RowSeeMore(
                           name: "Annonceurs proches",
                           msg: "Liste basé sur votre position",
-                          press: () {}),
+                          press: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AllItemScreen(),
+                                    settings: RouteSettings(arguments: false)));
+                          }),
                       const EspaceMenuWidget(),
-                      Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: ksecondaryColor,
-                              borderRadius: BorderRadius.circular(23),
+                      BlocConsumer<ServiceBloc, ServiceState>(
+                        listener: (context, state) {
+                          if (state is ServiceProviderLoading) {
+                            setState(() {
+                              isLoading = true;
+                            });
+                          }
+                          if (state is ServiceProviderState) {
+                            setState(() {
+                              isLoading = false;
+                            });
+
+                            //  list = state.services;
+
+                            // print(list.length);
+                          }
+                          if (state is ErrorServiceFetchingAllState) {
+                            setState(() {
+                              isLoading = false;
+                            });
+
+                            ToastService.errorMessage(
+                                state.error.message, context);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is ServiceProviderState) {
+                            list = state.provider;
+                          }
+                          return ShimmerLoading(
+                            isLoading: isLoading,
+                            child: SizedBox(
+                              height: getProportionateScreenHeight(400),
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: (list.length),
+                                itemBuilder: (context, index) {
+                                  if (list.isNotEmpty && index < list.length) {
+                                    //  final MapEntry<Services, Services> entry =
+                                    //     itemServices[0].entries.first;
+                                    //  final Services serviceData = entry.value;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        print(index);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                                  return const DescriptionService();
+                                                },
+                                                settings: RouteSettings(
+                                                    arguments: list[index]
+                                                        .serviceName
+                                                        .id)));
+                                      },
+                                      child: CardServicePrestataire(
+                                          serviceData: Services(
+                                              name: list[index].fullname,
+                                              isSponsorite:
+                                                  list[index].isSponsored,
+                                              profession:
+                                                  list[index].serviceName.name,
+                                              img: list[index].profileRef,
+                                              note: list[index]
+                                                  .avgRating
+                                                  .toString(),
+                                              distance: list[index].address,
+                                              lieu: list[index].address,
+                                              like: true,
+                                              favorite: false,
+                                              prestataire: Prestataire(
+                                                name: list[index].fullname,
+                                                firstname: '',
+                                              ))),
+                                    );
+                                  }
+                                  return null;
+                                },
+                              ),
                             ),
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(23),
-                                  child: Image.asset(
-                                    "img/portrait-stylish-professional-photographer.jpg",
-                                    width: getProportionateScreenWidth(387),
-                                    height: getProportionateScreenHeight(356),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Spacer(),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: size.width * 0.02, top: 10),
-                                      // child: BoxStar(
-                                      //   size: size,
-                                      //   nbrOfStar: '4.6',
-                                      // ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: size.height * 0.3),
-                                  child: Center(
-                                    child: BoxInformation(
-                                      size: size,
-                                      name: "Grec Koum,",
-                                      profession: "Photographe",
-                                      lieu: "Douala,akwa",
-                                      distance: "3km",
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     ],
                   ),

@@ -46,7 +46,7 @@ class CardServicePrestataire extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                 serviceData.isSponsorite==true? Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 13, vertical: 2),
                     decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class CardServicePrestataire extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                         size: 14,
                         color: Colors.white),
-                  ),
+                  ):SizedBox.shrink(),
                   // Spacer(),
                   BoxStar(
                     size: size,
