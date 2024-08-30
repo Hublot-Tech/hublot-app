@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/blocs/message/bloc/chat_bloc.dart';
 import 'package:app/model/message_detail.dart';
 
-
 class Body extends StatelessWidget {
   const Body({super.key});
 
@@ -21,7 +20,8 @@ class Body extends StatelessWidget {
       builder: (context, state) {
         if (state is ChatLisLoading) {
           listChat = state.chatList;
-
+          if (listChat.isEmpty)
+            return const Center(child: Text("Pas de message pour le moment"));
           return Column(
               children: List.generate(listChat.length, (index) {
             return GestureDetector(
@@ -41,7 +41,18 @@ class Body extends StatelessWidget {
         } else if (state is ChatError) {
           return Center(child: Text(state.error.message));
         }
-        return const Center(child: Text('Aucun message'));
+        return const Center(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Messages en cours de chargement"),
+            SizedBox(
+                width: 6,
+                height: 6,
+                child: CircularProgressIndicator(strokeAlign: 2)),
+          ],
+        ));
       },
     )));
   }

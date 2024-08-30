@@ -7,6 +7,7 @@ import 'package:app/blocs/auth/auth_form_bloc.dart';
 import 'package:app/blocs/message/bloc/chat_bloc.dart';
 import 'package:app/configuration.dart';
 import 'package:app/model/user.model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'components/body.dart';
 
@@ -42,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
- // final List<String> _menuItems = ['Selon une offre', 'Selon un besoin'];
+  // final List<String> _menuItems = ['Selon une offre', 'Selon un besoin'];
   BlotItem? selectedBlotItem;
 
   @override
@@ -62,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: kprimaryColor,
-          toolbarHeight: size.height * 0.1,
+          toolbarHeight: size.height * 0.12,
           flexibleSpace: SafeArea(
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,14 +87,12 @@ class _ChatScreenState extends State<ChatScreen> {
                             fit: BoxFit.cover)),
                   ),
                   //
-
+                  16.horizontalSpace,
                   BoxxUserChat(widget: widget, size: size),
+                  Spacer(),
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(
-                      Icons.send,
-                      color: kColorWhite,
-                    ),
+                    icon: Image.asset("img/Group 142.png"),
                   ),
 
                   PopupMenuButton<BlotItem>(
@@ -116,7 +115,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     },
                     icon: isClick
                         ? BoxBublePopup(size: size)
-                        : const Icon(Icons.more_vert_sharp, color: kColorWhite),
+                        : const Icon(Icons.more_vert_sharp,
+                            color: kColorWhite),
                     iconColor: kColorWhite,
                     shape: RoundedRectangleBorder(
                         side: const BorderSide(color: kColorWhite, width: 1),
@@ -128,11 +128,11 @@ class _ChatScreenState extends State<ChatScreen> {
                             icons: 'img/appel_audio.svg',
                             mesg: 'Appel audio',
                           )),
-                  
                       const PopupMenuItem(
                         value: BlotItem.appelVideo,
                         child: PopRowItem(
-                            icons: 'img/appel_video.svg', mesg: 'Appel video'),
+                            icons: 'img/appel_video.svg',
+                            mesg: 'Appel video'),
                       ),
                       const PopupMenuItem(
                           value: BlotItem.litige,
@@ -156,6 +156,3 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-
-
-

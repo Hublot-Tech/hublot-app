@@ -18,11 +18,14 @@ class BoxxUserChat extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        textPresentation(
-            msg: widget.name,
-            fontWeight: FontWeight.bold,
-            size: 24,
-            color: Colors.white),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: textPresentation(
+              msg: widget.name,
+              fontWeight: FontWeight.bold,
+              size: 20,
+              color: Colors.white),
+        ),
         Row(children: [
           Container(
             width: 4,

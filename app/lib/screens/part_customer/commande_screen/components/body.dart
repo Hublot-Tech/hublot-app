@@ -147,11 +147,16 @@ class _BodyState extends State<Body> {
                     }
                     return const Center(
                         child: Row(
-                          children: [
-                            Text("Commande en cours de chargement"),
-                            CircularProgressIndicator(),
-                          ],
-                        ));
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Commande en cours de chargement"),
+                        SizedBox(
+                            width: 6,
+                            height: 6,
+                            child: CircularProgressIndicator(strokeAlign: 2)),
+                      ],
+                    ));
                   },
                 ),
               ],

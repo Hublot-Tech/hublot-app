@@ -65,8 +65,8 @@ class OrderBuble extends StatelessWidget {
                         fit: BoxFit.cover)),
               ),
               Container(
-                padding:
-                    const EdgeInsets.only(left: 16, top: 13, bottom: 15, right: 10),
+                padding: const EdgeInsets.only(
+                    left: 16, top: 13, bottom: 15, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -94,7 +94,9 @@ class OrderBuble extends StatelessWidget {
                         color: isMe ? kColorWhite : kColorBlack),
                     Container(
                       margin: EdgeInsets.only(bottom: 10.r),
-                      padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10).r,
+                      padding:
+                          const EdgeInsets.only(left: 10, top: 10, bottom: 10)
+                              .r,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: kyellowColor),
@@ -150,7 +152,7 @@ class OfferNamePrice extends StatelessWidget {
           child: textPresentation(
             msg: photographe,
             fontWeight: FontWeight.w400,
-            overflow: TextOverflow.clip,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.start,
             size: 14,
             color: isMe ? kprimaryColor : kColorBlack,
