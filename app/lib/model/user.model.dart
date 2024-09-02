@@ -27,6 +27,7 @@ class User {
   final bool? isOTPVerified;
   final bool? isActive;
   final bool? isOnline;
+  
 
   final String phoneNumber;
   final String? email;

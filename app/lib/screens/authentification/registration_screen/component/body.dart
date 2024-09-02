@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,13 +13,20 @@ import 'package:app/model/user.model.dart';
 import 'package:app/screens/authentification/code_phone_screen/code_phone_screen.dart';
 import 'package:app/screens/authentification/login_screen/login.dart';
 import 'package:app/services/toastServices.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'button_custom.dart';
 import 'field_form.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({super.key});
 
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+ 
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
@@ -129,6 +139,7 @@ class Body extends StatelessWidget {
       ),
     ]);
   }
+ 
 }
 
 class FormInscription extends StatefulWidget {
@@ -152,6 +163,8 @@ class FormInscription extends StatefulWidget {
 class _FormInscriptionState extends State<FormInscription> {
   bool isHide = true;
   final _formKey = GlobalKey<FormState>();
+    File selectedImage = File('');
+  String? nameImg;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -221,6 +234,39 @@ class _FormInscriptionState extends State<FormInscription> {
                     ),
                     border: const OutlineInputBorder())),
             const SizedBox(height: 24),
+             InkWell(
+                      onTap: () {
+                        showImagePickerOption(context);
+                      },
+                      child: Container(
+                        height: getProportionateScreenHeight(53),
+                        padding: const EdgeInsets.only(left: 20),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: nameImg == null
+                                    ? const Color(0xFF000000)
+                                    : kyellowColor),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset("img/icons8_upload_file_144px_1 2.png"),
+                            SizedBox(width: getProportionateScreenWidth(5)),
+                            textPresentation(
+                                msg: "Ajouter les images",
+                                fontWeight: FontWeight.normal,
+                                size: getProportionateScreenWidth(15)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    textPresentation(
+                        textAlign: TextAlign.start,
+                        msg: nameImg != null ? nameImg.toString() : "",
+                        fontWeight: FontWeight.bold,
+                        color: kyellowColor,
+                        size: getProportionateScreenWidth(12)),
+                    const EspaceMenuWidget(),
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthError) {
@@ -257,7 +303,7 @@ class _FormInscriptionState extends State<FormInscription> {
                           address: widget.emailController.text,
                           password: widget.mdpController.text,
                           email: widget.emailController.text);
-                      context.read<AuthBloc>().add(AuthCreateUserEvent(user));
+                      context.read<AuthBloc>().add(AuthCreateUserEvent(user,selectedImage));
                       // Navigator.pushNamed(context, HomeScreen.routeName);
                     }
                   },
@@ -269,6 +315,100 @@ class _FormInscriptionState extends State<FormInscription> {
           ],
         ));
   }
+  
+   
+  void showImagePickerOption(BuildContext context) {
+    showModalBottomSheet(
+        backgroundColor: kprimaryColor,
+        context: context,
+        builder: (builder) {
+          return SizedBox(
+            height: getProportionateScreenHeight(150),
+            child: Padding(
+              padding: EdgeInsets.only(top: getProportionateScreenWidth(30)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        pictureFromCamera();
+                      },
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.camera,
+                            color: Colors.white,
+                            size: 50,
+                          ),
+                          const EspaceMenuWidget(taille: 10),
+                          textPresentation(
+                              msg: "Caméra",
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              size: getProportionateScreenWidth(20))
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: getProportionateScreenWidth(40)),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        pictureFromGallerie();
+                      },
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.image,
+                            color: Colors.white,
+                            size: 50,
+                          ),
+                          const EspaceMenuWidget(taille: 10),
+                          textPresentation(
+                              msg: "Gallerie",
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                              size: getProportionateScreenWidth(20))
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+//picture to take picture from gallery
+  Future pictureFromGallerie() async {
+    final returnImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnImage == null) return;
+    setState(() {
+      selectedImage = File(returnImage.path);
+      nameImg = returnImage.name;
+    });
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
+
+  //function to take picture with camera
+  Future pictureFromCamera() async {
+    final returnImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    if (returnImage == null) return;
+    setState(() {
+      selectedImage = File(returnImage.path);
+      nameImg = returnImage.name;
+    });
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
+
+
 }
+
 
 ///cette class est utilise pour le formulaire,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:app/model/user.model.dart';
 
@@ -33,7 +35,7 @@ final class PasswordUnfocused extends AuthEvent {}
 final class FormSubmitted extends AuthEvent {}
 
 final class AuthVerifyOTPEvent extends AuthEvent {
-  final String phoneNumber,otp;
+  final String phoneNumber, otp;
 
   const AuthVerifyOTPEvent(this.phoneNumber, this.otp);
 }
@@ -61,7 +63,8 @@ final class AuthSignEmailAndPasswordEvent extends AuthEvent {
 
 final class AuthCreateUserEvent extends AuthEvent {
   final User user;
-  const AuthCreateUserEvent(this.user);
+  final File file;
+  const AuthCreateUserEvent(this.user, this.file);
 }
 
 final class AuthCheckTokenEvent extends AuthEvent {}

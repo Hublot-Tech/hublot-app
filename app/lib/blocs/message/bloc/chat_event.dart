@@ -22,3 +22,8 @@ class  ChatMarkAsReadEvent extends ChatEvent{
   final String id;
   const ChatMarkAsReadEvent({required this.id});
 }
+
+class ChatMarkAsDeliveredEvent extends ChatEvent {
+  final String id;
+  const ChatMarkAsDeliveredEvent({required this.id});
+}

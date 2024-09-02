@@ -124,17 +124,43 @@ class Chatservice {
     }
   }
 
-    Future<dynamic> markMessageAsRead(String messageId) async {
-    final response = await http.patch(
-      Uri.parse('/api/chats/messages/$messageId/read'),
-    );
-    // Gère la réponse selon ton besoin
+  Future<Object> markMessageAsRead(String messageId) async {
+    final token = await storage.read(key: 'accessToken');
+    final apiUrl = '$baseUrl/chats/messages/$messageId/read';
+    final uri = Uri.parse(apiUrl);
+    try {
+      final response = await http.patch(
+        uri,
+        headers: <String, String>{'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return MessageError.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      return MessageError(message: e.toString(), status: 500);
+    }
   }
 
-  Future<dynamic> markMessageAsDelivered(String messageId) async {
-    final response = await http.patch(
-      Uri.parse('/api/chats/messages/$messageId/delivered'),
-    );
-    // Gère la réponse selon ton besoin
+  Future<Object> markMessageAsDelivered(String messageId) async {
+    final token = await storage.read(key: 'accessToken');
+    final apiUrl = '$baseUrl/chats/messages/$messageId/delivered';
+    final uri = Uri.parse(apiUrl);
+    try {
+      final response = await http.patch(
+        uri,
+        headers: <String, String>{'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return MessageError.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      return MessageError(message: e.toString(), status: 500);
+    }
   }
 }

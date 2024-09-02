@@ -1,6 +1,7 @@
 import 'package:app/blocs/blot/bloc/blot_bloc.dart';
 import 'package:app/configuration.dart';
 import 'package:app/controller/enumeration/blot.dart';
+import 'package:app/model/blot_entity.dart';
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/components/shimmer.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/card_presentation.dart';
@@ -23,6 +24,7 @@ class _BodyState extends State<Body> {
   //controller form textfield
   TextEditingController numberController = TextEditingController();
   bool isLoading = true;
+  BlotDetatails blotDetail = BlotDetatails.empty();
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class _BodyState extends State<Body> {
             setState(() {
               isLoading = false;
             });
+            blotDetail = state.data;
           }
           if (state is BlotErrorState) {
             setState(() {
@@ -86,7 +89,8 @@ class _BodyState extends State<Body> {
                                     fontWeight: FontWeight.normal,
                                     color: kColorWhite,
                                     size: 15),
-                                const Icon(Icons.edit, color: kyellowColor, size: 14),
+                                const Icon(Icons.edit,
+                                    color: kyellowColor, size: 14),
                               ],
                             )),
                       ],
@@ -109,23 +113,25 @@ class _BodyState extends State<Body> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         textPresentation(
-                            msg: 'Détails',
+                            msg: 'Détails ',
                             fontWeight: FontWeight.w300,
                             size: 15),
                         textPresentation(
-                            msg: ' 01/06/2024 ',
+                            msg:
+                                "${blotDetail.createdAt.month.toString()}/${blotDetail.createdAt.day.toString()}/${blotDetail.createdAt.year.toString()}",
                             fontWeight: FontWeight.w600,
                             size: 15),
                         textPresentation(
-                            msg: 'à', fontWeight: FontWeight.w300, size: 15),
+                            msg: ' à', fontWeight: FontWeight.w300, size: 15),
                         textPresentation(
-                            msg: ' 10h58',
+                            msg:
+                                " ${blotDetail.createdAt.hour.toString()}h${blotDetail.createdAt.minute.toString()}",
                             fontWeight: FontWeight.w600,
                             size: 15),
                       ],
                     ),
                     30.verticalSpace,
-                    CardPresentation(widget: buildColumn()),
+                    CardPresentation(widget: buildColumn(blotDetail)),
                     30.verticalSpace,
                     // Container(
                     //   width: double.infinity,
@@ -336,7 +342,8 @@ class StepperItem extends StatelessWidget {
   final bool isCompleted;
   final bool isLast;
 
-  const StepperItem({super.key, required this.isCompleted, this.isLast = false});
+  const StepperItem(
+      {super.key, required this.isCompleted, this.isLast = false});
 
   @override
   Widget build(BuildContext context) {
@@ -407,7 +414,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                         msg: 'Description',
                         fontWeight: FontWeight.normal,
                         size: 13.54),
-                    const Icon(Icons.arrow_drop_down, size: 16, color: Colors.grey),
+                    const Icon(Icons.arrow_drop_down,
+                        size: 16, color: Colors.grey),
                   ],
                 ),
               ),

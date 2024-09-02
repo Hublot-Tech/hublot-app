@@ -13,7 +13,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<ChatSendMessageEvent>(sendMessage);
     on<ChatFetchMessageEvent>(fetchMessage);
     on<ChatUpdateEvent>(fetchChat);
-    // startPeriodicFetching();
+    on<ChatMarkAsReadEvent>(markAsReadHandler);
   }
 
   Chatservice api = Chatservice();
@@ -71,22 +71,32 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-// FutureOr<void> markAsReadHandler(
-//   ChatMarkAsReadEvent event,
-//   Emitter<ChatState> emit,
-// ) async {
-//   try {
-//      final response = await api.markAsRead(event.id);
-//       if (response is Success) {
-//         // Recharge les messages pour mettre à jour leur état
-//         add(ChatFetchMessageEvent(interculators: widget.interlocutor));
-//       } else if (response is MessageError) {
-//         emit(ChatError(error: response));
-//       }
-//   } catch (e) {
-//     // Gérer l'erreur
-//   }
-// }
+  FutureOr<void> markAsReadHandler(
+      ChatMarkAsReadEvent event, Emitter<ChatState> emit) async {
+    try {
+      final response = await api.markMessageAsRead(event.id);
+      if (response is Map<String, bool> && response['success'] == true) {
+        emit(ChatMessageRead(messageId: event.id));
+      } else if (response is MessageError) {
+        emit(ChatError(error: response));
+      }
+    } catch (e) {
+      emit(ChatError(error: MessageError(message: e.toString(), status: 500)));
+    }
+  }
+  FutureOr<void> markAsReadDelivered(
+      ChatMarkAsReadEvent event, Emitter<ChatState> emit) async {
+    try {
+      final response = await api.markMessageAsDelivered(event.id);
+      if (response is Map<String, bool> && response['success'] == true) {
+        emit(ChatMessageRead(messageId: event.id));
+      } else if (response is MessageError) {
+        emit(ChatError(error: response));
+      }
+    } catch (e) {
+      emit(ChatError(error: MessageError(message: e.toString(), status: 500)));
+    }
+  }
 
   void startPeriodicFetching(ChatFetchMessageEvent event) {
     _timer = Timer.periodic(const Duration(seconds: 60), (timer) {

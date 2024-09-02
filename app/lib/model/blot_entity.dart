@@ -154,7 +154,7 @@ class BlotDetatails {
   final DateTime startDate;
   final int duration;
   final String status;
-  final String offer,payment,payoutRef;
+  final String offer, payment, payoutRef;
   final List<BlotOptionEntity>
       options; // Adapte le type en fonction du contenu de "options"
 
@@ -182,11 +182,11 @@ class BlotDetatails {
     return BlotDetatails(
       consumer: User.fromJson(json['consumer']),
       createdAt: DateTime.parse(json['createdAt']),
-      payment: json['payment'],
-      payoutRef: json['payoutRef'],
-      duration: json['duration'],
-      id: json['id'],
-      offer: json['offer'],
+      payment: json['payment'] != null ? json['payment'] : '',
+      payoutRef: json['payoutRef'] != null ? json['payoutRef'] : '',
+      duration: json['duration'] != null ? json['duration'] : 0,
+      id: json['id'] != null ? json['id'] : '',
+      offer: json['offer'] != null ? json['offer'] : '',
       options: json['option'] != null
           ? List<BlotOptionEntity>.from(
               json['options'].map((x) => BlotOptionEntity.fromJson(x)))
@@ -201,8 +201,8 @@ class BlotDetatails {
 
   //factory blot is empty
   factory BlotDetatails.empty() => BlotDetatails(
-         payment: '',
-         payoutRef: '',
+        payment: '',
+        payoutRef: '',
         consumer: User.empty(),
         createdAt: DateTime.now(),
         duration: 0,
@@ -230,7 +230,6 @@ class BlotDetatails {
       'startDate': startDate.toIso8601String(),
       'status': status,
       'updatedAt': updatedAt.toIso8601String(),
-      
     };
   }
 }

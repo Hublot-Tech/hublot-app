@@ -35,24 +35,33 @@ const shimmerGradient = LinearGradient(
   end: Alignment(1.0, 0.3),
   tileMode: TileMode.clamp,
 );
-Widget textPresentation(
-    {required String msg,
-    double size = 30,
-    Color color = kprimaryColor,
-    TextAlign textAlign = TextAlign.center,
-    TextOverflow overflow = TextOverflow.ellipsis,
-    maxLine,
-    required FontWeight fontWeight}) {
-  return AutoSizeText(
-    msg,
-    textAlign: textAlign,
-    overflow: overflow,
-    maxLines: maxLine,
-    style: TextStyle(
-        fontWeight: fontWeight,
-        color: color,
-        fontSize: size.sp,
-        fontFamily: 'ProximaNova'),
+Widget textPresentation({
+  required String msg,
+  double size = 30,
+  Color color = kprimaryColor,
+  TextAlign textAlign = TextAlign.center,
+  TextOverflow overflow = TextOverflow.ellipsis,
+  int? maxLine,
+  required FontWeight fontWeight,
+}) {
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      return AutoSizeText(
+        msg,
+        textAlign: textAlign,
+        overflow: overflow,
+        maxLines: maxLine?? 1,
+        minFontSize: 8,
+        stepGranularity: 0.5,
+        style: TextStyle(
+          fontWeight: fontWeight,
+          color: color,
+          fontSize: size.sp,
+          fontFamily: 'ProximaNova',
+        ),
+        maxFontSize: constraints.maxWidth / 10,
+      );
+    },
   );
 }
 

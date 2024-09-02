@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:app/blocs/auth/auth_form_bloc.dart';
 import 'package:app/blocs/message/bloc/chat_bloc.dart';
 import 'package:app/configuration.dart';
 import 'package:app/model/message_detail.dart';
 import 'package:app/model/send_menu_item.dart';
 import 'package:app/services/toastServices.dart';
+import 'chat_input_field.dart';
+import 'bottom_sheet.dart';
 
 class Body extends StatefulWidget {
   final String interlocutor;
@@ -29,7 +30,6 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     read();
   }
@@ -43,52 +43,9 @@ class _BodyState extends State<Body> {
   ];
   void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) => Container(
-              decoration: const BoxDecoration(
-                  color: kColorWhite,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      topLeft: Radius.circular(20))),
-              child: Column(
-                children: [
-                  Center(
-                      child: Container(
-                    height: 4,
-                    width: 58,
-                    color: Colors.grey.shade200,
-                  )),
-                  ListView.builder(
-                      itemCount: menuItems.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: menuItems[index].color.shade100,
-                              ),
-                              height: 50,
-                              width: 50,
-                              child: Icon(
-                                menuItems[index].icons,
-                                size: 20,
-                                color: menuItems[index].color.shade400,
-                              ),
-                            ),
-                            title: textPresentation(
-                                msg: menuItems[index].text,
-                                fontWeight: FontWeight.normal,
-                                size: 12),
-                          ),
-                        );
-                      })
-                ],
-              ),
-            ));
+      context: context,
+      builder: (context) => ChatBottomSheet(menuItems: menuItems),
+    );
   }
 
   @override
@@ -101,6 +58,25 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     TextEditingController controller = TextEditingController();
     List<ResponseMessageSend> listChat = [];
+    void markMessagesAsRead(List<ResponseMessageSend> messages) {
+      final chatBloc = BlocProvider.of<ChatBloc>(context);
+      for (var message in messages) {
+        if (message.sender != idUser &&
+            message.readAt.isBefore(message.sendAt)) {
+          chatBloc.add(ChatMarkAsReadEvent(id: message.id));
+        }
+      }
+    }
+
+    void markMessagesAsDelivered(List<ResponseMessageSend> messages) {
+      final chatBloc = BlocProvider.of<ChatBloc>(context);
+      for (var message in messages) {
+        if (message.sender != idUser &&
+            message.deliveredAt.isBefore(message.sendAt)) {
+          chatBloc.add(ChatMarkAsDeliveredEvent(id: message.id));
+        }
+      }
+    }
 
     File file = File('');
 
@@ -109,8 +85,10 @@ class _BodyState extends State<Body> {
         BlocConsumer<ChatBloc, ChatState>(
           listener: (context, state) {
             if (state is ChatLoaded) {
+              markMessagesAsRead(state.chatList);
+              markMessagesAsDelivered(state.chatList);
             } else if (state is ChatError) {
-              ToastService.errorMessage(state.error.message,context);
+              ToastService.errorMessage(state.error.message, context);
             }
           },
           builder: (context, state) {
@@ -150,109 +128,33 @@ class _BodyState extends State<Body> {
                   ToastService.successMessage(
                       "Message envoyé avec succès", kprimaryColor, context);
                 } else if (state is ChatError) {
-                  ToastService.errorMessage(state.error.message,context);
+                  ToastService.errorMessage(state.error.message, context);
                 }
               },
-              child: Row(
-                children: [
-                  SizedBox(width: size.width * 0.05),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors
-                            .grey[200], // Couleur de fond du TextFormField
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      child: TextFormField(
-                        onFieldSubmitted: (value) {
-                          if (value.isNotEmpty) {
-                            String contentType = "";
-                            CreateMessage createMessage;
-                            if (controller.text.isNotEmpty) {
-                              contentType = "text";
-                              createMessage = CreateMessage(
-                                contentType: contentType,
-                                receiver: widget.interlocutor,
-                                content: controller.text,
-                              );
-                            } else {
-                              contentType = "file";
-                              createMessage = CreateMessage(
-                                contentType: contentType,
-                                receiver: widget.interlocutor,
-                                file: file,
-                              );
-                            }
-                            context.read<ChatBloc>().add(
-                                ChatSendMessageEvent(message: createMessage));
-                            controller.clear();
-                          }
-                        },
-                        controller: controller,
-                        decoration: InputDecoration(
-                          hintText: "Ecrivez un message ...",
-                          hintStyle: const TextStyle(
-                              color: Colors.grey), // Couleur du hintText
-                          prefixIcon: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: IconButton(
-                                onPressed: () {
-                                  showBottomSheet(context);
-                                },
-                                icon: SvgPicture.asset(
-                                  'img/epingle.svg',
-                                  color: Colors.grey, // Couleur de l'icône
-                                ),
-                              )),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          border: InputBorder
-                              .none, // Supprimer la bordure par défaut
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: size.width * 0.02),
-                  Container(
-                    width: size.width * 0.12,
-                    height: size.width *
-                        0.12, // Assurer que le bouton est un cercle
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey, // Couleur du bouton d'envoi
-                    ),
-                    child: IconButton(
-                      icon: SvgPicture.asset(
-                        'img/vectorPlig.svg',
-                        color: Colors.white, // Couleur de l'icône d'envoi
-                      ),
-                      onPressed: () {
-                        String contentType = "";
-                        CreateMessage createMessage;
-                        if (controller.text.isNotEmpty) {
-                          contentType = "text";
-                          createMessage = CreateMessage(
-                            contentType: contentType,
-                            receiver: widget.interlocutor,
-                            content: controller.text,
-                          );
-                        } else {
-                          contentType = "file";
-                          createMessage = CreateMessage(
-                            contentType: contentType,
-                            receiver: widget.interlocutor,
-                            file: file,
-                          );
-                        }
-                        context
-                            .read<ChatBloc>()
-                            .add(ChatSendMessageEvent(message: createMessage));
-                        controller.clear();
-                      },
-                    ),
-                  ),
-                  SizedBox(width: size.width * 0.05),
-                ],
+              child: ChatInputField(
+                controller: controller,
+                onAttachmentPressed: () => showBottomSheet(context),
+                onSendPressed: () {
+                  String contentType = "";
+                  CreateMessage createMessage;
+                  if (controller.text.isNotEmpty) {
+                    contentType = "text";
+                    createMessage = CreateMessage(
+                      contentType: contentType,
+                      receiver: widget.interlocutor,
+                      content: controller.text,
+                    );
+                  } else {
+                    contentType = "file";
+                    createMessage = CreateMessage(
+                      contentType: contentType,
+                      receiver: widget.interlocutor,
+                      file: file,
+                    );
+                  }
+                  context.read<ChatBloc>().add(ChatSendMessageEvent(message: createMessage));
+                  controller.clear();
+                },
               ),
             ),
           ),
@@ -262,38 +164,6 @@ class _BodyState extends State<Body> {
   }
 }
 
-class FieldFom extends StatefulWidget {
-  const FieldFom({
-    super.key,
-    this.isChange = false,
-    required this.controller,
-  });
 
-  final TextEditingController controller;
-  final bool isChange;
-  @override
-  State<FieldFom> createState() => _FieldFomState();
-}
 
-class _FieldFomState extends State<FieldFom> {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: TextFormField(
-          controller: widget.controller,
-          decoration: InputDecoration(
-            hintText: "Ecrivez un message ...",
-            prefixIcon: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SvgPicture.asset(
-                // fit: BoxFit.cover,
-                'img/epingle.svg',
-              ),
-            ),
-            contentPadding: const EdgeInsets.only(left: 20),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-          )),
-    );
-  }
-}
+

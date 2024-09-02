@@ -1,4 +1,5 @@
 import 'package:app/configuration.dart';
+import 'package:app/model/blot_entity.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/row_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +15,7 @@ class CardPresentation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(left: 10.r, right: 15, top: 10, bottom: 15).r,
+      padding: EdgeInsets.only(left: 10.r, right: 12, top: 10, bottom: 15).r,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10).r,
           color: kColorWhite,
@@ -45,37 +46,108 @@ class CardPresentation extends StatelessWidget {
   }
 }
 
-Column buildColumn() {
+Column buildColumn(BlotDetatails blotDetail) {
+  int newPrice = (blotDetail.price * 0.1).toInt();
   return Column(
     children: [
-      const RowInfo(
+      RowInfo(
           profession: 'Nom du prestataire',
           value: 'Photographe',
-          name: 'Gislain Lamga'),
+          name: blotDetail.provider.fullname),
       13.verticalSpace,
-      const RowInfo(name: 'Diboum alex', profession: 'Nom du client'),
+      RowInfo(name: blotDetail.consumer.fullname, profession: 'Nom du client'),
       13.verticalSpace,
-      const RowInfo(
-          name: 'Options choisies',
-          value: 'Tenues',
-          valu: 50,
-          profession: 'Photographe'),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Options choisies',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  'Photographie',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+            Spacer(flex: 2),
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                // Action pour le bouton précédent
+              },
+            ),
+            Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.yellow[700],
+              ),
+              child: Text(
+                '1',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(width: 8),
+            Column(
+              children: [
+                Text(
+                  'Tenues',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(width: 4),
+                Text(
+                  '1000 FCFA',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_forward_ios),
+              onPressed: () {
+                // Action pour le bouton suivant
+              },
+            ),
+          ],
+        ),
+      ),
       13.verticalSpace,
-      const RowInfo(
+      RowInfo(
           name: 'Offre de base',
-          value: '100000 000 FCFA',
+          value: '${blotDetail.offer}FCFA',
           profession: 'Photographe'),
       13.verticalSpace,
-      const RowInfo(
+      RowInfo(
           name: 'Coût de la prestation : ',
-          value: '1000000FCFA',
+          value: '${blotDetail.price}FCFA',
           profession: 'Prix des options prise en compte'),
       13.verticalSpace,
-      const RowInfo(
+      RowInfo(
           name: 'Commission',
-          value: '110 FCFA',
+          value: '$newPrice FCFA',
           valu: 65,
-          profession: 'Prix des options prise en compte'),
+          profession: '1% de votre coût de prestations'),
     ],
   );
 }

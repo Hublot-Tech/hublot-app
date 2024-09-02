@@ -86,9 +86,6 @@ class Blotservice {
           'Authorization': 'Bearer $token'
         },
       );
-      print(response.body);
-      print(response.reasonPhrase);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         return BlotResponseDetails.fromJson(jsonDecode(response.body));
       } else {

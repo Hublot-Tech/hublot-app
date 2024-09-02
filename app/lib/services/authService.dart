@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/configuration.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as httpClient;
 import 'package:app/blocs/auth/auth_form_event.dart';
@@ -14,23 +15,33 @@ class AuthService {
       Uri.parse('https://hublots-api-8c97109dc203.herokuapp.com/api');
 
   Future<Object> register(AuthCreateUserEvent data) async {
-    final response = await httpClient.post(Uri.parse('$host/auth/register'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(data.user.toJson()));
+    final uri = Uri.parse('$baseUrl2/auth/register');
+    final request = httpClient.MultipartRequest('POST', uri);
+    request.fields['email'] = data.user.email!;
+    request.fields['password'] = data.user.password;
+    request.fields['fullname'] = data.user.fullname;
+    request.fields['phoneNumber'] = data.user.phoneNumber;
+    request.fields['locale'] = data.user.locale;
+    request.fields['address'] = data.user.address;
+    request.files.add(
+        await httpClient.MultipartFile.fromPath('profile', data.file.path));
+    final response = await request.send();
+
+    final responseData = await response.stream.bytesToString();
+    final jsonResponse = jsonDecode(responseData);
+
+    
     try {
-      print(jsonEncode(data.user.toJson()));
-      if (response.statusCode == 201) {
-        print(response.body);
-        late final data = RegisterResponse.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(jsonResponse);
+        late final data = RegisterResponse.fromJson(jsonResponse);
         return data;
       } else {
-        print(response.body);
-        return ErrorAuth.fromJson(jsonDecode(response.body));
+        print(jsonResponse);
+        return ErrorAuth.fromJson(jsonResponse);
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
       return ErrorAuth(message: e.toString(), status: 505);
     }
   }
@@ -46,8 +57,7 @@ class AuthService {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       late final data = SuccessAuth.fromJson(jsonDecode(response.body));
-      late final user = getCurrentUsers();
-      print(user);
+
       return data;
     } else {
       return ErrorAuth.fromJson(jsonDecode(response.body));
@@ -69,8 +79,7 @@ class AuthService {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'refreshToken': refreshToken}),
       );
-      print(response.body);
-      print(refreshToken);
+
       if (response.statusCode == 201) {
         // Rafraîchissement réussi : mets à jour l'access token
         final responseData = jsonDecode(response.body);
@@ -83,13 +92,12 @@ class AuthService {
       } else {
         // Échec du rafraîchissement
         // Gère les erreurs du backend si nécessaire (ex: déconnexion si le refresh token est invalide)
-        print(
-            'Erreur lors du rafraîchissement du token : ${response.statusCode}');
+
         return false;
       }
     } catch (e) {
       // Erreur réseau ou autre
-      print('Erreur lors du rafraîchissement du token : $e');
+
       return false;
     }
   }
@@ -125,7 +133,6 @@ class AuthService {
         return ErrorAuth.fromJson(jsonDecode(request.body));
       }
     } catch (e) {
-      print(e);
       return ErrorAuth(message: e.toString(), status: 500);
     }
   }
@@ -144,11 +151,9 @@ class AuthService {
       if (request.statusCode == 204) {
         return SuccessAuth(message: request.reasonPhrase!, status: 204);
       } else {
-        print(request.body);
         return ErrorAuth.fromJson(jsonDecode(request.body));
       }
     } catch (e) {
-      print(e.toString);
       return ErrorAuth(message: e.toString(), status: 500);
     }
   }
@@ -168,7 +173,6 @@ class AuthService {
       if (request.statusCode == 204) {
         return SuccessAuth(message: request.reasonPhrase!, status: 204);
       } else {
-        print(jsonDecode(request.body));
         return ErrorOPTAuth.fromJson(jsonDecode(request.body));
       }
     } catch (e) {

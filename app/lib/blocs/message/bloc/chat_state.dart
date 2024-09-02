@@ -29,3 +29,13 @@ class ChatError extends ChatState{
   final MessageError error;
   const ChatError({required this.error});
 }
+
+class ChatMessageRead extends ChatState {
+  final String messageId;
+  const ChatMessageRead({required this.messageId});
+}
+
+class ChatMessageDelivered extends ChatState {
+  final String messageId;
+  const ChatMessageDelivered({required this.messageId});
+}
