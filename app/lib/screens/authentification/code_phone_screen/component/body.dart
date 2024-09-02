@@ -8,8 +8,6 @@ import 'package:app/blocs/auth/auth_form_event.dart';
 import 'package:app/blocs/auth/auth_form_state.dart';
 import 'package:app/configuration.dart';
 import 'package:app/screens/components/background_add_service.dart';
-import 'package:app/screens/authentification/phone_number_screen/phone_number_screen.dart';
-import 'package:app/screens/components/cancel_button.dart';
 import 'package:app/services/toastServices.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +26,7 @@ class _BodyState extends State<Body> {
   TextEditingController _otpData = TextEditingController();
   static const maxSeconds = 30;
   int remainingSeconds = maxSeconds;
+  bool isLoading = false;
   Timer? _timer;
   @override
   void initState() {
@@ -72,15 +71,17 @@ class _BodyState extends State<Body> {
     return BackgroundAddService(
       widget: Column(
         children: [
-          Padding(
-              padding: EdgeInsets.only(
-                  top: 10, right: getProportionateScreenWidth(660)),
-              child: IconButton(
+          Row(
+            children: [
+              IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, PhoneNumberScreen.routeName);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScrenns()));
                   },
-                  icon: const Icon(Icons.arrow_back))),
-          const EspaceMenuWidget(taille: 100),
+                  icon: const Icon(Icons.arrow_back)),
+            ],
+          ),
+          const EspaceMenuWidget(taille: 50),
           textPresentation(
               msg: 'Consulter votre messagerie',
               fontWeight: FontWeight.bold,
@@ -147,10 +148,15 @@ class _BodyState extends State<Body> {
               SizedBox(width: getProportionateScreenWidth(10)),
               BlocListener<AuthBloc, AuthState>(
                 listener: (context, state) {
-                  // TODO: implement listener
-                  if (state is AuthOtpSend) {}
+                  if (state is AuthLoading) {
+                    isLoading = true;
+                  }
+                  if (state is AuthOtpSend) {
+                    isLoading = false;
+                  }
                   if (state is AuthError) {
-                    ToastService.errorMessage(state.errorAuth.message,context);
+                    isLoading = false;
+                    ToastService.errorMessage(state.errorAuth.message, context);
                   }
                 },
                 child: TextButton(
@@ -183,11 +189,17 @@ class _BodyState extends State<Body> {
           const EspaceMenuWidget(),
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
+              if (state is AuthLoading) {
+                isLoading = true;
+              }
               if (state is AuthError) {
-                ToastService.errorMessage(state.errorAuth.message,context);
+                ToastService.errorMessage(state.errorAuth.message, context);
+                isLoading = false;
               }
               if (state is AuthOtpVerified) {
-                //ToastService.successMessage('Code recus', kyellowColor);
+                ToastService.successMessage(
+                    'Code verifié avec succès', kyellowColor, context);
+                isLoading = false;
                 MaterialPageRoute(
                   builder: (context) {
                     return const HomeScrenns();
@@ -202,11 +214,12 @@ class _BodyState extends State<Body> {
                       .add(AuthVerifyOTPEvent(userPhone, _otpData.text));
                 },
                 msg: 'Confirmer',
+                loading: isLoading,
                 isValided:
                     _otpData.text.isNotEmpty && _otpData.text.length == 6),
           ),
           const EspaceMenuWidget(),
-          CancelButtom(press: () {}),
+          //  CancelButtom(press: () {}),
         ],
       ),
     );

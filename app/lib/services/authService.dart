@@ -30,7 +30,6 @@ class AuthService {
     final responseData = await response.stream.bytesToString();
     final jsonResponse = jsonDecode(responseData);
 
-    
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {
         print(jsonResponse);
@@ -130,9 +129,11 @@ class AuthService {
 
         return data;
       } else {
+        print(jsonDecode(request.body));
         return ErrorAuth.fromJson(jsonDecode(request.body));
       }
     } catch (e) {
+      print(e);
       return ErrorAuth(message: e.toString(), status: 500);
     }
   }

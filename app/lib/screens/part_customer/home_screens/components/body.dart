@@ -11,6 +11,7 @@ import 'package:app/screens/authentification/code_phone_screen/code_phone_screen
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/part_customer/description_service/description_service_screen.dart';
 import 'package:app/screens/part_customer/item_screen/item_screen.dart';
+import 'package:app/screens/part_customer/verify_identity/verify_identity_screen.dart';
 import 'package:app/services/toastServices.dart';
 import 'package:app/size_configuration.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,25 @@ class _BodyState extends State<Body> {
                     settings: RouteSettings(arguments: user.phoneNumber)));
           }
         } else if (state is AuthError) {
-          ToastService.errorConnection('msg', Colors.red, context);
+          isLoading = false;
+          ToastService.errorMessage(state.errorAuth.message, context);
+          print(state.errorAuth);
+          if (!user.isOTPVerified!) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) {
+                      return const CodePhoneScreem();
+                    },
+                    settings: RouteSettings(arguments: user.phoneNumber)));
+          } else {
+            if (user.verificationStatus == "not_submitted") {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const VerifyIdentityScreen()));
+            }
+          }
         }
       },
       child: Shimmer(

@@ -68,6 +68,7 @@ class CardHistoric extends StatelessWidget {
                   textPresentation(
                       msg: "Consultez l'historique de votre \nnavigation...",
                       fontWeight: FontWeight.normal,
+                      maxLine: 2,
                       textAlign: TextAlign.start,
                       size: (11)),
                 ],

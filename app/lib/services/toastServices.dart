@@ -18,36 +18,38 @@ class ToastService {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset('img/Group 140.png'),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    textPresentation(
-                        msg: 'Desoler une ',
-                        fontWeight: FontWeight.w600,
-                        size: 14,
-                        color: Colors.white),
-                    textPresentation(
-                        msg: ' erreur s’est produite !!! ',
-                        fontWeight: FontWeight.w600,
-                        size: 14,
-                        color: Colors.white),
-                  ],
-                ),
-                textPresentation(
-                    msg:
-                        "Ressayer à present... Et decrouvez comment vivre de votre passion sur hublots...",
-                    fontWeight: FontWeight.normal,
-                    size: 11,
-                    color: Colors.white),
-              ],
+            Flexible(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      textPresentation(
+                          msg: 'Desoler une ',
+                          fontWeight: FontWeight.w600,
+                          size: 14,
+                          color: Colors.white),
+                      textPresentation(
+                          msg: ' erreur s’est produite !!! ',
+                          fontWeight: FontWeight.w600,
+                          size: 14,
+                          color: Colors.white),
+                    ],
+                  ),
+                  textPresentation(
+                      msg:
+                          "Ressayer à present... Et decouvrez comment vivre de votre passion sur hublots...",
+                      fontWeight: FontWeight.normal,
+                      size: 11,
+                      color: Colors.white),
+                ],
+              ),
             ),
           ],
         ));
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: const Duration(seconds: 3),
+      toastDuration: toastDuration,
     );
   }
 
@@ -63,20 +65,22 @@ class ToastService {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Image.asset("img/Group 140.png"),
           const SizedBox(width: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.6,
-            child: textPresentation(
-                textAlign: TextAlign.start,
-                msg: msg,
-                fontWeight: FontWeight.normal,
-                size: 11,
-                color: Colors.white),
+          Flexible(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: textPresentation(
+                  textAlign: TextAlign.start,
+                  msg: msg,
+                  fontWeight: FontWeight.normal,
+                  size: 11,
+                  color: Colors.white),
+            ),
           )
         ]));
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: const Duration(seconds: 3),
+      toastDuration: toastDuration,
     );
   }
 
@@ -101,16 +105,18 @@ class ToastService {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Image.asset("img/Group 139.png"),
           const SizedBox(width: 10),
-          textPresentation(
-              msg: msg,
-              fontWeight: FontWeight.normal,
-              size: 11,
-              color: Colors.white)
+          Flexible(
+            child: textPresentation(
+                msg: msg,
+                fontWeight: FontWeight.normal,
+                size: 11,
+                color: Colors.white),
+          )
         ]));
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: const Duration(seconds: 3),
+      toastDuration: toastDuration,
     );
   }
 
@@ -126,39 +132,41 @@ class ToastService {
         child: Row(
           children: [
             Image.asset("img/Group 139.png"),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    textPresentation(
-                        msg: 'Bravo pour votre ',
-                        fontWeight: FontWeight.w600,
-                        size: 16.sp,
-                        color: Colors.white),
-                    textPresentation(
-                        msg: 'connexion !!!',
-                        fontWeight: FontWeight.w600,
-                        size: 16.sp,
-                        color: kyellowColor),
-                  ],
-                ),
-                textPresentation(
-                    textAlign: TextAlign.start,
-                    msg:
-                        "L’adventure commence...\n Decrouvez comment vivre de votre passion sur hublots...",
-                    fontWeight: FontWeight.normal,
-                    size: 11.sp,
-                    color: Colors.white),
-              ],
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      textPresentation(
+                          msg: 'Bravo pour votre ',
+                          fontWeight: FontWeight.w600,
+                          size: 16.sp,
+                          color: Colors.white),
+                      textPresentation(
+                          msg: 'connexion !!!',
+                          fontWeight: FontWeight.w600,
+                          size: 16.sp,
+                          color: kyellowColor),
+                    ],
+                  ),
+                  textPresentation(
+                      textAlign: TextAlign.start,
+                      msg:
+                          "L’adventure commence...\n Decouvrez comment vivre de votre passion sur hublots...",
+                      fontWeight: FontWeight.normal,
+                      size: 11.sp,
+                      color: Colors.white),
+                ],
+              ),
             ),
           ],
         ));
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.TOP,
-      toastDuration: const Duration(seconds: 3),
+      toastDuration: toastDuration,
     );
   }
 }

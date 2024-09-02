@@ -42,7 +42,8 @@ final class ErrorAuth {
 
   factory ErrorAuth.fromJson(Map<String, dynamic> json) {
     return ErrorAuth(
-        message: json['message'] as String, status: json['statusCode'] as int);
+        message: json['message'][0] as String,
+        status: json['statusCode'] as int);
   }
 }
 
