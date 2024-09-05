@@ -115,8 +115,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     },
                     icon: isClick
                         ? BoxBublePopup(size: size)
-                        : const Icon(Icons.more_vert_sharp,
-                            color: kColorWhite),
+                        : const Icon(Icons.more_vert_sharp, color: kColorWhite),
                     iconColor: kColorWhite,
                     shape: RoundedRectangleBorder(
                         side: const BorderSide(color: kColorWhite, width: 1),
@@ -131,8 +130,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       const PopupMenuItem(
                         value: BlotItem.appelVideo,
                         child: PopRowItem(
-                            icons: 'img/appel_video.svg',
-                            mesg: 'Appel video'),
+                            icons: 'img/appel_video.svg', mesg: 'Appel video'),
                       ),
                       const PopupMenuItem(
                           value: BlotItem.litige,
@@ -151,6 +149,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ]),
           ),
         ),
+        backgroundColor: kColorWhite,
         body: Body(interlocutor: widget.interlocutor),
       ),
     );

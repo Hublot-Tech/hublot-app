@@ -15,7 +15,7 @@ class CommandeScreen extends StatelessWidget {
         ..add(const BlotFetchEvent(
            status: 'created')),
       child: Scaffold(
-        appBar: AppBar(),
+     
         body:  const Body(),
         backgroundColor: kColorWhite,
       ),

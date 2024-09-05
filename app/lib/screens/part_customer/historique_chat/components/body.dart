@@ -24,6 +24,7 @@ class Body extends StatelessWidget {
       child: SafeArea(
           child: Column(
         children: [
+          40.verticalSpace,
           const HublotTextWigdet(),
           10.verticalSpace,
           Row(children: [
@@ -37,7 +38,7 @@ class Body extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
               hintText: "Que recherchez-vous ?",
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: TextStyle(color: Colors.grey,fontSize: 18),
               prefixIcon: Icon(Icons.search),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 10, vertical: 10),

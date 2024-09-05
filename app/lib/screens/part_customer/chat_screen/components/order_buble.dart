@@ -103,7 +103,7 @@ class OrderBuble extends StatelessWidget {
                       child: Row(
                         children: [
                           textPresentation(
-                              msg: 'Photographe',
+                              msg: serviceDetails.provider.address,
                               fontWeight: FontWeight.bold,
                               size: 18.5,
                               color: isMe ? kprimaryColor : kColorBlack),

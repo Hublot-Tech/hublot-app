@@ -21,39 +21,42 @@ class BlotStatus extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => BlotDetailsScreen(id: blotNumber))),
-      child: Row(
-        children: [
-          Container(
-            //width and height to 57 with Mediaquery.of(context).size
-            width: size.width * 0.14,
-            height: size.height * 0.14,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: kyellowColor),
-                image: const DecorationImage(
-                    image: AssetImage('img/backona.png'), fit: BoxFit.cover)),
-          ),
-          9.horizontalSpace,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              textPresentation(
-                  msg: nomClient, fontWeight: FontWeight.w600, size: 24),
-              Row(
-                children: [
-                  textPresentation(
-                      msg: blotNumber, fontWeight: FontWeight.w300, size: 13),
-                  9.horizontalSpace,
-                  textPresentation(
-                      msg: statusBlot,
-                      fontWeight: FontWeight.w300,
-                      size: 13,
-                      color: const Color.fromRGBO(10, 17, 40, 0.5))
-                ],
-              )
-            ],
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: Row(
+          children: [
+            Container(
+              //width and height to 57 with Mediaquery.of(context).size
+              width: size.width * 0.14,
+              height: size.height * 0.14,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: kyellowColor),
+                  image: const DecorationImage(
+                      image: AssetImage('img/backona.png'), fit: BoxFit.cover)),
+            ),
+            9.horizontalSpace,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                textPresentation(
+                    msg: nomClient, fontWeight: FontWeight.w600, size: 24),
+                Row(
+                  children: [
+                    textPresentation(
+                        msg: blotNumber, fontWeight: FontWeight.w300, size: 13),
+                    2.horizontalSpace,
+                    textPresentation(
+                        msg: statusBlot,
+                        fontWeight: FontWeight.w300,
+                        size: 13,
+                        color: const Color.fromRGBO(10, 17, 40, 0.5))
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
