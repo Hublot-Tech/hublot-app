@@ -189,13 +189,15 @@ class BlotDetatails {
       payoutRef: json['payoutRef'] != null ? json['payoutRef'] : '',
       duration: json['duration'] != null ? json['duration'] : 0,
       id: json['id'] != null ? json['id'] : '',
-      offer: json['offer'] != null ? BlotOffer.fromJson(json['offer']) : BlotOffer.empty(),
+      offer: json['offer'] != null
+          ? BlotOffer.fromJson(json['offer'])
+          : BlotOffer.empty(),
       options: json['option'] != null
           ? List<BlotOptionEntity>.from(
               json['options'].map((x) => BlotOptionEntity.fromJson(x)))
           : [],
       price: json['price'],
-      description:json['description']!=null?json['description']:'',
+      description: json['description'] != null ? json['description'] : '',
       provider: User.fromJson(json['provider']),
       startDate: DateTime.parse(json['startDate']),
       status: json['status'],
@@ -229,7 +231,7 @@ class BlotDetatails {
       'duration': duration,
       'id': id,
       'offer': offer.toJson(),
-      'description':description,
+      'description': description,
       'options': options,
       'price': price,
       'provider': provider.toJson(),
@@ -238,4 +240,10 @@ class BlotDetatails {
       'updatedAt': updatedAt.toIso8601String(),
     };
   }
+}
+
+class BlotInfo {
+  final String idBlot;
+  final DateTime created;
+  const BlotInfo({required this.idBlot,required this.created});
 }

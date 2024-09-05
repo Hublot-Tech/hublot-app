@@ -7,11 +7,14 @@ import 'package:app/screens/components/shimmer.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/card_presentation.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/step_colum.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/verification_dialog.dart';
+import 'package:app/screens/part_customer/blot_verify/blot_verify_screen.dart';
 import 'package:app/services/toastServices.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'button_order.dart';
+import 'order_boton.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -207,6 +210,7 @@ class _BodyState extends State<Body> {
                                 setState(() {
                                   isSubmit = false;
                                 });
+                                currentStep = BlotStep.validationCommande;
                               }
                             },
                             child: buildActionButton(size, blotDetail,
@@ -243,6 +247,7 @@ class _BodyState extends State<Body> {
                   context: context,
                   builder: (context) {
                     return VerificationDialog(
+                      img: 'img/icons8_ledger 1.png',
                       widget: Positioned(
                         left: 20.r,
                         top: 220.r,
@@ -404,63 +409,9 @@ class _BodyState extends State<Body> {
                                             TextEditingValue>(
                                         valueListenable: numberController,
                                         builder: (context, value, child) {
-                                          return Container(
-                                            height: 47,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: value.text.isEmpty
-                                                    ? kFiedBgColor2
-                                                    : kyellowColor,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey.shade500,
-                                                    blurRadius: 2,
-                                                    offset: const Offset(0, 2),
-                                                    spreadRadius: 1.0,
-                                                  ),
-                                                  const BoxShadow(
-                                                    color: Colors.white,
-                                                    blurRadius: 1,
-                                                    offset: Offset(-1.0, 0),
-                                                    spreadRadius: 0,
-                                                  )
-                                                ]),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  'img/commande_val.png',
-                                                  scale: 1.3,
-                                                  color: value.text.isEmpty
-                                                      ? Colors.black
-                                                          .withOpacity(0.4)
-                                                      : Colors.black,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                textPresentation(
-                                                    msg: 'Valider la commande',
-                                                    fontWeight: FontWeight.bold,
-                                                    color: value.text.isEmpty
-                                                        ? Colors.black
-                                                            .withOpacity(0.4)
-                                                        : Colors.black,
-                                                    size: 15.62),
-                                                const SizedBox(width: 6),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 7),
-                                                  child: Image.asset(
-                                                      'img/Rectangle 12.png'),
-                                                ),
-                                                //circular in sizedBox
-                                                isSubmit
-                                                    ? CircularProgressIndicator()
-                                                    : SizedBox.shrink(),
-                                              ],
-                                            ),
+                                          return ButtonOrder(
+                                            value: value,
+                                            isSubmit: isSubmit,
                                           );
                                         }),
                                   )
@@ -478,25 +429,34 @@ class _BodyState extends State<Body> {
             size: size,
             name: "J'ai vue le prestataire",
             asset: 'img/icons8_look 1.png',
-            press: () {});
+            press: () {
+              blotBloc.add(BlotUpdateEvent('got_in_touch', blotDetail.id));
+            });
       case BlotStep.presencePrestataire:
-        return OrderBoton(
-            size: size,
-            name: "J'ai vue le client",
-            asset: 'img/icons8_look 1.png',
-            press: () {});
-      case BlotStep.debutTravaux:
+        // case BlotStep.debutTravaux:
         return OrderBoton(
             size: size,
             name: 'Début des travaux',
             asset: 'img/travaux_icon.png',
-            press: () {});
-      case BlotStep.termine:
+            press: () {
+              blotBloc.add(BlotUpdateEvent('started_work', blotDetail.id));
+            });
+      case BlotStep.debutTravaux:
         return OrderBoton(
             size: size,
-            name: 'Telecharger',
-            asset: 'img/download.png',
-            press: () {});
+            name: 'Fin des travaux',
+            asset: 'img/travaux_icon.png',
+            press: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BlotVerifyScreen(
+                        blotInfo: BlotInfo(
+                            idBlot: blotDetail.id,
+                            created: blotDetail.createdAt),
+                      ),
+                      ));
+            });
       default:
         return OrderBoton(
             size: size,
@@ -504,302 +464,5 @@ class _BodyState extends State<Body> {
             asset: 'img/travaux_icon.png',
             press: () {});
     }
-  }
-}
-
-class OrderBoton extends StatelessWidget {
-  const OrderBoton({
-    super.key,
-    required this.size,
-    required this.name,
-    required this.asset,
-    required this.press,
-    this.fontSize = 20,
-  });
-
-  final Size size;
-  final String name;
-  final String asset;
-  final double? fontSize;
-  final GestureCancelCallback press;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      //margin: EdgeInsets.only(right: 10),
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(12), boxShadow: [
-        BoxShadow(
-          color: Colors.grey.shade500,
-          blurRadius: 4,
-          offset: const Offset(0, 3),
-          spreadRadius: 1.0,
-        ),
-        const BoxShadow(
-          color: Colors.white,
-          blurRadius: 1,
-          offset: Offset(-4.0, -4.0),
-          spreadRadius: 0,
-        )
-      ]),
-      child: TextButton(
-          onPressed: press,
-          style: TextButton.styleFrom(
-              backgroundColor: kyellowColor,
-              padding: EdgeInsets.symmetric(
-                  vertical: 15, horizontal: size.width * 0.1),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12))),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(asset),
-              const SizedBox(width: 10),
-              textPresentation(
-                  msg: name, fontWeight: FontWeight.bold, size: fontSize!),
-              const SizedBox(width: 10),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Image.asset('img/Rectangle 12.png'),
-              ),
-            ],
-          )),
-    );
-  }
-}
-
-class StepperItem extends StatelessWidget {
-  final bool isCompleted;
-  final bool isLast;
-
-  const StepperItem(
-      {super.key, required this.isCompleted, this.isLast = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return isCompleted
-        ? const SteppItemValided()
-        : Container(
-            width: 21,
-            height: 21,
-            decoration: const BoxDecoration(
-              color: Colors.grey,
-            ),
-            child: Image.asset('img/Vector 3726.png'));
-  }
-}
-
-class ConfirmationScreen extends StatefulWidget {
-  final TextEditingController numberController;
-
-  const ConfirmationScreen({super.key, required this.numberController});
-  @override
-  State<ConfirmationScreen> createState() => _ConfirmationScreenState();
-}
-
-class _ConfirmationScreenState extends State<ConfirmationScreen> {
-  @override
-  Widget build(BuildContext context) {
-    //form key form validation
-    final formKey = GlobalKey<FormState>();
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(20),
-      //margin: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 20,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Form(
-        key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              child: Column(children: [
-                textPresentation(
-                    msg: 'Confirmation de commande',
-                    fontWeight: FontWeight.bold,
-                    size: 20),
-                const SizedBox(height: 8),
-              ]),
-            ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  textPresentation(
-                      msg: 'Description',
-                      fontWeight: FontWeight.normal,
-                      size: 13.54),
-                  const Icon(Icons.arrow_drop_down,
-                      size: 16, color: Colors.grey),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textPresentation(
-                    msg: 'De vous', fontWeight: FontWeight.normal, size: 13.54),
-                textPresentation(
-                    msg: 'Client', fontWeight: FontWeight.normal, size: 13.54),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textPresentation(
-                    msg: 'Jean Charles',
-                    fontWeight: FontWeight.bold,
-                    size: 19.54),
-                textPresentation(
-                    msg: 'Client',
-                    fontWeight: FontWeight.bold,
-                    size: 18.54,
-                    color: kyellowColor),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textPresentation(
-                    msg: 'Vers', fontWeight: FontWeight.normal, size: 13.54),
-                textPresentation(
-                    msg: 'Prrestataire',
-                    fontWeight: FontWeight.normal,
-                    size: 13.54),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textPresentation(
-                    msg: 'Jean Charles',
-                    fontWeight: FontWeight.bold,
-                    size: 19.54),
-                textPresentation(
-                    msg: 'Photographe',
-                    fontWeight: FontWeight.bold,
-                    size: 18.54,
-                    color: kyellowColor),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textPresentation(
-                    msg: 'Total', fontWeight: FontWeight.normal, size: 13.54),
-                Row(
-                  children: [
-                    textPresentation(
-                        msg: "\$865", fontWeight: FontWeight.bold, size: 18.54),
-                    textPresentation(
-                        msg: ' Fcfa',
-                        fontWeight: FontWeight.normal,
-                        size: 13.54)
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Image.asset('img/Group 138.png'),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: widget.numberController,
-                    onChanged: (value) {
-                      print(widget.numberController.text.isEmpty);
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Veuillez saisir votre numéro de téléphone';
-                      } else if (value.length > 9 || value.length < 9) {
-                        return 'Veuillez saisir un numéro de téléphone valide';
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: "6xx xx xx xx",
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            ValueListenableBuilder<TextEditingValue>(
-                valueListenable: widget.numberController,
-                builder: (context, value, child) {
-                  return GestureDetector(
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {}
-                      },
-                      child: Container(
-                        height: 47,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: value.text.isEmpty
-                                ? kFiedBgColor2
-                                : kyellowColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade500,
-                                blurRadius: 2,
-                                offset: const Offset(0, 2),
-                                spreadRadius: 1.0,
-                              ),
-                              const BoxShadow(
-                                color: Colors.white,
-                                blurRadius: 1,
-                                offset: Offset(-1.0, 0),
-                                spreadRadius: 0,
-                              )
-                            ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'img/commande_val.png',
-                              scale: 1.3,
-                              color: value.text.isEmpty
-                                  ? Colors.black.withOpacity(0.4)
-                                  : Colors.black,
-                            ),
-                            const SizedBox(width: 10),
-                            textPresentation(
-                                msg: 'Valider la commande',
-                                fontWeight: FontWeight.bold,
-                                color: value.text.isEmpty
-                                    ? Colors.black.withOpacity(0.4)
-                                    : Colors.black,
-                                size: 15.62),
-                            const SizedBox(width: 6),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 7),
-                              child: Image.asset('img/Rectangle 12.png'),
-                            )
-                          ],
-                        ),
-                      ));
-                })
-          ],
-        ),
-      ),
-    );
   }
 }

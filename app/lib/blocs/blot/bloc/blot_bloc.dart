@@ -15,6 +15,8 @@ class BlotBloc extends Bloc<BlotEvent, BlotState> {
     on<BlotFetchEvent>(getBlot);
     on<BlotFetchIdEvent>(getBlotById);
     on<BlotAcceptOffer>(acceptBlotOffer);
+    on<BlotDeleteEvent>(cancelBlotId);
+    on<BlotUpdateEvent>(updateStatus);
   }
 
   final Blotservice blotservice = Blotservice();
@@ -104,6 +106,21 @@ class BlotBloc extends Bloc<BlotEvent, BlotState> {
       final response = await blotservice.getBlot(event);
       if (response is BlotResponseDetails) {
         emit(BlotFetchedDetail(response.data));
+      } else if (response is BlotError) {
+        emit(BlotErrorState(response));
+      }
+    } catch (e) {
+      emit(BlotErrorState(BlotError(message: e.toString(), status: 505)));
+    }
+  }
+
+  FutureOr<void> cancelBlotId(
+      BlotDeleteEvent event, Emitter<BlotState> emit) async {
+    emit(BlotInitial());
+    try {
+      final response = await blotservice.deleteBlot(event.idBlot);
+      if (response is BlotCancelResponse) {
+        emit(BlotDeleted(response.message));
       } else if (response is BlotError) {
         emit(BlotErrorState(response));
       }

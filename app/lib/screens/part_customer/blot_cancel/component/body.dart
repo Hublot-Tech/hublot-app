@@ -1,7 +1,11 @@
+import 'package:app/blocs/blot/bloc/blot_bloc.dart';
 import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/registration_screen/component/button_custom.dart';
 import 'package:app/screens/components/cancel_button.dart';
+import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
+import 'package:app/services/toastServices.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Body extends StatelessWidget {
@@ -9,6 +13,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
     final formKey = GlobalKey<FormState>();
     final motifController = TextEditingController();
     final descriptionController = TextEditingController();
@@ -76,11 +81,35 @@ class Body extends StatelessWidget {
                       ],
                     )),
               ),
-              ButtomCustom(
-                  msg: "Confirmer",
-                  press: () {},
-                  isValided: motifController.text.isNotEmpty &&
-                      descriptionController.text.isNotEmpty),
+              BlocListener<BlotBloc, BlotState>(
+                listener: (context, state) {
+                  if (state is BlotInitial) {
+                    isLoading = true;
+                  }
+                  if (state is BlotDeleted) {
+                    ToastService.successMessage(
+                        'Votre annulation a été prise en compte',
+                        kColorWhite,
+                        context);
+                    isLoading = false;
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScrenns()));
+                  }
+                  if (state is BlotErrorState) {
+                    isLoading = false;
+                    ToastService.errorMessage(state.message.message, context);
+                  }
+                },
+                child: ButtomCustom(
+                    msg: "Confirmer",
+                    press: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<BlotBloc>().add(BlotDeleteEvent('idBlot'));
+                      }
+                    },
+                    isValided: true,
+                    loading: isLoading),
+              ),
               EspaceMenuWidget(taille: 10),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),

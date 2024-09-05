@@ -54,3 +54,11 @@ class BlotFetchIdEvent extends BlotEvent{
   final String idBlot;
   const BlotFetchIdEvent(this.idBlot);
 }
+
+class BlotDeleteEvent extends BlotEvent {
+  final String idBlot;
+  const BlotDeleteEvent(this.idBlot);
+
+  @override
+  List<Object> get props => [idBlot];
+}

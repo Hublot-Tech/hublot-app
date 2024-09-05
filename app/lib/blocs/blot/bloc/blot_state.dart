@@ -59,3 +59,11 @@ class BlotOfferAccepted extends BlotState {
   final BlotDetatails blotResponse;
   const BlotOfferAccepted(this.blotResponse);
 }
+
+final class BlotDeleted extends BlotState {
+  final String message;
+  const BlotDeleted(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

@@ -1,13 +1,18 @@
+import 'package:app/blocs/blot/bloc/blot_bloc.dart';
 import 'package:app/configuration.dart';
+import 'package:app/model/blot_entity.dart';
 import 'package:app/screens/default_screen.dart';
 import 'package:app/screens/part_customer/blot_cancel/blot_cancel_screen.dart';
+import 'package:app/services/toastServices.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'button_order2.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
+  final BlotInfo blotInfo;
+  const Body({super.key, required this.blotInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -67,24 +72,33 @@ class Body extends StatelessWidget {
                           size: 20.sp,
                           maxLine: 2),
                       textPresentation(
-                          msg: "Blot délivrer le 06/10/2024 à 16h00",
+                          msg:
+                              "Blot délivrer le ${blotInfo.created.day}/${blotInfo.created.month}/${blotInfo.created.year} à ${blotInfo.created.hour}h${blotInfo.created.minute}",
                           fontWeight: FontWeight.normal,
                           size: 15),
                       // Spacer(),
                       EspaceMenuWidget(taille: 132),
-                      ButtonOrder2(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DefaultScreen()));
+                      BlocListener<BlotBloc, BlotState>(
+                        listener: (context, state) {
+                          if (state is BlotUpdated) {
+                            ToastService.successMessage('Merci', kprimaryColor, context);
+                            
+                          }else if(state is BlotErrorState){
+                            ToastService.errorMessage(state.message.message, context);
+                          }
                         },
-                        carre: 'img/Rectangle 12.png',
-                        text: 'Recevoir les travaux',
-                        color1: kyellowColor,
-                        color2: Colors.black,
-                        color3: Colors.black,
-                        img: 'img/icons8_working_at_the_imac 1.png',
+                        child: ButtonOrder2(
+                          onTap: () {
+                            context.read<BlotBloc>().add(
+                                BlotUpdateEvent('finalized', blotInfo.idBlot));
+                          },
+                          carre: 'img/Rectangle 12.png',
+                          text: 'Recevoir les travaux',
+                          color1: kyellowColor,
+                          color2: Colors.black,
+                          color3: Colors.black,
+                          img: 'img/icons8_working_at_the_imac 1.png',
+                        ),
                       ),
                       EspaceMenuWidget(taille: 8),
                       ButtonOrder2(

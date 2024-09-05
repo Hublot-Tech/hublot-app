@@ -110,3 +110,27 @@ class BlotError {
   factory BlotError.fromJson(Map<String, dynamic> json) =>
       BlotError(message: json['message'], status: json['statusCode']);
 }
+
+class BlotCancelResponse {
+  final String message;
+  final int status;
+
+  const BlotCancelResponse({
+    required this.message,
+    required this.status,
+  });
+
+  factory BlotCancelResponse.fromJson(Map<String, dynamic> json) {
+    return BlotCancelResponse(
+      message: json['message'] as String,
+      status: json['status'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'message': message,
+      'status': status,
+    };
+  }
+}
