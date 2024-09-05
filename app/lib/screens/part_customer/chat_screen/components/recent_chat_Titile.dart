@@ -22,7 +22,7 @@ class RecentChatTitle extends StatelessWidget {
             flex: 1,
             child: Container(
               //width and height to 57 with Mediaquery.of(context).size
-              width: size.width * 0.14,
+              width: size.width * 0.2,
               height: size.height * 0.09,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -43,8 +43,8 @@ class RecentChatTitle extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     color: kprimaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400,
                     fontFamily: 'Josefin Sans',
                   ),
                   maxLines: 1,
@@ -53,13 +53,6 @@ class RecentChatTitle extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(
-              flex: 1,
-              child: Icon(
-                Icons.more_horiz,
-                color: kprimaryColor,
-                size: 20,
-              ))
         ],
       ),
     );

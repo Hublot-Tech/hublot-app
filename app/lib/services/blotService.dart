@@ -87,6 +87,7 @@ class Blotservice {
         },
       );
       if (response.statusCode == 200) {
+        print(jsonDecode(response.body));
         return BlotResponseDetails.fromJson(jsonDecode(response.body));
       } else {
         return BlotError.fromJson(jsonDecode(response.body));
@@ -110,6 +111,31 @@ class Blotservice {
       );
       if (response.statusCode == 200) {
         return BlotResponse.fromJson(jsonDecode(response.body));
+      } else {
+        return BlotError.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      return BlotError(message: e.toString(), status: 505);
+    }
+  }
+
+  Future<Object> acceptBlotOffer(BlotAcceptOffer event) async {
+    final token = await storage.read(key: 'accessToken');
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl2/blots/${event.idBlot}/accept-offer'),
+        body: jsonEncode({
+          "email": event.email,
+          "description": event.description,
+          "phoneNumber": event.phone
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+      );
+      if (response.statusCode == 200) {
+        return BlotResponseDetails.fromJson(jsonDecode(response.body));
       } else {
         return BlotError.fromJson(jsonDecode(response.body));
       }

@@ -47,22 +47,22 @@ Widget textPresentation({
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
-      double maxFontSize = (constraints.maxWidth / 10).floorToDouble();
-      print(maxFontSize);
+    //  double maxFontSize = (constraints.maxWidth / 10).floorToDouble();
+
       return AutoSizeText(
         msg,
         textAlign: textAlign,
         overflow: overflow,
         maxLines: maxLine ?? 1,
         minFontSize: minFontSize ?? 11,
-        stepGranularity: 0.5,
+        stepGranularity: 1,
         style: TextStyle(
           fontWeight: fontWeight,
           color: color,
           fontSize: size.sp,
           fontFamily: 'ProximaNova',
         ),
-        maxFontSize: maxFontSize,
+        // maxFontSize: maxFontSize,
       );
     },
   );
@@ -81,4 +81,5 @@ class EspaceMenuWidget extends StatelessWidget {
     return taille.verticalSpace;
   }
 }
+
 const toastDuration = Duration(seconds: 6);

@@ -6,6 +6,7 @@ import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/components/shimmer.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/card_presentation.dart';
 import 'package:app/screens/part_customer/blot_detail_screen/components/step_colum.dart';
+import 'package:app/screens/part_customer/blot_detail_screen/components/verification_dialog.dart';
 import 'package:app/services/toastServices.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,12 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  BlotStep currentStep = BlotStep.validationCommande;
+  BlotStep currentStep = BlotStep.delaisRealisation;
   //controller form textfield
   TextEditingController numberController = TextEditingController();
   bool isLoading = true;
   BlotDetatails blotDetail = BlotDetatails.empty();
-
+  bool isSubmit = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -133,73 +134,83 @@ class _BodyState extends State<Body> {
                     30.verticalSpace,
                     CardPresentation(widget: buildColumn(blotDetail)),
                     30.verticalSpace,
-                    // Container(
-                    //   width: double.infinity,
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //       color: kColorWhite,
-                    //       boxShadow: [
-                    //         // BoxShadow(
-                    //         //   color: Colors.black.withOpacity(
-                    //         //       0.05), // rgba(0, 0, 0, 0.05) en Flutter
-                    //         //   spreadRadius: 0, // Pas d'étalement
-                    //         //   blurRadius: 6, // Rayon de flou de 4 pixels
-                    //         //   offset: const Offset(
-                    //         //       0, 4), // Décalage de 4 pixels vers le bas
-                    //         // ),
-                    //         BoxShadow(
-                    //           color: Colors.grey.shade500,
-                    //           blurRadius: 4,
-                    //           offset: const Offset(4, 0),
-                    //           spreadRadius: 1.0,
-                    //         ),
-                    //         const BoxShadow(
-                    //           color: Colors.white,
-                    //           blurRadius: 2,
-                    //           offset: Offset(-4.0, -4.0),
-                    //           spreadRadius: 0,
-                    //         )
-                    //       ]),
-                    //   child:
+
                     CardPresentation(
                       widget: Column(
                         children: [
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               // StepperItem(isCompleted: true, isLast: true),
                               // StepperConnector(isCompleted: true),
-                              StepperItem(isCompleted: true),
-                              StepperConnector(isCompleted: false),
-                              StepperItem(isCompleted: false),
-                              StepperConnector(isCompleted: false),
-                              StepperItem(isCompleted: false),
-                              StepperConnector(isCompleted: false),
-                              StepperItem(isCompleted: false),
-                              StepperConnector(isCompleted: false),
+                              StepperItem(
+                                  isCompleted: currentStep ==
+                                      BlotStep.validationCommande),
+                              StepperConnector(
+                                  isCompleted: currentStep ==
+                                      BlotStep.validationCommande),
+                              StepperItem(
+                                  isCompleted: currentStep ==
+                                      BlotStep.presencePrestataire),
+                              StepperConnector(
+                                  isCompleted: currentStep ==
+                                      BlotStep.presencePrestataire),
+                              StepperItem(
+                                  isCompleted: currentStep ==
+                                      BlotStep.presencePrestataire),
+                              StepperConnector(
+                                  isCompleted: currentStep ==
+                                      BlotStep.presencePrestataire),
                               StepperItem(isCompleted: false),
                             ],
                           ),
                           5.verticalSpace,
                           // StepColumn(isClick: false, msg: 'Délais de réalisation'),
                           // 5.verticalSpace,
-                          const StepColumn(
-                              isClick: false, msg: 'Validation de la commande'),
+                          StepColumn(
+                              isValid:
+                                  currentStep == BlotStep.validationCommande,
+                              isClick: false,
+                              msg: 'Validation de la commande'),
                           5.verticalSpace,
-                          const StepColumn(
-                              isClick: true, msg: 'Réalisation de la commande'),
+                          StepColumn(
+                              isValid:
+                                  currentStep == BlotStep.presencePrestataire,
+                              isClick: true,
+                              msg: 'Réalisation de la commande'),
                           5.verticalSpace,
-                          const StepColumn(
+                          StepColumn(
+                              isValid:
+                                  currentStep == BlotStep.presencePrestataire,
                               isClick: false,
                               msg: 'Présence du prestataire signaler'),
                           5.verticalSpace,
-                          const StepColumn(
+                          StepColumn(
+                              isValid:
+                                  currentStep == BlotStep.presencePrestataire,
                               isClick: false,
                               msg: 'Présence du client signaler'),
                           10.verticalSpace,
                           BlocListener<BlotBloc, BlotState>(
-                            listener: (context, state) {},
-                            child: buildActionButton(size),
+                            listener: (context, state) {
+                              if (state is BlotInitial) {
+                                setState(() {
+                                  isSubmit = true;
+                                });
+                              }
+                              if (state is BlotAcceptOffer) {
+                                setState(() {
+                                  isSubmit = false;
+                                });
+                                currentStep = BlotStep.validationCommande;
+                              } else if (state is BlotErrorState) {
+                                setState(() {
+                                  isSubmit = false;
+                                });
+                              }
+                            },
+                            child: buildActionButton(size, blotDetail,
+                                context.read<BlotBloc>(), isSubmit),
                           ),
                           10.verticalSpace,
                         ],
@@ -217,17 +228,12 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget buildActionButton(Size size) {
+  Widget buildActionButton(
+      Size size, BlotDetatails blotDetail, BlotBloc blotBloc, bool isSubmit) {
+    final formKey = GlobalKey<FormState>();
+    TextEditingController numberController = TextEditingController();
     switch (currentStep) {
       case BlotStep.delaisRealisation:
-        return OrderBoton(
-            size: size,
-            name: 'Valider le delai',
-            asset: 'img/clock.png',
-            press: () {
-              context.read<BlotBloc>().add(const BlotUpdateEvent('', ''));
-            });
-      case BlotStep.validationCommande:
         return OrderBoton(
             size: size,
             name: 'Valider la commande',
@@ -236,23 +242,247 @@ class _BodyState extends State<Body> {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return Dialog(
-                      backgroundColor: Colors.transparent,
-                      child: ConfirmationScreen(
-                          numberController: numberController),
+                    return VerificationDialog(
+                      widget: Positioned(
+                        left: 20.r,
+                        top: 220.r,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: Form(
+                              key: formKey,
+                              child: Column(
+                                //mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  textPresentation(
+                                      msg: 'Confirmation de commande',
+                                      fontWeight: FontWeight.bold,
+                                      size: 18.sp),
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        textPresentation(
+                                            msg: 'Description',
+                                            fontWeight: FontWeight.normal,
+                                            size: 13.54),
+                                        const Icon(Icons.arrow_drop_down,
+                                            size: 16, color: Colors.grey),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      textPresentation(
+                                          msg: 'De vous',
+                                          fontWeight: FontWeight.normal,
+                                          size: 13.54),
+                                      textPresentation(
+                                          msg: 'Client',
+                                          fontWeight: FontWeight.normal,
+                                          size: 13.54),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      textPresentation(
+                                          msg: blotDetail.consumer.fullname,
+                                          fontWeight: FontWeight.bold,
+                                          size: 19.54),
+                                      textPresentation(
+                                          msg: 'Client',
+                                          fontWeight: FontWeight.bold,
+                                          size: 18.54,
+                                          color: kyellowColor),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      textPresentation(
+                                          msg: 'Vers',
+                                          fontWeight: FontWeight.normal,
+                                          size: 13.54),
+                                      textPresentation(
+                                          msg: 'Prrestataire',
+                                          fontWeight: FontWeight.normal,
+                                          size: 13.54),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      textPresentation(
+                                          msg: blotDetail.provider.fullname,
+                                          fontWeight: FontWeight.bold,
+                                          size: 19.54),
+                                      textPresentation(
+                                          msg: blotDetail.description,
+                                          fontWeight: FontWeight.bold,
+                                          size: 18.54,
+                                          color: kyellowColor),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      textPresentation(
+                                          msg: 'Total',
+                                          fontWeight: FontWeight.normal,
+                                          size: 13.54),
+                                      Row(
+                                        children: [
+                                          textPresentation(
+                                              msg: "\$ ${blotDetail.price}",
+                                              fontWeight: FontWeight.bold,
+                                              size: 18.54),
+                                          textPresentation(
+                                              msg: ' Fcfa',
+                                              fontWeight: FontWeight.normal,
+                                              size: 13.54)
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    children: [
+                                      Image.asset('img/Group 138.png'),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: TextFormField(
+                                          keyboardType: TextInputType.number,
+                                          controller: numberController,
+                                          onChanged: (value) {
+                                            print(
+                                                numberController.text.isEmpty);
+                                          },
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Veuillez saisir votre numéro de téléphone';
+                                            } else if (value.length > 9 ||
+                                                value.length < 9) {
+                                              return 'Veuillez saisir un numéro de téléphone valide';
+                                            }
+                                            return null;
+                                          },
+                                          decoration: const InputDecoration(
+                                            labelText: "6xx xx xx xx",
+                                            border: OutlineInputBorder(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (formKey.currentState!.validate()) {
+                                        blotBloc.add(
+                                          BlotAcceptOffer(
+                                            blotDetail.id,
+                                            blotDetail.consumer.email!,
+                                            'descriptions',
+                                            numberController.text,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: ValueListenableBuilder<
+                                            TextEditingValue>(
+                                        valueListenable: numberController,
+                                        builder: (context, value, child) {
+                                          return Container(
+                                            height: 47,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: value.text.isEmpty
+                                                    ? kFiedBgColor2
+                                                    : kyellowColor,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.shade500,
+                                                    blurRadius: 2,
+                                                    offset: const Offset(0, 2),
+                                                    spreadRadius: 1.0,
+                                                  ),
+                                                  const BoxShadow(
+                                                    color: Colors.white,
+                                                    blurRadius: 1,
+                                                    offset: Offset(-1.0, 0),
+                                                    spreadRadius: 0,
+                                                  )
+                                                ]),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  'img/commande_val.png',
+                                                  scale: 1.3,
+                                                  color: value.text.isEmpty
+                                                      ? Colors.black
+                                                          .withOpacity(0.4)
+                                                      : Colors.black,
+                                                ),
+                                                const SizedBox(width: 10),
+                                                textPresentation(
+                                                    msg: 'Valider la commande',
+                                                    fontWeight: FontWeight.bold,
+                                                    color: value.text.isEmpty
+                                                        ? Colors.black
+                                                            .withOpacity(0.4)
+                                                        : Colors.black,
+                                                    size: 15.62),
+                                                const SizedBox(width: 6),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 7),
+                                                  child: Image.asset(
+                                                      'img/Rectangle 12.png'),
+                                                ),
+                                                //circular in sizedBox
+                                                isSubmit
+                                                    ? CircularProgressIndicator()
+                                                    : SizedBox.shrink(),
+                                              ],
+                                            ),
+                                          );
+                                        }),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     );
                   });
             });
-      case BlotStep.realisationCommande:
+      case BlotStep.validationCommande:
         return OrderBoton(
             size: size,
-            name: 'J’ai vue le prestataire',
+            name: "J'ai vue le prestataire",
             asset: 'img/icons8_look 1.png',
             press: () {});
       case BlotStep.presencePrestataire:
         return OrderBoton(
             size: size,
-            name: 'J’ai vue le client',
+            name: "J'ai vue le client",
             asset: 'img/icons8_look 1.png',
             press: () {});
       case BlotStep.debutTravaux:
@@ -331,7 +561,7 @@ class OrderBoton extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Image.asset('img/Rectangle 12.png'),
-              )
+              ),
             ],
           )),
     );
@@ -372,212 +602,202 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
   Widget build(BuildContext context) {
     //form key form validation
     final formKey = GlobalKey<FormState>();
-    return ClipPath(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(20),
-        //margin: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 255, 255, 255),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 20,
-              offset: Offset(0, 5),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.all(20),
+      //margin: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 255, 255, 255),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 20,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              child: Column(children: [
+                textPresentation(
+                    msg: 'Confirmation de commande',
+                    fontWeight: FontWeight.bold,
+                    size: 20),
+                const SizedBox(height: 8),
+              ]),
             ),
-          ],
-        ),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                child: Column(children: [
-                  const Icon(Icons.receipt_long, size: 50, color: Colors.green),
-                  const SizedBox(height: 16),
+            const SizedBox(height: 8),
+            GestureDetector(
+              onTap: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   textPresentation(
-                      msg: 'Confirmation de commande',
-                      fontWeight: FontWeight.bold,
-                      size: 20),
-                  const SizedBox(height: 8),
-                ]),
+                      msg: 'Description',
+                      fontWeight: FontWeight.normal,
+                      size: 13.54),
+                  const Icon(Icons.arrow_drop_down,
+                      size: 16, color: Colors.grey),
+                ],
               ),
-              const SizedBox(height: 8),
-              GestureDetector(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textPresentation(
+                    msg: 'De vous', fontWeight: FontWeight.normal, size: 13.54),
+                textPresentation(
+                    msg: 'Client', fontWeight: FontWeight.normal, size: 13.54),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textPresentation(
+                    msg: 'Jean Charles',
+                    fontWeight: FontWeight.bold,
+                    size: 19.54),
+                textPresentation(
+                    msg: 'Client',
+                    fontWeight: FontWeight.bold,
+                    size: 18.54,
+                    color: kyellowColor),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textPresentation(
+                    msg: 'Vers', fontWeight: FontWeight.normal, size: 13.54),
+                textPresentation(
+                    msg: 'Prrestataire',
+                    fontWeight: FontWeight.normal,
+                    size: 13.54),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textPresentation(
+                    msg: 'Jean Charles',
+                    fontWeight: FontWeight.bold,
+                    size: 19.54),
+                textPresentation(
+                    msg: 'Photographe',
+                    fontWeight: FontWeight.bold,
+                    size: 18.54,
+                    color: kyellowColor),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                textPresentation(
+                    msg: 'Total', fontWeight: FontWeight.normal, size: 13.54),
+                Row(
                   children: [
                     textPresentation(
-                        msg: 'Description',
+                        msg: "\$865", fontWeight: FontWeight.bold, size: 18.54),
+                    textPresentation(
+                        msg: ' Fcfa',
                         fontWeight: FontWeight.normal,
-                        size: 13.54),
-                    const Icon(Icons.arrow_drop_down,
-                        size: 16, color: Colors.grey),
+                        size: 13.54)
                   ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textPresentation(
-                      msg: 'De vous',
-                      fontWeight: FontWeight.normal,
-                      size: 13.54),
-                  textPresentation(
-                      msg: 'Client',
-                      fontWeight: FontWeight.normal,
-                      size: 13.54),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textPresentation(
-                      msg: 'Jean Charles',
-                      fontWeight: FontWeight.bold,
-                      size: 19.54),
-                  textPresentation(
-                      msg: 'Client',
-                      fontWeight: FontWeight.bold,
-                      size: 18.54,
-                      color: kyellowColor),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textPresentation(
-                      msg: 'Vers', fontWeight: FontWeight.normal, size: 13.54),
-                  textPresentation(
-                      msg: 'Prrestataire',
-                      fontWeight: FontWeight.normal,
-                      size: 13.54),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textPresentation(
-                      msg: 'Jean Charles',
-                      fontWeight: FontWeight.bold,
-                      size: 19.54),
-                  textPresentation(
-                      msg: 'Photographe',
-                      fontWeight: FontWeight.bold,
-                      size: 18.54,
-                      color: kyellowColor),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textPresentation(
-                      msg: 'Total', fontWeight: FontWeight.normal, size: 13.54),
-                  Row(
-                    children: [
-                      textPresentation(
-                          msg: "\$865",
-                          fontWeight: FontWeight.bold,
-                          size: 18.54),
-                      textPresentation(
-                          msg: ' Fcfa',
-                          fontWeight: FontWeight.normal,
-                          size: 13.54)
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Image.asset('img/Group 138.png'),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: widget.numberController,
-                      onChanged: (value) {
-                        print(widget.numberController.text.isEmpty);
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Veuillez saisir votre numéro de téléphone';
-                        } else if (value.length > 9 || value.length < 9) {
-                          return 'Veuillez saisir un numéro de téléphone valide';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                        labelText: "6xx xx xx xx",
-                        border: OutlineInputBorder(),
-                      ),
+                )
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Image.asset('img/Group 138.png'),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: widget.numberController,
+                    onChanged: (value) {
+                      print(widget.numberController.text.isEmpty);
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Veuillez saisir votre numéro de téléphone';
+                      } else if (value.length > 9 || value.length < 9) {
+                        return 'Veuillez saisir un numéro de téléphone valide';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: "6xx xx xx xx",
+                      border: OutlineInputBorder(),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              ValueListenableBuilder<TextEditingValue>(
-                  valueListenable: widget.numberController,
-                  builder: (context, value, child) {
-                    return GestureDetector(
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {}
-                        },
-                        child: Container(
-                          height: 47,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            ValueListenableBuilder<TextEditingValue>(
+                valueListenable: widget.numberController,
+                builder: (context, value, child) {
+                  return GestureDetector(
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {}
+                      },
+                      child: Container(
+                        height: 47,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: value.text.isEmpty
+                                ? kFiedBgColor2
+                                : kyellowColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade500,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2),
+                                spreadRadius: 1.0,
+                              ),
+                              const BoxShadow(
+                                color: Colors.white,
+                                blurRadius: 1,
+                                offset: Offset(-1.0, 0),
+                                spreadRadius: 0,
+                              )
+                            ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'img/commande_val.png',
+                              scale: 1.3,
                               color: value.text.isEmpty
-                                  ? kFiedBgColor2
-                                  : kyellowColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade500,
-                                  blurRadius: 2,
-                                  offset: const Offset(0, 2),
-                                  spreadRadius: 1.0,
-                                ),
-                                const BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 1,
-                                  offset: Offset(-1.0, 0),
-                                  spreadRadius: 0,
-                                )
-                              ]),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'img/commande_val.png',
-                                scale: 1.3,
+                                  ? Colors.black.withOpacity(0.4)
+                                  : Colors.black,
+                            ),
+                            const SizedBox(width: 10),
+                            textPresentation(
+                                msg: 'Valider la commande',
+                                fontWeight: FontWeight.bold,
                                 color: value.text.isEmpty
                                     ? Colors.black.withOpacity(0.4)
                                     : Colors.black,
-                              ),
-                              const SizedBox(width: 10),
-                              textPresentation(
-                                  msg: 'Valider la commande',
-                                  fontWeight: FontWeight.bold,
-                                  color: value.text.isEmpty
-                                      ? Colors.black.withOpacity(0.4)
-                                      : Colors.black,
-                                  size: 15.62),
-                              const SizedBox(width: 6),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 7),
-                                child: Image.asset('img/Rectangle 12.png'),
-                              )
-                            ],
-                          ),
-                        ));
-                  })
-            ],
-          ),
+                                size: 15.62),
+                            const SizedBox(width: 6),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 7),
+                              child: Image.asset('img/Rectangle 12.png'),
+                            )
+                          ],
+                        ),
+                      ));
+                })
+          ],
         ),
       ),
     );

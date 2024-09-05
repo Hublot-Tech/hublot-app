@@ -47,8 +47,8 @@ class BlotUpdateEvent extends BlotEvent {
   const BlotUpdateEvent(this.status,this.idBlot);
 }
 class BlotAcceptOffer extends BlotEvent{
-  final String idBlot,description,phone;
-  const BlotAcceptOffer(this.idBlot,this.description,this.phone);
+  final String idBlot,description,phone,email;
+  const BlotAcceptOffer(this.idBlot,this.email,this.description,this.phone);
 }
 class BlotFetchIdEvent extends BlotEvent{
   final String idBlot;

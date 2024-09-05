@@ -14,6 +14,7 @@ class BlotBloc extends Bloc<BlotEvent, BlotState> {
     on<BlotCreatedEvent>(createBlot);
     on<BlotFetchEvent>(getBlot);
     on<BlotFetchIdEvent>(getBlotById);
+    on<BlotAcceptOffer>(acceptBlotOffer);
   }
 
   final Blotservice blotservice = Blotservice();
@@ -73,6 +74,21 @@ class BlotBloc extends Bloc<BlotEvent, BlotState> {
         final hasReachedMax = newBlots.isEmpty;
 
         emit(BlotFetched(blots: allBlots, hasReachedMax: hasReachedMax));
+      } else if (response is BlotError) {
+        emit(BlotErrorState(response));
+      }
+    } catch (e) {
+      emit(BlotErrorState(BlotError(message: e.toString(), status: 505)));
+    }
+  }
+
+  FutureOr<void> acceptBlotOffer(
+      BlotAcceptOffer event, Emitter<BlotState> emit) async {
+    emit(BlotInitial());
+    try {
+      final response = await blotservice.acceptBlotOffer(event);
+      if (response is BlotResponseDetails) {
+        emit(BlotOfferAccepted(response.data));
       } else if (response is BlotError) {
         emit(BlotErrorState(response));
       }

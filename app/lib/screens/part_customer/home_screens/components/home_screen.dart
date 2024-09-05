@@ -2,6 +2,7 @@ import 'package:app/blocs/auth/auth_form_bloc.dart';
 import 'package:app/blocs/auth/auth_form_event.dart';
 import 'package:app/blocs/service/bloc/service_bloc.dart';
 import 'package:app/configuration.dart';
+import 'package:app/screens/default_screen.dart';
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/historique_chat/recent_chat.dart';
@@ -38,7 +39,8 @@ class _HomeScrennsState extends State<HomeScrenns> {
               //          context.read<ServiceBloc>().add(FetchServicesEvent());
               // context.read<AuthBloc>().add(const AuthGetCurrentUserEvent());
               BlocProvider(
-                create: (context) => ServiceBloc()..add(const FetchProviderServicesEvent()),
+                create: (context) =>
+                    ServiceBloc()..add(const FetchProviderServicesEvent()),
               ),
               BlocProvider(
                 create: (context) => AuthBloc()..add(AuthGetCurrentUserEvent()),
@@ -46,7 +48,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
             ],
             child: const Body(),
           ),
-          Container(),
+          DefaultScreen(),
           const CommandeScreen(),
           const RecentChats(),
           const AccountTab()

@@ -1,3 +1,4 @@
+import 'package:app/model/blot_offer.dart';
 import 'package:app/model/offer_item_model.dart';
 import 'package:app/model/user.model.dart';
 
@@ -154,7 +155,8 @@ class BlotDetatails {
   final DateTime startDate;
   final int duration;
   final String status;
-  final String offer, payment, payoutRef;
+  final String description, payment, payoutRef;
+  final BlotOffer offer;
   final List<BlotOptionEntity>
       options; // Adapte le type en fonction du contenu de "options"
 
@@ -164,6 +166,7 @@ class BlotDetatails {
   final String id;
   BlotDetatails(
       {required this.consumer,
+      required this.description,
       required this.createdAt,
       required this.duration,
       required this.id,
@@ -186,12 +189,13 @@ class BlotDetatails {
       payoutRef: json['payoutRef'] != null ? json['payoutRef'] : '',
       duration: json['duration'] != null ? json['duration'] : 0,
       id: json['id'] != null ? json['id'] : '',
-      offer: json['offer'] != null ? json['offer'] : '',
+      offer: json['offer'] != null ? BlotOffer.fromJson(json['offer']) : BlotOffer.empty(),
       options: json['option'] != null
           ? List<BlotOptionEntity>.from(
               json['options'].map((x) => BlotOptionEntity.fromJson(x)))
           : [],
       price: json['price'],
+      description:json['description']!=null?json['description']:'',
       provider: User.fromJson(json['provider']),
       startDate: DateTime.parse(json['startDate']),
       status: json['status'],
@@ -207,11 +211,12 @@ class BlotDetatails {
         createdAt: DateTime.now(),
         duration: 0,
         id: '',
-        offer: '',
+        offer: BlotOffer.empty(),
         options: [],
         price: 0,
         provider: User.empty(),
         startDate: DateTime.now(),
+        description: '',
         status: '',
         updatedAt: DateTime.now(),
       );
@@ -223,7 +228,8 @@ class BlotDetatails {
       'createdAt': createdAt.toIso8601String(),
       'duration': duration,
       'id': id,
-      'offer': offer,
+      'offer': offer.toJson(),
+      'description':description,
       'options': options,
       'price': price,
       'provider': provider.toJson(),

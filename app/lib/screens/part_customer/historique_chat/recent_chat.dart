@@ -10,14 +10,7 @@ class RecentChats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: kyellowColor,
-          title: textPresentation(
-              msg: 'Vos Discussions',
-              fontWeight: FontWeight.bold,
-              color: kprimaryColor)),
+      backgroundColor: kColorWhite,
       body: BlocProvider(
         create: (context) => ChatBloc()..add(ChatUpdateEvent()),
         child: const Body(),

@@ -57,89 +57,10 @@ Column buildColumn(BlotDetatails blotDetail) {
       13.verticalSpace,
       RowInfo(name: blotDetail.consumer.fullname, profession: 'Nom du client'),
       13.verticalSpace,
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Options choisies',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  'Photographie',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-            Spacer(flex: 2),
-            IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                // Action pour le bouton précédent
-              },
-            ),
-            Container(
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.yellow[700],
-              ),
-              child: Text(
-                '1',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(width: 8),
-            Column(
-              children: [
-                Text(
-                  'Tenues',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(width: 4),
-                Text(
-                  '1000 FCFA',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_ios),
-              onPressed: () {
-                // Action pour le bouton suivant
-              },
-            ),
-          ],
-        ),
-      ),
+      RowInfo(name: 'Offre de base', value: 'oo', profession: 'Photographe'),
       13.verticalSpace,
       RowInfo(
-          name: 'Offre de base',
-          value: '${blotDetail.offer}FCFA',
-          profession: 'Photographe'),
-      13.verticalSpace,
-      RowInfo(
-          name: 'Coût de la prestation : ',
+          name: 'Coût de la prestation',
           value: '${blotDetail.price}FCFA',
           profession: 'Prix des options prise en compte'),
       13.verticalSpace,

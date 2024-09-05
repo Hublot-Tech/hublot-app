@@ -8,8 +8,9 @@ class StepColumn extends StatefulWidget {
     super.key,
     required this.isClick,
     required this.msg,
+    required this.isValid,
   });
-  final bool isClick;
+  final bool isClick, isValid;
   final String msg;
   @override
   State<StepColumn> createState() => _StepColumnState();
@@ -25,10 +26,14 @@ class _StepColumnState extends State<StepColumn> {
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           6.horizontalSpace,
-          SvgPicture.asset('img/Vector 3730.svg'),
+          widget.isValid
+              ? SvgPicture.asset('img/Vectoroi.svg')
+              : SvgPicture.asset('img/Vector 3730.svg'),
           15.horizontalSpace,
           textPresentation(
-              msg: widget.msg, size: 15.3, fontWeight: FontWeight.w600),
+              msg: widget.msg,
+              size: 15.3,
+              fontWeight: widget.isValid ? FontWeight.w600 : FontWeight.w200),
           const Spacer(),
           IconButton(
               onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
@@ -79,7 +84,7 @@ class StepperConnector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.14,
+      width: MediaQuery.of(context).size.width * 0.2,
       height: 4.r,
       color: isCompleted ? kyellowColor : Colors.grey,
     );

@@ -54,3 +54,8 @@ final class BlotFetchedDetail extends BlotState{
   final BlotDetatails data;
   const BlotFetchedDetail(this.data);
 }
+
+class BlotOfferAccepted extends BlotState {
+  final BlotDetatails blotResponse;
+  const BlotOfferAccepted(this.blotResponse);
+}
