@@ -76,6 +76,29 @@ class SteppItemValided extends StatelessWidget {
   }
 }
 
+
+class StepperItem extends StatelessWidget {
+  final bool isCompleted;
+  final bool isLast;
+
+  const StepperItem(
+      {super.key, required this.isCompleted, this.isLast = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return isCompleted
+        ? const SteppItemValided()
+        : Container(
+            width: 21,
+            height: 21,
+            decoration: const BoxDecoration(
+              color: Colors.grey,
+            ),
+            child: Image.asset('img/Vector 3726.png'));
+  }
+}
+
+
 class StepperConnector extends StatelessWidget {
   final bool isCompleted;
 

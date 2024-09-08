@@ -73,12 +73,12 @@ class _BodyState extends State<Body> {
             }
             return Column(
               children: [
-                20.verticalSpace,
+                40.verticalSpace,
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0).r,
                   child: RowUserProfile(userData: userData),
                 ),
-                20.verticalSpace,
+                15.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -91,7 +91,7 @@ class _BodyState extends State<Body> {
                       dashGapLength: 4.0,
                     ),
                     9.verticalSpace,
-                    SvgPicture.asset("img/commande.svg"),
+                    SvgPicture.asset("img/icons8_edit_delivery_terms 1.svg"),
                     5.verticalSpace,
                     textPresentation(
                         msg: "Commandes",
@@ -108,7 +108,7 @@ class _BodyState extends State<Body> {
                     ),
                   ],
                 ),
-                20.verticalSpace,
+                10.verticalSpace,
                 BlocBuilder<BlotBloc, BlotState>(
                   builder: (context, state) {
                     if (state is BlotFetched) {

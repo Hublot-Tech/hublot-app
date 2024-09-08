@@ -45,7 +45,7 @@ class OrderBuble extends StatelessWidget {
         // }
         return SizedBox(
           width: size.width * 0.9,
-          height: size.width * 0.808,
+          // height: size.width * 0.808,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,18 +102,20 @@ class OrderBuble extends StatelessWidget {
                           color: kyellowColor),
                       child: Row(
                         children: [
-                          textPresentation(
-                              msg: serviceDetails.provider.address,
-                              fontWeight: FontWeight.bold,
-                              size: 18.5,
-                              color: isMe ? kprimaryColor : kColorBlack),
+                          SizedBox(
+                            child: textPresentation(
+                                msg: serviceDetails.provider.address,
+                                fontWeight: FontWeight.bold,
+                                size: 18.5,
+                                color: isMe ? kprimaryColor : kColorBlack),
+                          ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 2),
                     Container(
                         padding: const EdgeInsets.only(
-                            left: 0, top: 0, bottom: 8, right: 6),
+                            left: 6, top: 6, bottom: 10, right: 2),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: kyellowColor),
@@ -147,22 +149,24 @@ class OfferNamePrice extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          width: 170,
+        Expanded(
+          //   width: 170,
           child: textPresentation(
             msg: photographe,
             fontWeight: FontWeight.w400,
-            overflow: TextOverflow.ellipsis,
+            // overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.start,
             size: 14,
             color: isMe ? kprimaryColor : kColorBlack,
           ),
         ),
-        textPresentation(
-          msg: '$price FCFA',
-          fontWeight: FontWeight.bold,
-          size: 16,
-          color: isMe ? kprimaryColor : kColorBlack,
+        Expanded(
+          child: textPresentation(
+            msg: '$price FCFA',
+            fontWeight: FontWeight.bold,
+            size: 16,
+            color: isMe ? kprimaryColor : kColorBlack,
+          ),
         ),
       ],
     );

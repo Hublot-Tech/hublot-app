@@ -2,7 +2,6 @@ import 'package:app/blocs/auth/auth_form_bloc.dart';
 import 'package:app/blocs/auth/auth_form_event.dart';
 import 'package:app/blocs/service/bloc/service_bloc.dart';
 import 'package:app/configuration.dart';
-import 'package:app/screens/default_screen.dart';
 import 'package:app/screens/part_customer/account_tab/account_tab.dart';
 import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/historique_chat/recent_chat.dart';
@@ -11,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../blot_finalized/blot_finalized_screen.dart';
 import 'body.dart';
 
 class HomeScrenns extends StatefulWidget {
@@ -33,6 +33,7 @@ class _HomeScrennsState extends State<HomeScrenns> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+        backgroundColor: kColorWhite,
         body: [
           MultiBlocProvider(
             providers: [
@@ -48,14 +49,14 @@ class _HomeScrennsState extends State<HomeScrenns> {
             ],
             child: const Body(),
           ),
-          DefaultScreen(),
+          BlotFinalizedScreen(), //DefaultScreen(),
           const CommandeScreen(),
           const RecentChats(),
           const AccountTab()
         ][_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: kyellowColor,
-            selectedItemColor: Colors.black,
+            backgroundColor: kColorWhite,
+            selectedItemColor: Colors.white,
             onTap: (value) => setCurrentIndex(value),
             currentIndex: _currentIndex,
             items: [

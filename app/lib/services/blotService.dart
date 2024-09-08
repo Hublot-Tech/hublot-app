@@ -37,7 +37,8 @@ class Blotservice {
     Map<String, String> queryParams = {
       'perPage': event.perPage.toString(),
       'page': event.page.toString(),
-      'provider': '6696b422a3938220854d4077', //event.provider.toString(),
+      'provider': '6696b422a3938220854d4077',
+      // 'provider': event.provider.toString(),
       'consumer': userId.toString(),
       'status': event.status!,
     };
@@ -136,6 +137,27 @@ class Blotservice {
       );
       if (response.statusCode == 200) {
         return BlotResponseDetails.fromJson(jsonDecode(response.body));
+      } else {
+        return BlotError.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      return BlotError(message: e.toString(), status: 505);
+    }
+  }
+
+  Future<Object> deleteBlot(String idBlot) async {
+    final token = await storage.read(key: 'accessToken');
+    try {
+      final response = await http.delete(
+        Uri.parse('$baseUrl2/blots/$idBlot'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+      );
+      if (response.statusCode == 204) {
+        print(jsonDecode(response.body));
+        return BlotCancelResponse.fromJson(jsonDecode(response.body));
       } else {
         return BlotError.fromJson(jsonDecode(response.body));
       }

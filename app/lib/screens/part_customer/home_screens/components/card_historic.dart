@@ -74,10 +74,8 @@ class CardHistoric extends StatelessWidget {
                 ],
               ),
             ),
-            60.horizontalSpace,
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.arrow_forward_outlined)),
+            50.horizontalSpace,
+            const Icon(Icons.arrow_forward_outlined),
           ],
         ),
       ]),
