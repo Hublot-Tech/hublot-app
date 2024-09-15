@@ -22,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthCheckTokenEvent>(checkTokenValidity);
     on<AuthVerifyOTPEvent>(verifyOtpCode);
     on<AuthSendOTPEvent>(sendOtpToUser);
+    on<AuthSignOutEvent>(signOutUser);
   }
 }
 
@@ -157,6 +158,21 @@ FutureOr<void> verifyOtpCode(
       emit(AuthError(
           errorAuth:
               ErrorAuth(message: result.message, status: result.status)));
+    }
+  } catch (e) {
+    emit(AuthError(errorAuth: ErrorAuth(message: e.toString(), status: 504)));
+  }
+}
+
+FutureOr<void> signOutUser(
+    AuthSignOutEvent event, Emitter<AuthState> emit) async {
+  emit(AuthLoading());
+  try {
+    final result = await authService.signOut();
+    if (result is SuccessAuth) {
+      emit(AuthSignOut());
+    } else if (result is ErrorAuth) {
+      emit(AuthError(errorAuth: result));
     }
   } catch (e) {
     emit(AuthError(errorAuth: ErrorAuth(message: e.toString(), status: 504)));

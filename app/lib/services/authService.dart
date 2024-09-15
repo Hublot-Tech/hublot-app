@@ -150,7 +150,32 @@ class AuthService {
           },
           body: jsonEncode({'phoneNumber': event.phoneNumber}));
       if (request.statusCode == 204) {
+     
         return SuccessAuth(message: request.reasonPhrase!, status: 204);
+      } else {
+        return ErrorAuth.fromJson(jsonDecode(request.body));
+      }
+    } catch (e) {
+      return ErrorAuth(message: e.toString(), status: 500);
+    }
+  }
+
+  //endpoint api/auth/sign-out pour se deconnecter
+  Future<Object> signOut() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: 'accessToken');
+
+    try {
+      final request = await httpClient
+          .delete(Uri.parse('$host/auth/sign-out'), headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+      if (request.statusCode == 204) {
+        await storage.delete(key: 'accessToken');
+        await storage.delete(key: 'refreshToken');
+        await storage.delete(key: 'tokenExpiry');
+        return SuccessAuth(message: request.reasonPhrase!, status: 100);
       } else {
         return ErrorAuth.fromJson(jsonDecode(request.body));
       }

@@ -59,6 +59,7 @@ final class AuthUserProfile extends AuthState {
   const AuthUserProfile({required this.user});
 }
 
+final class AuthSignOut extends AuthState {}
 final class UsersuccessAuth extends AuthState {
   final SuccessAuth authSuccess;
   const UsersuccessAuth({required this.authSuccess});

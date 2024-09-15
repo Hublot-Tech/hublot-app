@@ -1,10 +1,16 @@
+import 'package:app/blocs/auth/auth_form_bloc.dart';
+import 'package:app/blocs/auth/auth_form_event.dart';
+import 'package:app/blocs/auth/auth_form_state.dart';
 import 'package:app/configuration.dart';
 import 'package:app/model/user_storage.dart';
+import 'package:app/screens/authentification/login_screen/login.dart';
 import 'package:app/screens/part_customer/city_screen_choice/city_screen.dart';
 import 'package:app/screens/part_customer/commande_screen/commande_screen.dart';
 import 'package:app/screens/part_customer/language_screen/language_screen.dart';
+import 'package:app/services/toastServices.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -173,7 +179,32 @@ class Body extends StatelessWidget {
                             ville: "Publicités",
                             icon: "img/icons8_commercial 1.svg",
                             info: "",
-                          )
+                          ),
+                          BlocListener<AuthBloc, AuthState>(
+                            listener: (context, state) {
+                              if (state is AuthSignOut) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen()));
+                              }
+                              if (state is AuthError) {
+                                ToastService.errorMessage(
+                                    state.errorAuth.message, context);
+                              }
+                            },
+                            child: SettingsRow(
+                              press: () {
+                                context
+                                    .read<AuthBloc>()
+                                    .add(AuthSignOutEvent());
+                              },
+                              ville: "Déconnexion",
+                              icon: "img/icons8_cancel 1.svg",
+                              info: "",
+                            ),
+                          ),
                         ],
                       ),
                     ),

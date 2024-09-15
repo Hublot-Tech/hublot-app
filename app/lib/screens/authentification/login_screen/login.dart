@@ -66,11 +66,12 @@ class _LoginWidgetState extends State<LoginScreen> {
                     decoration: const BoxDecoration(color: Color(0x00d9d9d9)),
                   ),
                 ),
+                Image.asset('img/Group 141.png'),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      Image.asset('img/Group 141.png'),
+                      
                       textPresentation(
                           msg: 'Connexion à Hublots',
                           size: 24,
