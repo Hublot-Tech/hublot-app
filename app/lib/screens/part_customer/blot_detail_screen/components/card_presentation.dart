@@ -1,8 +1,9 @@
 import 'package:app/configuration.dart';
 import 'package:app/model/blot_entity.dart';
-import 'package:app/screens/part_customer/blot_detail_screen/components/row_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'row_info.dart';
 
 class CardPresentation extends StatelessWidget {
   const CardPresentation({

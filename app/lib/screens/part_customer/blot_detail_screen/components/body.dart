@@ -4,17 +4,16 @@ import 'package:app/controller/enumeration/blot.dart';
 import 'package:app/model/blot_entity.dart';
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/components/shimmer.dart';
-import 'package:app/screens/part_customer/blot_detail_screen/components/card_presentation.dart';
-import 'package:app/screens/part_customer/blot_detail_screen/components/step_colum.dart';
-import 'package:app/screens/part_customer/blot_detail_screen/components/verification_dialog.dart';
-import 'package:app/screens/part_customer/blot_verify/blot_verify_screen.dart';
 import 'package:app/services/toastServices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'button_order.dart';
+import 'card_presentation.dart';
 import 'order_boton.dart';
+import 'step_colum.dart';
+import 'verification_dialog.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -447,15 +446,15 @@ class _BodyState extends State<Body> {
             name: 'Fin des travaux',
             asset: 'img/travaux_icon.png',
             press: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BlotVerifyScreen(
-                        blotInfo: BlotInfo(
-                            idBlot: blotDetail.id,
-                            created: blotDetail.createdAt),
-                      ),
-                      ));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => BlotVerifyScreen(
+              //           blotInfo: BlotInfo(
+              //               idBlot: blotDetail.id,
+              //               created: blotDetail.createdAt),
+              //         ),
+              //         ));
             });
       default:
         return OrderBoton(
