@@ -63,3 +63,4 @@ final class UsersuccessAuth extends AuthState {
   final SuccessAuth authSuccess;
   const UsersuccessAuth({required this.authSuccess});
 }
+final class AuthSignOut extends AuthState {}

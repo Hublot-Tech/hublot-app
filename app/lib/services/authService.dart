@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/configuration.dart';
+import 'package:app/model/user_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as httpClient;
 import 'package:app/blocs/auth/auth_form_event.dart';
@@ -176,6 +177,20 @@ class AuthService {
       } else {
         return ErrorOPTAuth.fromJson(jsonDecode(request.body));
       }
+    } catch (e) {
+      return ErrorAuth(message: e.toString(), status: 500);
+    }
+  }
+
+  //endpoint api/auth/sign-out pour se deconnecter
+  Future<Object> signOut() async {
+    const storage = FlutterSecureStorage();
+    // final token = await storage.read(key: 'accessToken');
+    UserStorage user = UserStorage();
+    try {
+      saveTokenAndExpiry('', '', 0);
+      user.deleteUserData();
+      return const SuccessAuth(message: 'message', status: 100);
     } catch (e) {
       return ErrorAuth(message: e.toString(), status: 500);
     }

@@ -49,10 +49,12 @@ dependencies:
   otp_input_editor: ^0.0.9
   carousel_slider: ^5.0.0
   dotted_line: ^3.2.2
+  rename_app: ^1.6.1
   easy_stepper: ^0.8.5+1
   connectivity_plus: ^6.0.5
   flutter_screenutil: ^5.9.3
   auto_size_text: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
   flutter_localizations:
     sdk: flutter
 
@@ -115,3 +117,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+       
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "img/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21

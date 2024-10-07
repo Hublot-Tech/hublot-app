@@ -38,10 +38,10 @@ class Body extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
               hintText: "Que recherchez-vous ?",
-              hintStyle: TextStyle(color: Colors.grey,fontSize: 18),
-              prefixIcon: Icon(Icons.search),
+              hintStyle: const TextStyle(color: Colors.grey, fontSize: 18),
+              prefixIcon: const Icon(Icons.search),
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(37),
               ),
@@ -53,8 +53,7 @@ class Body extends StatelessWidget {
               if (state is ChatLisLoading) {
                 listChat = state.chatList;
                 if (listChat.isEmpty)
-                  return const Center(
-                      child: Text("Pas de message pour le moment"));
+                  return Center(child: Text("Pas de message pour le moment"));
                 return Column(
                     children: List.generate(listChat.length, (index) {
                   return GestureDetector(
@@ -72,7 +71,11 @@ class Body extends StatelessWidget {
                   );
                 }));
               } else if (state is ChatError) {
-                return Center(child: Text(state.error.message));
+                return Center(
+                    child: Text(state.error.message
+                            .contains("ClientException with SocketException")
+                        ? "Pas de connexion internet"
+                        : 'Pas de message pour le moment'));
               }
               return const Center(
                   child: Row(

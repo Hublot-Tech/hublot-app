@@ -70,3 +70,4 @@ final class AuthCreateUserEvent extends AuthEvent {
 final class AuthCheckTokenEvent extends AuthEvent {}
 
 final class AuthRefreshtokenEvent extends AuthEvent {}
+final class AuthSignOutEvent extends AuthEvent {}

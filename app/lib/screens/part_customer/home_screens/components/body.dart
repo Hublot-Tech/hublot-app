@@ -10,6 +10,7 @@ import 'package:app/model/user_storage.dart';
 import 'package:app/screens/authentification/code_phone_screen/code_phone_screen.dart';
 import 'package:app/screens/components/shimer_loading.dart';
 import 'package:app/screens/part_customer/description_service/description_service_screen.dart';
+import 'package:app/screens/part_customer/home_screens/components/not_modald.dart';
 import 'package:app/screens/part_customer/item_screen/item_screen.dart';
 import 'package:app/screens/part_customer/verify_identity/verify_identity_screen.dart';
 import 'package:app/services/toastServices.dart';
@@ -149,7 +150,7 @@ class _BodyState extends State<Body> {
                       ),
 
                       const EspaceMenuWidget(), //column deleted
-                      const CardHistoric(),
+                       CardHistoric(press: (){},),
                       const EspaceMenuWidget(),
                       RowSeeMore(
                           name: "Recommandés ",
@@ -404,3 +405,20 @@ class MistakeWidget extends StatelessWidget {
     );
   }
 }
+
+
+void _showNotReadyModal(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        content: const NotReadyModal(),
+        contentPadding: EdgeInsets.zero,
+      );
+    },
+  );
+}
+
