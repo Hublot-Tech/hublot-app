@@ -199,12 +199,10 @@ class _BodyState extends State<Body> {
               if (state is AuthOtpVerified) {
                 ToastService.successMessage(
                     'Code verifié avec succès', kyellowColor, context);
+
                 isLoading = false;
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const HomeScrenns();
-                  },
-                );
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => HomeScrenns()));
               }
             },
             child: ButtomCustom(

@@ -51,6 +51,9 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     //size with Mediaquery
+    print(widget.interlocutor);
+    print(idUser);
+
     SchedulerBinding.instance.addPostFrameCallback((_) => context
         .read<ChatBloc>()
         .startPeriodicFetching(
@@ -136,6 +139,7 @@ class _BodyState extends State<Body> {
                 onAttachmentPressed: () => showBottomSheet(context),
                 onSendPressed: () {
                   String contentType = "";
+                  print("hello");
                   CreateMessage createMessage;
                   if (controller.text.isNotEmpty) {
                     contentType = "text";
@@ -152,7 +156,9 @@ class _BodyState extends State<Body> {
                       file: file,
                     );
                   }
-                  context.read<ChatBloc>().add(ChatSendMessageEvent(message: createMessage));
+                  context
+                      .read<ChatBloc>()
+                      .add(ChatSendMessageEvent(message: createMessage));
                   controller.clear();
                 },
               ),
@@ -163,7 +169,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
-
-
-
-

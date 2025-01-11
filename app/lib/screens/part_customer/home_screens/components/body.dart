@@ -68,7 +68,7 @@ class _BodyState extends State<Body> {
       listener: (context, state) {
         if (state is AuthUserProfile) {
           user = state.user;
-          print(user.id);
+
           userStorage.storeUserData(
               user.id!, user.verificationStatus!, user.email!, user.fullname);
           if (!user.isOTPVerified!) {
@@ -150,7 +150,9 @@ class _BodyState extends State<Body> {
                       ),
 
                       const EspaceMenuWidget(), //column deleted
-                       CardHistoric(press: (){},),
+                      CardHistoric(
+                        press: () {},
+                      ),
                       const EspaceMenuWidget(),
                       RowSeeMore(
                           name: "Recommandés ",
@@ -183,7 +185,7 @@ class _BodyState extends State<Body> {
                             setState(() {
                               isLoading = false;
                             });
-
+                         //   print(state.error.message);
                             ToastService.errorMessage(
                                 state.error.message, context);
                           }
@@ -406,7 +408,6 @@ class MistakeWidget extends StatelessWidget {
   }
 }
 
-
 void _showNotReadyModal(BuildContext context) {
   showDialog(
     context: context,
@@ -421,4 +422,3 @@ void _showNotReadyModal(BuildContext context) {
     },
   );
 }
-

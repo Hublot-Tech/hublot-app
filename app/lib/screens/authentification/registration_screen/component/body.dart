@@ -18,20 +18,16 @@ import 'package:image_picker/image_picker.dart';
 import 'button_custom.dart';
 import 'field_form.dart';
 
-class Body extends StatefulWidget {
+class Body extends StatelessWidget {
   const Body({super.key});
 
-  @override
-  State<Body> createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     TextEditingController numberController = TextEditingController();
     TextEditingController mdpController = TextEditingController();
+    TextEditingController addressController = TextEditingController();
 
     return Stack(children: [
       Container(
@@ -57,16 +53,11 @@ class _BodyState extends State<Body> {
                       padding: const EdgeInsets.only(top: 25, left: 20),
                       child: Row(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: SvgPicture.asset("img/croix.svg"),
-                            ),
-                          ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(Icons.close))
                         ],
                       ),
                     ),
@@ -76,22 +67,23 @@ class _BodyState extends State<Body> {
                         const Spacer(),
                         textPresentation(
                           msg: "Inscrivez vous chez HUB",
-                          fontWeight: FontWeight.w400,
-                          size: 18.sp,
+                          fontWeight: FontWeight.w500,
+                          size: 23,
                         ),
                         //HublotTextWigdet(),
 
                         textPresentation(
                             msg: "LOTS",
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                             color: const Color.fromARGB(255, 255, 177, 59),
-                            size: 18.r),
+                            size: 23),
                         const Spacer(),
                       ],
                     ),
                     const SizedBox(height: 10),
                     textPresentation(
                       overflow: TextOverflow.visible,
+                      maxLine: 2,
                       msg:
                           "Veuillez vous assurer de la crédibilité de ces informations, car elles seront rigoureusement vérifiées",
                       fontWeight: FontWeight.w100,
@@ -103,6 +95,7 @@ class _BodyState extends State<Body> {
                       emailController: emailController,
                       mdpController: mdpController,
                       numberControler: numberController,
+                      addresController: addressController,
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -116,7 +109,7 @@ class _BodyState extends State<Body> {
                         InkWell(
                           onTap: () {
                             //navigate route for loginScreen
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const LoginScreen()));
@@ -147,12 +140,14 @@ class FormInscription extends StatefulWidget {
     required this.emailController,
     required this.numberControler,
     required this.mdpController,
+    required this.addresController,
   });
 
   final TextEditingController nameController;
   final TextEditingController emailController;
   final TextEditingController numberControler;
   final TextEditingController mdpController;
+  final TextEditingController addresController;
 
   @override
   State<FormInscription> createState() => _FormInscriptionState();
@@ -180,8 +175,14 @@ class _FormInscriptionState extends State<FormInscription> {
                 label: "Email",
                 hint: "Email"),
             const SizedBox(height: 17),
+            FieldForm(
+                controller: widget.addresController,
+                label: "Votre Adresse",
+                hint: "Votre Adresse"),
+            const SizedBox(height: 17),
             TextFormField(
                 controller: widget.numberControler,
+                keyboardType: TextInputType.phone,
                 onChanged: (value) {
                   setState(() => value.length == 9 ? isHide = false : true);
                 },
@@ -237,7 +238,7 @@ class _FormInscriptionState extends State<FormInscription> {
                 showImagePickerOption(context);
               },
               child: Container(
-                height: getProportionateScreenHeight(53),
+                height: (53),
                 padding: const EdgeInsets.only(left: 20),
                 decoration: BoxDecoration(
                     border: Border.all(
@@ -249,11 +250,11 @@ class _FormInscriptionState extends State<FormInscription> {
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset("img/icons8_upload_file_144px_1 2.png"),
-                    SizedBox(width: getProportionateScreenWidth(5)),
+                    const SizedBox(width: (5)),
                     textPresentation(
                         msg: "Ajouter une photo de profil",
                         fontWeight: FontWeight.normal,
-                        size: getProportionateScreenWidth(15)),
+                        size: (15)),
                   ],
                 ),
               ),
@@ -263,18 +264,26 @@ class _FormInscriptionState extends State<FormInscription> {
                 msg: nameImg != null ? nameImg.toString() : "",
                 fontWeight: FontWeight.bold,
                 color: kyellowColor,
-                size: getProportionateScreenWidth(12)),
+                size: (12)),
             const EspaceMenuWidget(),
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthError) {
-                  print(state.errorAuth.message);
-                  ToastService.errorMessage(state.errorAuth.message, context);
+                  if (state.errorAuth.message.contains('already taken')) {
+                    ToastService.errorMessage(
+                        "L'email ou le numero de telephone sont deja utilisé!",
+                        context);
+                  } else if (state.errorAuth.message.contains('valid phone')) {
+                    ToastService.errorMessage(
+                        "Numero de telephone Whatsapp pas valide!", context);
+                  } else if (state.errorAuth.message.contains('an email')) {
+                    ToastService.errorMessage("Email incorrect", context);
+                  }
                 }
                 if (state is AuthUserCreated) {
                   ToastService.successMessage(
                       "Inscription reussie avec succes", kyellowColor, context);
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) {
@@ -294,11 +303,13 @@ class _FormInscriptionState extends State<FormInscription> {
                   press: () {
                     // Navigator.pushNamed(context, HomeScreen.routeName);
                     if (_formKey.currentState!.validate()) {
+                      String phone = "+237${widget.numberControler.text}";
+
                       User user = User(
                           fullname: widget.nameController.text,
-                          phoneNumber: widget.numberControler.text,
+                          phoneNumber: phone,
                           locale: "fr",
-                          address: widget.emailController.text,
+                          address: widget.addresController.text,
                           password: widget.mdpController.text,
                           email: widget.emailController.text);
                       context
@@ -322,9 +333,9 @@ class _FormInscriptionState extends State<FormInscription> {
         context: context,
         builder: (builder) {
           return SizedBox(
-            height: getProportionateScreenHeight(150),
+            height: (150),
             child: Padding(
-              padding: EdgeInsets.only(top: getProportionateScreenWidth(30)),
+              padding: const EdgeInsets.only(top: (30)),
               child: Row(
                 children: [
                   Expanded(
@@ -344,12 +355,12 @@ class _FormInscriptionState extends State<FormInscription> {
                               msg: "Caméra",
                               color: Colors.white,
                               fontWeight: FontWeight.normal,
-                              size: getProportionateScreenWidth(20))
+                              size: (20))
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(width: getProportionateScreenWidth(40)),
+                  const SizedBox(width: (40)),
                   Expanded(
                     child: InkWell(
                       onTap: () {
@@ -367,7 +378,7 @@ class _FormInscriptionState extends State<FormInscription> {
                               msg: "Gallerie",
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
-                              size: getProportionateScreenWidth(20))
+                              size: (20))
                         ],
                       ),
                     ),
@@ -406,6 +417,5 @@ class _FormInscriptionState extends State<FormInscription> {
     Navigator.of(context).pop();
   }
 }
-
 
 ///cette class est utilise pour le formulaire,

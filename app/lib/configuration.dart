@@ -18,7 +18,7 @@ const kColorWhite = Colors.white;
 
 const kColorBlack = Colors.black;
 String baseUrl = 'https://api.hublots.co/api';
-String baseUrl2 = 'https://hublots-api-8c97109dc203.herokuapp.com/api';
+String baseUrl2 = 'https://api.hublots.co/api';
 
 const shimmerGradient = LinearGradient(
   colors: [
@@ -47,7 +47,7 @@ Widget textPresentation({
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
-    //  double maxFontSize = (constraints.maxWidth / 10).floorToDouble();
+      //  double maxFontSize = (constraints.maxWidth / 10).floorToDouble();
 
       return AutoSizeText(
         msg,

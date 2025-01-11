@@ -4,48 +4,67 @@ import 'package:flutter/material.dart';
 
 class OffreBaseBox extends StatelessWidget {
   const OffreBaseBox({
-    super.key,
+    Key? key,
     required this.name,
     required this.nbre,
-  });
+  }) : super(key: key);
   final String? name, nbre;
   @override
   Widget build(BuildContext context) {
+    //final size = MediaQuery.of(context).size;
     return Container(
-      // width: getProportionateScreenWidth(395),
-      height: getProportionateScreenWidth(50),
-      padding: EdgeInsets.only(
-          left: getProportionateScreenWidth(20),
-          right: getProportionateScreenWidth(20)),
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(20),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: getProportionateScreenHeight(197),
-            height: getProportionateScreenWidth(50),
-            decoration: BoxDecoration(
-              color: kcolorBoxService,
-              border: Border.all(),
-            ),
-            child: Center(
-              child: name != null
-                  ? textPresentation(
-                      msg: name!, fontWeight: FontWeight.normal, size: 14)
-                  : const SizedBox(), // Remplacer par un widget vide si name est null
+          Expanded(
+            child: Container(
+              height: getProportionateScreenWidth(50),
+              decoration: BoxDecoration(
+                color: kcolorBoxService,
+                border: Border.all(),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: name != null
+                      ? FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: textPresentation(
+                            msg: name!,
+                            fontWeight: FontWeight.normal,
+                            size: 14,
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
+              ),
             ),
           ),
-          Container(
-            width: getProportionateScreenHeight(145),
-            height: getProportionateScreenWidth(50),
-            decoration: BoxDecoration(
-              color: kcolorBoxService,
-              border: Border.all(),
-            ),
-            child: Center(
-              child: nbre != null
-                  ? textPresentation(
-                      msg: nbre!, fontWeight: FontWeight.normal, size: 14)
-                  : const SizedBox(), // Remplacer par un widget vide si nbre est null
+          Expanded(
+            child: Container(
+              height: getProportionateScreenWidth(50),
+              decoration: BoxDecoration(
+                color: kcolorBoxService,
+                border: Border.all(),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: nbre != null
+                      ? FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: textPresentation(
+                            msg: nbre!,
+                            fontWeight: FontWeight.normal,
+                            size: 14,
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
+              ),
             ),
           ),
         ],

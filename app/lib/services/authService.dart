@@ -12,8 +12,7 @@ class AuthService {
   // final String token =
   //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imdlcm1jdkBnbWFpbC5jb20iLCJzdWIiOiI2NjliOWYyZmNjY2U0NGMyOWM1M2U1YjQiLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNzIxNDc0ODYzLCJleHAiOjE3MjE1NjEyNjN9.R6lc-yEK_xQMT_n-mMH4eaOmBKN-kZq7obDkyqLtohM";
 
-  static final host =
-      Uri.parse('https://hublots-api-8c97109dc203.herokuapp.com/api');
+  static final host = Uri.parse(baseUrl2);
 
   Future<Object> register(AuthCreateUserEvent data) async {
     final uri = Uri.parse('$baseUrl2/auth/register');
@@ -33,15 +32,12 @@ class AuthService {
 
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print(jsonResponse);
         late final data = RegisterResponse.fromJson(jsonResponse);
         return data;
       } else {
-        print(jsonResponse);
-        return ErrorAuth.fromJson(jsonResponse);
+        return ErrorRegister.fromJson(jsonResponse);
       }
     } catch (e) {
-      print(e);
       return ErrorAuth(message: e.toString(), status: 505);
     }
   }
@@ -57,6 +53,7 @@ class AuthService {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       late final data = SuccessAuth.fromJson(jsonDecode(response.body));
+      late final user = getCurrentUsers();
 
       return data;
     } else {
@@ -80,10 +77,11 @@ class AuthService {
         body: jsonEncode({'refreshToken': refreshToken}),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         // Rafraîchissement réussi : mets à jour l'access token
         final responseData = jsonDecode(response.body);
         final newAccessToken = responseData['data']['accessToken'];
+
         final newRefreshToken = responseData['data']['refreshToken'];
         await storage.write(key: 'accessToken', value: newAccessToken);
         await storage.write(key: 'refreshToken', value: newRefreshToken);
@@ -97,7 +95,7 @@ class AuthService {
       }
     } catch (e) {
       // Erreur réseau ou autre
-
+      print('Erreur lors du rafraîchissement du token : $e');
       return false;
     }
   }
@@ -124,13 +122,14 @@ class AuthService {
           'Authorization': 'Bearer $token'
         },
       );
-
+      print(request.body);
       if (request.statusCode == 200 || request.statusCode == 201) {
         final data = RegisterResponse.fromJson(jsonDecode(request.body));
 
         return data;
       } else {
-        print(jsonDecode(request.body));
+        print(request.statusCode);
+        print(request.body);
         return ErrorAuth.fromJson(jsonDecode(request.body));
       }
     } catch (e) {
@@ -144,18 +143,20 @@ class AuthService {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'accessToken');
     try {
-      final request = await httpClient.post(Uri.parse('$host/otp/send'),
+      final request = await httpClient.post(Uri.parse('$host/auth/resend-code'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer $token'
           },
           body: jsonEncode({'phoneNumber': event.phoneNumber}));
-      if (request.statusCode == 204) {
-        return SuccessAuth(message: request.reasonPhrase!, status: 204);
+      if (request.statusCode == 200 || request.statusCode == 201) {
+        return const SuccessAuth(message: 'envoye avec succes', status: 204);
       } else {
+        print(request.body);
         return ErrorAuth.fromJson(jsonDecode(request.body));
       }
     } catch (e) {
+      print(e.toString);
       return ErrorAuth(message: e.toString(), status: 500);
     }
   }
@@ -165,15 +166,15 @@ class AuthService {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'accessToken');
     try {
-      final request = await httpClient.post(Uri.parse('$host/otp/verify'),
+      final request = await httpClient.patch(
+          Uri.parse('$host/auth/verify-code/${event.otp}'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer $token'
           },
-          body:
-              jsonEncode({'phoneNumber': event.phoneNumber, 'otp': event.otp}));
-      if (request.statusCode == 204) {
-        return SuccessAuth(message: request.reasonPhrase!, status: 204);
+          body: jsonEncode({'code': event.otp}));
+      if (request.statusCode == 200 || request.statusCode == 201) {
+        return const SuccessAuth(message: 'Envoye avec acces', status: 204);
       } else {
         return ErrorOPTAuth.fromJson(jsonDecode(request.body));
       }
@@ -182,13 +183,13 @@ class AuthService {
     }
   }
 
-  //endpoint api/auth/sign-out pour se deconnecter
+//endpoint api/auth/sign-out pour se deconnecter
   Future<Object> signOut() async {
     const storage = FlutterSecureStorage();
     // final token = await storage.read(key: 'accessToken');
     UserStorage user = UserStorage();
     try {
-      saveTokenAndExpiry('', '', 0);
+      await storage.deleteAll();
       user.deleteUserData();
       return const SuccessAuth(message: 'message', status: 100);
     } catch (e) {

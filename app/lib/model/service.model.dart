@@ -227,13 +227,13 @@ class ServiceProvider {
 
   factory ServiceProvider.fromJson(Map<String, dynamic> json) {
     return ServiceProvider(
-      fullname: json['fullname'],
-      email: json['email'],
-      phoneNumber: json['phoneNumber'],
-      locale: json['locale'],
-      address: json['address'],
-      profile: json['profile'] != null ? json['profile'] : '',
-      id: json['id'],
+      fullname: json['fullname'] ?? '', // Valeur par défaut si null
+      email: json['email'] ?? '', // Valeur par défaut si null
+      phoneNumber: json['phoneNumber'] ?? '', // Valeur par défaut si null
+      locale: json['locale'] ?? 'fr', // Valeur par défaut si null
+      address: json['address'] ?? '', // Valeur par défaut si null
+      profile: json['profile'] ?? '', // Valeur par défaut si null
+      id: json['id'] ?? '', // Valeur par défaut si null
       updatedAt: json['updatedAt'] != null
           ? DateTime.parse(json['updatedAt'])
           : DateTime.now(),
@@ -242,16 +242,18 @@ class ServiceProvider {
           : DateTime.now(),
       roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
       kycImages: json['kycImages'] != null ? json['kycImages'] : [],
-      verificationStatus: json['verificationStatus'],
-      isOnline: json['isOnline'],
-      isActive: json['isActive'],
-      isOTPVerified: json['isOTPVerified'],
-      profileRef: json['profileRef'] != null ? json['profileRef'] : '',
+      verificationStatus:
+          json['verificationStatus'] ?? '', // Valeur par défaut si null
+      isOnline: json['isOnline'] ?? false, // Valeur par défaut si null
+      isActive: json['isActive'] ?? false, // Valeur par défaut si null
+      isOTPVerified:
+          json['isOTPVerified'] ?? false, // Valeur par défaut si null
+      profileRef: json['profileRef'] ?? '', // Valeur par défaut si null
       avgRating: json['avgRating'] != null ? json['avgRating'] : 0,
       serviceName: json['service'] != null
           ? ServiceItem.fromJson(json['service'])
           : ServiceItem.empty(),
-      isSponsored: json['isSponsored'],
+      isSponsored: json['isSponsored'] ?? false, // Valeur par défaut si null
     );
   }
 
@@ -283,7 +285,8 @@ class ServiceItem {
   bool isSponsored;
   String name;
   String description;
-  String category;
+  String category, profileRef, avgRating;
+
   List<String> imageRefs;
   String mainImageRef;
   DateTime updatedAt;
@@ -294,6 +297,8 @@ class ServiceItem {
     required this.isSponsored,
     required this.name,
     required this.description,
+    required this.avgRating,
+    required this.profileRef,
     required this.category,
     required this.imageRefs,
     required this.mainImageRef,
@@ -307,6 +312,8 @@ class ServiceItem {
       name: '',
       description: '',
       category: '',
+      profileRef: '',
+      avgRating: '',
       imageRefs: [],
       mainImageRef: '',
       updatedAt: DateTime.now(),
@@ -319,6 +326,8 @@ class ServiceItem {
       name: json['name'],
       description: json['description'],
       category: json['category'],
+      profileRef: json['profileRef'] != null ? json['profileRef'] : '',
+      avgRating: json['avgRating'] != null ? json['avgRating'] : '',
       imageRefs:
           json['imageRefs'] != null ? List<String>.from(json['imageRefs']) : [],
       mainImageRef: json['mainImageRef'],

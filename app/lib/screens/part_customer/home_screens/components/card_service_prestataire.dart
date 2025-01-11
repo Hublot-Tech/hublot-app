@@ -33,7 +33,10 @@ class CardServicePrestataire extends StatelessWidget {
           height: 435,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(23),
-            child: Image.network(serviceData.img, fit: BoxFit.cover),
+            child: Image.network(
+                serviceData
+                    .img, // "https://blog.aube-nature.com/wp-content/uploads/2021/06/photographe-professionnel-autoentrepreneur-1024x768.jpg", //serviceData.img,
+                fit: BoxFit.cover),
           ),
         ),
         Column(
@@ -46,19 +49,21 @@ class CardServicePrestataire extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                 serviceData.isSponsorite==true? Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 13, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: kyellowColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: textPresentation(
-                        msg: 'Sponsorisé',
-                        fontWeight: FontWeight.normal,
-                        size: 14,
-                        color: Colors.white),
-                  ):SizedBox.shrink(),
+                  serviceData.isSponsorite == true
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 13, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: kyellowColor,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: textPresentation(
+                              msg: 'Sponsorisé',
+                              fontWeight: FontWeight.normal,
+                              size: 14,
+                              color: Colors.white),
+                        )
+                      : SizedBox.shrink(),
                   // Spacer(),
                   BoxStar(
                     size: size,

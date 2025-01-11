@@ -86,10 +86,12 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       } else if (result is ErrorServiceFetching) {
         emit(ErrorServiceFetchingAllState(ErrorServiceFetching(
             message: result.message, status: result.status)));
+       // throw result;
       }
     } catch (e) {
       emit(ErrorServiceFetchingAllState(
           ErrorServiceFetching(message: e.toString(), status: 500)));
+     // throw e;
     }
   }
 
