@@ -128,8 +128,7 @@ class _BodyState extends State<Body> {
                       isLoading: isLoading,
                       child: BoxPresentationInformation(
                         name: service.provider.fullname,
-                        profession:
-                            'Photographe',
+                        profession: 'Photographe',
                         distance: '3km',
                         lieu: 'Douala ,Akwa',
                       ),
@@ -267,6 +266,23 @@ class _BodyState extends State<Body> {
                         }),
                   ),
                   const EspaceMenuWidget(),
+
+                  //const EspaceMenuWidget(),
+
+                  //const EspaceMenuWidget(),
+                  ShimmerLoading(
+                    isLoading: isLoading,
+                    child: BoxBasicPrimaryColor(
+                      title: "Offre de Standard",
+                      method: () {},
+                    ),
+                  ),
+                  // ...List.generate(
+                  //     offerStandartList.length,
+                  //     (index) => OffreBaseBox(
+                  //         name: offerStandartList[index]['name']!,
+                  //         nbre: offerStandartList[index]['nbre']!)),
+                  const EspaceMenuWidget(),
                   ShimmerLoading(
                     isLoading: isLoading,
                     child: Row(
@@ -343,21 +359,6 @@ class _BodyState extends State<Body> {
                       ],
                     ),
                   ),
-                  const EspaceMenuWidget(),
-
-                  const EspaceMenuWidget(),
-                  ShimmerLoading(
-                    isLoading: isLoading,
-                    child: BoxBasicPrimaryColor(
-                      title: "Offre de Standard",
-                      method: () {},
-                    ),
-                  ),
-                  // ...List.generate(
-                  //     offerStandartList.length,
-                  //     (index) => OffreBaseBox(
-                  //         name: offerStandartList[index]['name']!,
-                  //         nbre: offerStandartList[index]['nbre']!)),
                   ShimmerLoading(
                     isLoading: isLoading,
                     child: ListView.builder(

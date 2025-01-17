@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         ),
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            // Logique de redirection gérée par l'état
+            // Logiquede  redirection gérée par l'état
             if (state is AuthAuthenticated) {
               return const HomeScrenns();
             } else if (state is AuthUnauthenticated) {

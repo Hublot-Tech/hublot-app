@@ -51,9 +51,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     //size with Mediaquery
-    print(widget.interlocutor);
-    print(idUser);
-
+   
     SchedulerBinding.instance.addPostFrameCallback((_) => context
         .read<ChatBloc>()
         .startPeriodicFetching(
