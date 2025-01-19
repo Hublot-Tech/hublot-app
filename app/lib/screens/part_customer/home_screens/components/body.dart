@@ -185,7 +185,7 @@ class _BodyState extends State<Body> {
                             setState(() {
                               isLoading = false;
                             });
-                         //   print(state.error.message);
+                            print(state.error.message);
                             ToastService.errorMessage(
                                 state.error.message, context);
                           }

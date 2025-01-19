@@ -22,7 +22,6 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     splahDatas = hublotProviderApi.getSplashData();
-    
   }
 
   @override
@@ -77,7 +76,7 @@ class _BodyState extends State<Body> {
             GestureDetector(
               onTap: currentIndex == 2
                   ? () {
-                      Navigator.push(context,
+                      Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (contexte) {
                         return const RegistrationScreen();
                       }));

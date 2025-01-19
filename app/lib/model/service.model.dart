@@ -101,7 +101,7 @@ class ServiceDetails {
   final String description, availability;
   final DateTime updatedAt, createdAt, deletedAt;
   final String category, place;
-  final List<String> imageRefs;
+  final String imageRefs;
   final String? mainImageRef, id;
   final List<String> offers;
   final User provider;
@@ -134,7 +134,7 @@ class ServiceDetails {
       availability: json['availability'] != null ? json['availability'] : '',
       // updatedAt: DateTime.parse(json['updatedAt'] as String),
       category: json['category'] as String,
-      imageRefs: List<String>.from(json['imageRefs'] as List<dynamic>),
+      imageRefs: json['imageRefs'] as String,
 
       mainImageRef: json['mainImageRef'] as String?,
       offers: json['offers'] != null
@@ -174,7 +174,7 @@ class ServiceDetails {
       updatedAt: DateTime.now(),
       deletedAt: DateTime.now(),
       createdAt: DateTime.now(),
-      imageRefs: [],
+      imageRefs: '',
       offers: [],
     );
   }
@@ -287,7 +287,7 @@ class ServiceItem {
   String description;
   String category, profileRef, avgRating;
 
-  List<String> imageRefs;
+  String imageRefs;
   String mainImageRef;
   DateTime updatedAt;
   DateTime createdAt;
@@ -314,7 +314,7 @@ class ServiceItem {
       category: '',
       profileRef: '',
       avgRating: '',
-      imageRefs: [],
+      imageRefs: '',
       mainImageRef: '',
       updatedAt: DateTime.now(),
       createdAt: DateTime.now(),
@@ -328,8 +328,7 @@ class ServiceItem {
       category: json['category'],
       profileRef: json['profileRef'] != null ? json['profileRef'] : '',
       avgRating: json['avgRating'] != null ? json['avgRating'] : '',
-      imageRefs:
-          json['imageRefs'] != null ? List<String>.from(json['imageRefs']) : [],
+      imageRefs: json['imageRefs'] != null ? json['imageRefs'] : '',
       mainImageRef: json['mainImageRef'],
       updatedAt: json['updatedAt'] != null
           ? DateTime.parse(json['updatedAt'])
