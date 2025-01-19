@@ -104,248 +104,259 @@ class _BodyState extends State<Body> {
       },
       child: Shimmer(
         linearGradient: shimmerGradient,
-        child: SafeArea(
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: SingleChildScrollView(
-                child: Column(children: [
-                  const EspaceMenuWidget(),
-                  const HublotTextWigdet(),
-                  const EspaceMenuWidget(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BecomeRowBox(
-                        text: "Devenir prestataire",
-                        press: () {
-                          Navigator.pushNamed(
-                              context, ProviderScreen.routeName);
-                        },
-                      ),
-                      const NotificationBox(),
-                    ],
-                  ),
-                  const EspaceMenuWidget(),
-                  const SearchBox(),
-                  const EspaceMenuWidget(),
-                  Column(
-                    children: [
-                      BoxCategoryService(name: "Catégories", press: () {}),
-                      10.verticalSpace,
-                      ShimmerLoading(
-                        isLoading: isLoading,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(
-                                itemCategoris.length,
-                                (index) => ItemCategories(
-                                    name: itemCategoris[index]['text']!,
-                                    icon: itemCategoris[index]['icon']!)),
+        child: ShimmerLoading(
+          isLoading: isLoading,
+          child: SafeArea(
+            child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: SingleChildScrollView(
+                  physics:
+                      isLoading ? const NeverScrollableScrollPhysics() : null,
+                  child: Column(children: [
+                    const EspaceMenuWidget(),
+                    const HublotTextWigdet(),
+                    const EspaceMenuWidget(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BecomeRowBox(
+                          text: "Devenir prestataire",
+                          press: () {
+                            Navigator.pushNamed(
+                                context, ProviderScreen.routeName);
+                          },
+                        ),
+                        const NotificationBox(),
+                      ],
+                    ),
+                    const EspaceMenuWidget(),
+                    const SearchBox(),
+                    const EspaceMenuWidget(),
+                    Column(
+                      children: [
+                        BoxCategoryService(name: "Catégories", press: () {}),
+                        10.verticalSpace,
+                        ShimmerLoading(
+                          isLoading: isLoading,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: List.generate(
+                                  itemCategoris.length,
+                                  (index) => ItemCategories(
+                                      name: itemCategoris[index]['text']!,
+                                      icon: itemCategoris[index]['icon']!)),
+                            ),
                           ),
                         ),
-                      ),
 
-                      const EspaceMenuWidget(), //column deleted
-                      CardHistoric(
-                        press: () {},
-                      ),
-                      const EspaceMenuWidget(),
-                      RowSeeMore(
-                          name: "Recommandés ",
-                          msg: "Liste basé sur votre position",
-                          press: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AllItemScreen(),
-                                    settings: RouteSettings(arguments: true)));
-                          }),
-                      const EspaceMenuWidget(),
-                      BlocConsumer<ServiceBloc, ServiceState>(
-                        listener: (context, state) {
-                          if (state is ServiceProviderLoading) {
-                            setState(() {
-                              isLoading = true;
-                            });
-                          }
-                          if (state is ServiceProviderState) {
-                            setState(() {
-                              isLoading = false;
-                            });
+                        const EspaceMenuWidget(), //column deleted
+                        CardHistoric(
+                          press: () {},
+                        ),
+                        const EspaceMenuWidget(),
+                        RowSeeMore(
+                            name: "Recommandés ",
+                            msg: "Liste basé sur votre position",
+                            press: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AllItemScreen(),
+                                      settings:
+                                          RouteSettings(arguments: true)));
+                            }),
+                        const EspaceMenuWidget(),
+                        BlocConsumer<ServiceBloc, ServiceState>(
+                          listener: (context, state) {
+                            if (state is ServiceProviderLoading) {
+                              setState(() {
+                                isLoading = true;
+                              });
+                            }
+                            if (state is ServiceProviderState) {
+                              setState(() {
+                                isLoading = false;
+                              });
 
-                            //  list = state.services;
+                              //  list = state.services;
 
-                            // print(list.length);
-                          }
-                          if (state is ErrorServiceFetchingAllState) {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            print(state.error.message);
-                            ToastService.errorMessage(
-                                state.error.message, context);
-                          }
-                        },
-                        builder: (context, state) {
-                          if (state is ServiceProviderState) {
-                            list = state.provider;
-                          }
-                          return ShimmerLoading(
-                            isLoading: isLoading,
-                            child: SizedBox(
-                              height: getProportionateScreenHeight(400),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: (list.length),
-                                itemBuilder: (context, index) {
-                                  if (list.isNotEmpty && index < list.length) {
-                                    //  final MapEntry<Services, Services> entry =
-                                    //     itemServices[0].entries.first;
-                                    //  final Services serviceData = entry.value;
-                                    return GestureDetector(
-                                      onTap: () {
-                                        print(index);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                                  return const DescriptionService();
-                                                },
-                                                settings: RouteSettings(
-                                                    arguments: list[index]
-                                                        .serviceName
-                                                        .id)));
-                                      },
-                                      child: CardServicePrestataire(
-                                          serviceData: Services(
-                                              name: list[index].fullname,
-                                              isSponsorite:
-                                                  list[index].isSponsored,
-                                              profession:
-                                                  list[index].serviceName.name,
-                                              img: list[index].profileRef,
-                                              note: list[index]
-                                                  .avgRating
-                                                  .toString(),
-                                              distance: list[index].address,
-                                              lieu: list[index].address,
-                                              like: true,
-                                              favorite: false,
-                                              prestataire: Prestataire(
+                              // print(list.length);
+                            }
+                            if (state is ErrorServiceFetchingAllState) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              print(state.error.message);
+                              ToastService.errorMessage(
+                                  state.error.message, context);
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is ServiceProviderState) {
+                              list = state.provider;
+                            }
+                            return ShimmerLoading(
+                              isLoading: isLoading,
+                              child: SizedBox(
+                                height: getProportionateScreenHeight(400),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: (list.length),
+                                  itemBuilder: (context, index) {
+                                    if (list.isNotEmpty &&
+                                        index < list.length) {
+                                      //  final MapEntry<Services, Services> entry =
+                                      //     itemServices[0].entries.first;
+                                      //  final Services serviceData = entry.value;
+                                      return GestureDetector(
+                                        onTap: () {
+                                          print(index);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return const DescriptionService();
+                                                  },
+                                                  settings: RouteSettings(
+                                                      arguments: list[index]
+                                                          .serviceName
+                                                          .id)));
+                                        },
+                                        child: CardServicePrestataire(
+                                            serviceData: Services(
                                                 name: list[index].fullname,
-                                                firstname: '',
-                                              ))),
-                                    );
-                                  }
-                                  return null;
-                                },
+                                                isSponsorite:
+                                                    list[index].isSponsored,
+                                                profession: list[index]
+                                                    .serviceName
+                                                    .name,
+                                                img: list[index].profileRef,
+                                                note: list[index]
+                                                    .avgRating
+                                                    .toString(),
+                                                distance: list[index].address,
+                                                lieu: list[index].address,
+                                                like: true,
+                                                favorite: false,
+                                                prestataire: Prestataire(
+                                                  name: list[index].fullname,
+                                                  firstname: '',
+                                                ))),
+                                      );
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                      const EspaceMenuWidget(),
-                      RowSeeMore(
-                          name: "Annonceurs proches",
-                          msg: "Liste basé sur votre position",
-                          press: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AllItemScreen(),
-                                    settings: RouteSettings(arguments: false)));
-                          }),
-                      const EspaceMenuWidget(),
-                      BlocConsumer<ServiceBloc, ServiceState>(
-                        listener: (context, state) {
-                          if (state is ServiceProviderLoading) {
-                            setState(() {
-                              isLoading = true;
-                            });
-                          }
-                          if (state is ServiceProviderState) {
-                            setState(() {
-                              isLoading = false;
-                            });
+                            );
+                          },
+                        ),
+                        const EspaceMenuWidget(),
+                        RowSeeMore(
+                            name: "Annonceurs proches",
+                            msg: "Liste basé sur votre position",
+                            press: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AllItemScreen(),
+                                      settings:
+                                          RouteSettings(arguments: false)));
+                            }),
+                        const EspaceMenuWidget(),
+                        BlocConsumer<ServiceBloc, ServiceState>(
+                          listener: (context, state) {
+                            if (state is ServiceProviderLoading) {
+                              setState(() {
+                                isLoading = true;
+                              });
+                            }
+                            if (state is ServiceProviderState) {
+                              setState(() {
+                                isLoading = false;
+                              });
 
-                            //  list = state.services;
+                              //  list = state.services;
 
-                            // print(list.length);
-                          }
-                          if (state is ErrorServiceFetchingAllState) {
-                            setState(() {
-                              isLoading = false;
-                            });
+                              // print(list.length);
+                            }
+                            if (state is ErrorServiceFetchingAllState) {
+                              setState(() {
+                                isLoading = false;
+                              });
 
-                            ToastService.errorMessage(
-                                state.error.message, context);
-                          }
-                        },
-                        builder: (context, state) {
-                          if (state is ServiceProviderState) {
-                            list = state.provider;
-                          }
-                          return ShimmerLoading(
-                            isLoading: isLoading,
-                            child: SizedBox(
-                              height: getProportionateScreenHeight(400),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: (list.length),
-                                itemBuilder: (context, index) {
-                                  if (list.isNotEmpty && index < list.length) {
-                                    //  final MapEntry<Services, Services> entry =
-                                    //     itemServices[0].entries.first;
-                                    //  final Services serviceData = entry.value;
-                                    return GestureDetector(
-                                      onTap: () {
-                                        print(index);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                                  return const DescriptionService();
-                                                },
-                                                settings: RouteSettings(
-                                                    arguments: list[index]
-                                                        .serviceName
-                                                        .id)));
-                                      },
-                                      child: CardServicePrestataire(
-                                          serviceData: Services(
-                                              name: list[index].fullname,
-                                              isSponsorite:
-                                                  list[index].isSponsored,
-                                              profession:
-                                                  list[index].serviceName.name,
-                                              img: list[index].profileRef,
-                                              note: list[index]
-                                                  .avgRating
-                                                  .toString(),
-                                              distance: list[index].address,
-                                              lieu: list[index].address,
-                                              like: true,
-                                              favorite: false,
-                                              prestataire: Prestataire(
+                              ToastService.errorMessage(
+                                  state.error.message, context);
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is ServiceProviderState) {
+                              list = state.provider;
+                            }
+                            return ShimmerLoading(
+                              isLoading: isLoading,
+                              child: SizedBox(
+                                height: getProportionateScreenHeight(400),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: (list.length),
+                                  itemBuilder: (context, index) {
+                                    if (list.isNotEmpty &&
+                                        index < list.length) {
+                                      //  final MapEntry<Services, Services> entry =
+                                      //     itemServices[0].entries.first;
+                                      //  final Services serviceData = entry.value;
+                                      return GestureDetector(
+                                        onTap: () {
+                                          print(index);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return const DescriptionService();
+                                                  },
+                                                  settings: RouteSettings(
+                                                      arguments: list[index]
+                                                          .serviceName
+                                                          .id)));
+                                        },
+                                        child: CardServicePrestataire(
+                                            serviceData: Services(
                                                 name: list[index].fullname,
-                                                firstname: '',
-                                              ))),
-                                    );
-                                  }
-                                  return null;
-                                },
+                                                isSponsorite:
+                                                    list[index].isSponsored,
+                                                profession: list[index]
+                                                    .serviceName
+                                                    .name,
+                                                img: list[index].profileRef,
+                                                note: list[index]
+                                                    .avgRating
+                                                    .toString(),
+                                                distance: list[index].address,
+                                                lieu: list[index].address,
+                                                like: true,
+                                                favorite: false,
+                                                prestataire: Prestataire(
+                                                  name: list[index].fullname,
+                                                  firstname: '',
+                                                ))),
+                                      );
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ]),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ]),
+                ),
               ),
             ),
           ),

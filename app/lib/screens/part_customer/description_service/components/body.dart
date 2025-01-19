@@ -77,9 +77,9 @@ class _BodyState extends State<Body> {
             offer = state.offer;
             service = state.services;
           } else if (state is ErrorServiceFetchingByIdState) {
-            isLoading = false;
-            print(state.error.message);
-            //  ToastService.errorMessage(state.error.message, context);
+            //isLoading = false;
+            //print(state.error.message);
+            //ToastService.errorMessage(state.error.message, context);
           }
 
           return Shimmer(
