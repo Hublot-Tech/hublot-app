@@ -35,7 +35,8 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   String id = '';
-
+  int selectedPrice = 0;
+  int selectedDuration = 0;
   HublotProviderApiApi hublotProviderApiApi = HublotProviderApiApi();
   List<Map<String, String>> offerList = [];
   List<Map<String, String>> offerStandartList = [];
@@ -258,6 +259,13 @@ class _BodyState extends State<Body> {
                                     .substring(index + offers.length)
                                     .trim();
                                 return OffreBaseBox(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedPrice = offer[index].price;
+                                        selectedDuration =
+                                            offer[index].estimatedDuration;
+                                      });
+                                    },
                                     name: trueName,
                                     nbre: offer[index].price.toString());
                               } else {
@@ -305,8 +313,7 @@ class _BodyState extends State<Body> {
                                 const Icon(Icons.keyboard_arrow_down_sharp),
                               ]),
                               textPresentation(
-                                  msg:
-                                      "${isLoading ? '' : offer.isEmpty ? '' : offer[price].estimatedDuration.toString()} j de réalisation",
+                                  msg: "$selectedDuration j de réalisation",
                                   fontWeight: FontWeight.normal,
                                   size: 11.64,
                                   color: kprimaryColor.withOpacity(0.9)),
@@ -358,7 +365,7 @@ class _BodyState extends State<Body> {
                                   ? ''
                                   : offer.isEmpty
                                       ? ''
-                                      : offer[price].price.toString()),
+                                      : selectedPrice.toString()),
                         ),
                       ],
                     ),
@@ -378,6 +385,13 @@ class _BodyState extends State<Body> {
                                   .substring(index + offers.length)
                                   .trim();
                               return OffreBaseBox(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedPrice = offer[index].price;
+                                      selectedDuration =
+                                          offer[index].estimatedDuration;
+                                    });
+                                  },
                                   name: trueName,
                                   nbre: offer[index].price.toString());
                             } else {
