@@ -2,7 +2,7 @@ import 'package:app/configuration.dart';
 import 'package:app/screens/authentification/registration_screen/component/button_custom.dart';
 import 'package:app/screens/part_customer/home_screens/components/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+////import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../city_screen_choice/components/navigation_row.dart';
 import 'hublo_version.dart';
@@ -19,7 +19,7 @@ class _BodyState extends State<Body> {
   Locale? _selectedLocale;
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = ''; //AppLocalizations.of(context)!;
     return SafeArea(
       child: Column(
         children: [
@@ -36,25 +36,25 @@ class _BodyState extends State<Body> {
             //Français
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              buildLanguageSelector(
-                  const Locale('fr', ''), localizations.frenchLanguage),
-              buildLanguageSelector(
-                  const Locale('en', ''), localizations.englishLanguage),
+              // buildLanguageSelector(
+              //     const Locale('fr', ''), localizations.frenchLanguage),
+              // buildLanguageSelector(
+              //     const Locale('en', ''), localizations.englishLanguage),
             ],
           ),
           const SizedBox(height: 100),
-          ButtomCustom(
-              press: () {
-                if (_selectedLocale != null) {
-                  Locale newLocale = _selectedLocale!;
-                  // Ici, vous devriez utiliser un état global (comme Provider ou Bloc) pour changer la langue de l'application
-                  // Pour cet exemple, nous allons simplement reconstruire l'application avec la nouvelle locale
-                  Navigator.of(context).pop(newLocale);
-                }
-              },
-              msg: localizations.confirmButton,
-              color: kprimaryColor,
-              isValided: true),
+          // ButtomCustom(
+          //     press: () {
+          //       if (_selectedLocale != null) {
+          //         Locale newLocale = _selectedLocale!;
+          //         // Ici, vous devriez utiliser un état global (comme Provider ou Bloc) pour changer la langue de l'application
+          //         // Pour cet exemple, nous allons simplement reconstruire l'application avec la nouvelle locale
+          //         Navigator.of(context).pop(newLocale);
+          //       }
+          //     },
+          //     msg: localizations.confirmButton,
+          //     color: kprimaryColor,
+          //     isValided: true),
           const SizedBox(height: 100),
           const VersionHublo(),
         ],

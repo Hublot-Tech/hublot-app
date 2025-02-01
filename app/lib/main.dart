@@ -9,7 +9,7 @@ import 'package:app/blocs/auth/auth_form_state.dart';
 import 'package:app/screens/authentification/login_screen/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'route.dart';
 
@@ -34,10 +34,10 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routes: route,
            localizationsDelegates:  [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
+          //  AppLocalizations.delegate,
+            // GlobalMaterialLocalizations.delegate,
+            // GlobalWidgetsLocalizations.delegate,
+            // GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [
             Locale('en', ''),
